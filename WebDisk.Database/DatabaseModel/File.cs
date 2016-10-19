@@ -10,7 +10,7 @@ namespace WebDisk.Database.DatabaseModel
     public class File : SpaceDataBase
     {
         [Key]
-        public int FileId { get; set; }
+        public Guid FileId { get; set; }
         public string FileName { get; set; }
 
         [ForeignKey("Blob")]

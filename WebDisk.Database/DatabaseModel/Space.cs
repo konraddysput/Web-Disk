@@ -10,7 +10,7 @@ namespace WebDisk.Database.DatabaseModel
     public class Space
     {
         [Key]
-        public int SpaceId { get; set; }
+        public Guid SpaceId { get; set; }
         public DateTime CreationDate { get; set; }
         public string LastLoginIp { get; set; }
 

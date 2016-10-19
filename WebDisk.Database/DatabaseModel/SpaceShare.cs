@@ -10,7 +10,7 @@ namespace WebDisk.Database.DatabaseModel
     public class SpaceShare
     {
         [Key]
-        public int ShareId { get; set; }
+        public Guid ShareId { get; set; }
 
         public DateTime SharedDate { get; set; }
         public ShareType Type { get; set; }

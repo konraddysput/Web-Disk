@@ -10,7 +10,7 @@ namespace WebDisk.Database.DatabaseModel
     public class Directory : SpaceDataBase
     {
         [Key]
-        public int DirectoryId { get; set; }
+        public Guid DirectoryId { get; set; }
         public string DirectoryName { get; set; }
 
         [ForeignKey("Space")]
