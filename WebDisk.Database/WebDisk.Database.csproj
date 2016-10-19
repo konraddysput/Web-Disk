@@ -57,12 +57,29 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DatabaseModel\Identity\IdentityRoleStore.cs" />
+    <Compile Include="DatabaseModel\Identity\IdentityUserClaim.cs" />
+    <Compile Include="DatabaseModel\Identity\IdentityUserLogin.cs" />
+    <Compile Include="DatabaseModel\Identity\IdentityUserRole.cs" />
+    <Compile Include="DatabaseModel\Identity\CustomRole.cs" />
+    <Compile Include="DatabaseModel\Identity\IdentityUserStorage.cs" />
+    <Compile Include="DatabaseModel\WebDiskDbContext.cs" />
+    <Compile Include="DatabaseModel\ApplicationUser.cs" />
+    <Compile Include="DatabaseModel\Blob.cs" />
+    <Compile Include="DatabaseModel\Directory.cs" />
+    <Compile Include="DatabaseModel\File.cs" />
+    <Compile Include="DatabaseModel\ShareType.cs" />
+    <Compile Include="DatabaseModel\Space.cs" />
+    <Compile Include="DatabaseModel\SpaceDataBase.cs" />
+    <Compile Include="DatabaseModel\SpaceShare.cs" />
+    <Compile Include="IdentityExtensions\ApplicationUserExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
