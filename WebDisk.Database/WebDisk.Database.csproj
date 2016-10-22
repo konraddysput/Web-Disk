@@ -57,6 +57,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DatabaseModel\Identity\AppClaimsPrincipals.cs" />
     <Compile Include="DatabaseModel\Identity\IdentityRoleStore.cs" />
     <Compile Include="DatabaseModel\Identity\IdentityUserClaim.cs" />
     <Compile Include="DatabaseModel\Identity\IdentityUserLogin.cs" />
@@ -72,7 +73,8 @@
     <Compile Include="DatabaseModel\Space.cs" />
     <Compile Include="DatabaseModel\SpaceDataBase.cs" />
     <Compile Include="DatabaseModel\SpaceShare.cs" />
-    <Compile Include="IdentityExtensions\ApplicationUserExtensions.cs" />
+    <Compile Include="IdentityExtensions\IdentityExtensions.cs" />
+    <Compile Include="IdentityExtensions\UserManagerExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

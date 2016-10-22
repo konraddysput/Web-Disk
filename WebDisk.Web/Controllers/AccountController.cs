@@ -9,6 +9,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using WebDisk.Web.Models;
+using WebDisk.Database.DatabaseModel;
 
 namespace WebDisk.Web.Controllers
 {
@@ -175,7 +176,7 @@ namespace WebDisk.Web.Controllers
         //
         // GET: /Account/ConfirmEmail
         [AllowAnonymous]
-        public async Task<ActionResult> ConfirmEmail(string userId, string code)
+        public async Task<ActionResult> ConfirmEmail(Guid userId, string code)
         {
             if (userId == null || code == null)
             {

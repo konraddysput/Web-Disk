@@ -9,6 +9,10 @@ namespace WebDisk.Database.DatabaseModel
 {
     public class Space
     {
+        public Space()
+        {
+            SpaceId= new Guid();
+        }
         [Key]
         public Guid SpaceId { get; set; }
         public DateTime CreationDate { get; set; }

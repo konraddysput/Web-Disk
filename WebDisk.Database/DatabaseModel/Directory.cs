@@ -9,6 +9,10 @@ namespace WebDisk.Database.DatabaseModel
 {
     public class Directory : SpaceDataBase
     {
+        public Directory()
+        {
+            DirectoryId = new Guid();
+        }
         [Key]
         public Guid DirectoryId { get; set; }
         public string DirectoryName { get; set; }

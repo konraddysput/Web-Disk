@@ -9,6 +9,10 @@ namespace WebDisk.Database.DatabaseModel
 {
     public class SpaceShare
     {
+        public SpaceShare()
+        {
+            ShareId= new Guid();
+        }
         [Key]
         public Guid ShareId { get; set; }
 
