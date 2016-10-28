@@ -12,13 +12,13 @@
 
 ## 1. About project - About
 
-Current project is my engineering's paper. 
+ 
 
 ## 1. About project - Project parts
 
 Project is divided into few parts. At the begining the project should have:
-* WEB API 
-* Angular + TypeScript Front-end project
+* ASP.NET MVC Application 
+* Business Logic Model Project
 * Data model project
 * Windows service
 * Windows application
@@ -26,24 +26,25 @@ Project is divided into few parts. At the begining the project should have:
 ## 2. Current Project Technologies
 
 Technologies used in current project:
-* ASP.NET CORE
- * Identity
- * Entity Framework
- * Autofac - ? ( we will see)
-* Angular 2.0
-* TypeScript
+* ASP.NET MVC
+* Identity
+* Entity Framework
+* Unity
 * HTML
 * SASS
 
 ## 3. Requirements 
 
 * Visual Studio 2015 update 3
-* Web Essential - Add on to Visual Studio
 * Web browser
+
+Not neccessary, but usefull: 
+* Web Essential - Add on to Visual Studio
+
 
 ## 4. How to run
 
-After you download source code from github, open project in Visual Studio 2015 update 3 and run.
+After you download source code from github, open project in Visual Studio 2015 and run by clicking F5.
 
 ## 5. Licence
 
