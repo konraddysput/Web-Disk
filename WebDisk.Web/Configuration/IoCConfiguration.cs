@@ -4,8 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using WebDisk.BusinessLogic.Interfaces;
 using WebDisk.BusinessLogic.Services;
-using WebDisk.BusinessLogic.Services.Interfaces;
+
 
 namespace WebDisk.Web.Configuration
 {
@@ -22,8 +23,8 @@ namespace WebDisk.Web.Configuration
 
         private static void RegisterServices(IUnityContainer container)
         {
-            container.RegisterType<IFileServiceProvider, FileServiceProvider>(new PerResolveLifetimeManager());
-            
+            container.RegisterType<ISpaceService, SpaceService>(new PerResolveLifetimeManager());
+
         }
     }
 }

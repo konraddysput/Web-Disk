@@ -20,9 +20,9 @@ namespace WebDisk.Database.DatabaseModel
         public ShareType Type { get; set; }
 
         [ForeignKey("Space")]
-        public int SpaceId { get; set; }
+        public Guid SpaceId { get; set; }
         [ForeignKey("SharedUser")]
-        public int SharedUserId { get; set; }
+        public Guid SharedUserId { get; set; }
 
 
         public virtual Space Space { get; set; }

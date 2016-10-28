@@ -7,6 +7,7 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using WebDisk.Database.DatabaseModel.Identity;
 using System.Data.Entity;
 using WebDisk.Database.BaseModels;
+using System.Data.Entity.ModelConfiguration.Conventions;
 
 namespace WebDisk.Database.DatabaseModel
 {
@@ -27,6 +28,13 @@ namespace WebDisk.Database.DatabaseModel
         public static WebDiskDbContext Create()
         {
             return new WebDiskDbContext();
+        }
+
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+            modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
+
         }
     }
 }

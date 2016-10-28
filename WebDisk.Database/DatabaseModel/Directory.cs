@@ -16,17 +16,20 @@ namespace WebDisk.Database.DatabaseModel
         }
         [Key]
         public Guid DirectoryId { get; set; }
-        public string DirectoryName { get; set; }
 
+        [NotMapped]
+        public new FieldType Type { get; } = FieldType.Directory;
+
+        [Required]
         [ForeignKey("Space")]
-        public int SpaceId { get; set; }
-        public virtual Space Space { get; set; }     
+        public Guid SpaceId { get; set; }
+        public virtual Space Space { get; set; }
 
         [ForeignKey("ModyfiedBy")]
-        public int LastModifiedById { get; set; }
-        public virtual ApplicationUser ModifiedBy { get; set; }
+        public Guid? LastModifiedById { get; set; }
+        public virtual ApplicationUser ModyfiedBy { get; set; }
 
-      
+
 
 
     }

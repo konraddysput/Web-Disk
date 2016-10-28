@@ -57,6 +57,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DatabaseModel\FieldType.cs" />
     <Compile Include="DatabaseModel\Identity\AppClaimsPrincipals.cs" />
     <Compile Include="DatabaseModel\Identity\IdentityRoleStore.cs" />
     <Compile Include="DatabaseModel\Identity\IdentityUserClaim.cs" />
@@ -76,13 +77,22 @@
     <Compile Include="DatabaseModel\SpaceShare.cs" />
     <Compile Include="IdentityExtensions\IdentityExtensions.cs" />
     <Compile Include="IdentityExtensions\UserManagerExtensions.cs" />
+    <Compile Include="Migrations\201610281947260_Initial.cs" />
+    <Compile Include="Migrations\201610281947260_Initial.Designer.cs">
+      <DependentUpon>201610281947260_Initial.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201610281947260_Initial.resx">
+      <DependentUpon>201610281947260_Initial.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

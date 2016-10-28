@@ -16,17 +16,16 @@ namespace WebDisk.Database.DatabaseModel
         }
         [Key]
         public Guid FileId { get; set; }
-        public string FileName { get; set; }
+        [Required]
+        public string Extension { get; set; }
 
         [ForeignKey("Blob")]
         public Guid BlobStartId { get; set; }
         public Blob Blob { get; set; }
 
-
-
         public double Size { get; set; }
 
-
+        [Required]
         [ForeignKey("ApplicationUser")]
         public Guid OwnerId { get; set; }
         public ApplicationUser ApplicationUser { get; set; }

@@ -1,0 +1,45 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.Mvc;
+
+namespace WebDisk.Web.Controllers
+{
+    [Authorize]
+    public class DirectoryController : Controller
+    {
+        [Route("")]
+        public ActionResult Index()
+        {
+            return View();
+        }
+        
+        [Route("{directoryId}")]
+        public ActionResult Index(Guid directoryId)
+        {
+            throw new NotImplementedException();
+        }
+
+        [Route("Details/{directoryId}")]
+        public ActionResult Details(Guid directoryId)
+        {
+            throw new NotImplementedException();
+            
+        }
+
+        [Route("Update/{directoryId}")]
+        public ActionResult Update(Guid directoryId)
+        {
+            throw new NotImplementedException();
+        }
+
+
+        [Route("Delete/{directoryId}")]
+        public ActionResult Delete(Guid directoryId)
+        {
+            throw new NotImplementedException();
+        }
+
+    }
+}

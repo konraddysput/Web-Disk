@@ -15,11 +15,14 @@ namespace WebDisk.Database.DatabaseModel
         }
         [Key]
         public Guid SpaceId { get; set; }
+        [Required]
         public DateTime CreationDate { get; set; }
         public string LastLoginIp { get; set; }
+        public string Name { get; set; }
 
+        [Required]
         [ForeignKey("Owner")]
-        public int OwnerId { get; set; }        
+        public Guid OwnerId { get; set; }        
         public virtual ApplicationUser Owner { get; set; }
 
         public virtual ICollection<SpaceShare> Shares { get; set; }
