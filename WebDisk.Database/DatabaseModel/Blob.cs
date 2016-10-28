@@ -11,7 +11,6 @@ namespace WebDisk.Database.DatabaseModel
         }
         [Key]
         public Guid BlobId { get; set; }
-        public int NextId { get; set; }
         public byte[] Data { get; set; }
     }
 }

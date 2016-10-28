@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace WebDisk.Database.DatabaseModel
+namespace WebDisk.Database.BaseModels
 {
     public class SpaceDataBase
     {

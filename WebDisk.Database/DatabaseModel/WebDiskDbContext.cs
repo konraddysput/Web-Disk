@@ -6,11 +6,12 @@ using System.Threading.Tasks;
 using Microsoft.AspNet.Identity.EntityFramework;
 using WebDisk.Database.DatabaseModel.Identity;
 using System.Data.Entity;
+using WebDisk.Database.BaseModels;
 
 namespace WebDisk.Database.DatabaseModel
 {
     public class WebDiskDbContext : IdentityDbContext<ApplicationUser, CustomRole, Guid,
-        Identity.IdentityUserLogin, Identity.IdentityUserRole, Identity.IdentityUserClaim>
+        Identity.IdentityUserLogin, Identity.IdentityUserRole, Identity.IdentityUserClaim>, IWebDiskDbContext
     {
         public WebDiskDbContext()
             : base("DefaultConnection")

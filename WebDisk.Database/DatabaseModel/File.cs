@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
+using WebDisk.Database.BaseModels;
 
 namespace WebDisk.Database.DatabaseModel
 {
@@ -18,7 +19,7 @@ namespace WebDisk.Database.DatabaseModel
         public string FileName { get; set; }
 
         [ForeignKey("Blob")]
-        public int BlobStartId { get; set; }
+        public Guid BlobStartId { get; set; }
         public Blob Blob { get; set; }
 
 
@@ -27,7 +28,7 @@ namespace WebDisk.Database.DatabaseModel
 
 
         [ForeignKey("ApplicationUser")]
-        public int OwnerId { get; set; }
+        public Guid OwnerId { get; set; }
         public ApplicationUser ApplicationUser { get; set; }
     }
 }
