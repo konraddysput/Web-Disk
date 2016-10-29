@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebDisk.Database", "WebDisk
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebDisk.BusinessLogic", "WebDisk.BusinessLogic\WebDisk.BusinessLogic.csproj", "{BF131314-D6DE-4118-B2B6-72D580B8D35E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebDisk.BusinessLogic.Tests", "WebDisk.BusinessLogic.Tests\WebDisk.BusinessLogic.Tests.csproj", "{EDD98BC0-B1F6-4733-9CEA-37C135048906}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{BF131314-D6DE-4118-B2B6-72D580B8D35E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BF131314-D6DE-4118-B2B6-72D580B8D35E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BF131314-D6DE-4118-B2B6-72D580B8D35E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EDD98BC0-B1F6-4733-9CEA-37C135048906}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EDD98BC0-B1F6-4733-9CEA-37C135048906}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EDD98BC0-B1F6-4733-9CEA-37C135048906}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EDD98BC0-B1F6-4733-9CEA-37C135048906}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

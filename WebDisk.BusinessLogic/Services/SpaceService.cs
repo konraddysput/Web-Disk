@@ -22,6 +22,12 @@ namespace WebDisk.BusinessLogic.Services
             _sharedSpaceRepository = new Repository<SpaceShare>(_context);
         }
 
+        public SpaceService(Repository<Space> spaceRepository, Repository<SpaceShare> shareSpaceRepository)
+        {
+            _spaceRepository = spaceRepository;
+            _sharedSpaceRepository = shareSpaceRepository;
+        }
+
         public IEnumerable<SpaceBusinessLogicViewModel> GetSpaces(Guid userId)
         {
             var currentUserSpaces = _spaceRepository
@@ -35,6 +41,21 @@ namespace WebDisk.BusinessLogic.Services
                     .Concat(_sharedSpaceRepository
                         .Get(n => n.SharedUserId == userId)
                         .ConvertSpace());
+        }
+
+        public void Create(Guid usedId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Delete(Guid spaceId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void ShareSpace(Guid spaceId, Guid userId)
+        {
+            throw new NotImplementedException();
         }
 
 

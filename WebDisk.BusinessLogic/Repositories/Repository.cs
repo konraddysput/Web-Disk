@@ -5,13 +5,14 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
+using WebDisk.BusinessLogic.Interfaces;
 using WebDisk.Database.BaseModels;
 using WebDisk.Database.DatabaseModel;
 
 namespace WebDisk.BusinessLogic.Services
 {
 
-    public class Repository<TEntity> where TEntity : class
+    public class Repository<TEntity> : IRepository<TEntity> where TEntity : class
     {
         private WebDiskDbContext _context;
         private DbSet<TEntity> dbSet;

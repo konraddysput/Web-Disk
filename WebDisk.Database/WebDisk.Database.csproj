@@ -81,6 +81,10 @@
     <Compile Include="Migrations\201610281947260_Initial.Designer.cs">
       <DependentUpon>201610281947260_Initial.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201610282213442_AddedSpaceNameAndType.cs" />
+    <Compile Include="Migrations\201610282213442_AddedSpaceNameAndType.Designer.cs">
+      <DependentUpon>201610282213442_AddedSpaceNameAndType.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -91,6 +95,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201610281947260_Initial.resx">
       <DependentUpon>201610281947260_Initial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201610282213442_AddedSpaceNameAndType.resx">
+      <DependentUpon>201610282213442_AddedSpaceNameAndType.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

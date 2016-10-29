@@ -7,6 +7,7 @@ using System.Web.Mvc;
 namespace WebDisk.Web.Controllers
 {
     [Authorize]
+    [RoutePrefix("Directory")]
     public class DirectoryController : Controller
     {
         [Route("")]
@@ -37,6 +38,12 @@ namespace WebDisk.Web.Controllers
 
         [Route("Delete/{directoryId}")]
         public ActionResult Delete(Guid directoryId)
+        {
+            throw new NotImplementedException();
+        }
+        
+        [Route("Create/{directoryId}/{directoryName}")]
+        public ActionResult Create(Guid directoryId, string directoryName)
         {
             throw new NotImplementedException();
         }

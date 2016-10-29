@@ -13,6 +13,7 @@ using WebDisk.Web.Models.Home;
 namespace WebDisk.Web.Controllers
 {
     [Authorize]
+    [RoutePrefix("Home")]
     public class HomeController : Controller
     {
         private ISpaceService _spaceService;
