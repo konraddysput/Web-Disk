@@ -22,6 +22,11 @@ namespace WebDisk.BusinessLogic.Services
             _context = context;
             dbSet = _context.Set<TEntity>();
         }
+        public Repository()
+        {
+            _context = new WebDiskDbContext();
+            dbSet = _context.Set<TEntity>();
+        }
 
         public virtual IEnumerable<TEntity> Get(
             Expression<Func<TEntity, bool>> filter = null,

@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WebDisk.BusinessLogic.Interfaces
+namespace WebDisk.BusinessLogic.Tests
 {
-    public interface IDirectoryProvider
+    class DirectoryServiceTests
     {
     }
 }

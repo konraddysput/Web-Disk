@@ -1,38 +1,23 @@
-﻿
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using WebDisk.BusinessLogic.Interfaces;
-using WebDisk.BusinessLogic.ViewModels;
-using WebDisk.Database.IdentityExtensions;
-using WebDisk.Web.Attributes;
-using WebDisk.Web.Models.Home;
+using WebDisk.BusinessLogic.Services;
 
 namespace WebDisk.Web.Controllers
 {
     [Authorize]
-    [RoutePrefix("Home")]
     public class HomeController : Controller
     {
-        private ISpaceService _spaceService;
+        private DirectoryService _directoryService;
 
-        public HomeController(ISpaceService spaceService)
-        {
-            _spaceService = spaceService;
-        }
 
-        [Route("")]
-        [AutoMap(typeof(SpaceBusinessLogicViewModel), typeof(SpaceOverviewViewModel))]
+        // GET: Home
         public ActionResult Index()
         {
-            var spaces = _spaceService.GetSpaces(User.Identity.GetUserId());
-            if (spaces.Count() == 0)
-            {
-                return RedirectToAction("Index", "Directory");
-            }
-            return View(spaces);
+
+            return View();
         }
     }
 }

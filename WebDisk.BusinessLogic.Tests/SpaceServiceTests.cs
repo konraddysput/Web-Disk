@@ -1,6 +1,4 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Moq;
-using NUnit.Framework;
+﻿using Moq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,75 +6,119 @@ using System.Security.Principal;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
+using WebDisk.BusinessLogic.Extensions;
 using WebDisk.BusinessLogic.Services;
+using WebDisk.BusinessLogic.ViewModels;
+using WebDisk.BusinessLogic.Interfaces;
 using WebDisk.Database.DatabaseModel;
+using Xunit;
 
 namespace WebDisk.BusinessLogic.Tests
 {
-    [TestFixture]
-    class SpaceServiceTests
+    public class SpaceServiceTests
     {
-        [Test]
-        [ExpectedException(typeof(ArgumentException))]
+        private SpaceService _spaceService;
+
+        public SpaceServiceTests()
+        {
+            _spaceService = new SpaceService();
+        }
+
+        [Fact]
+        //[ExpectedException(typeof(ArgumentException))]
         public void TestNotExistingSpaces()
         {
             var userId = Guid.Empty;
-            var mockSpaceRepository = new Mock<Repository<Space>>();
-            var mockSharedSpaceRepository = new Mock<Repository<SpaceShare>>();
-            var spaceService = new SpaceService().GetSpaces(userId);
+            Assert.Throws<ArgumentException>(() => _spaceService.GetSpaces(userId));
+
         }
 
-        [Test]
+        [Theory]
+        [InlineData("ac43555b-6e69-4b08-b169-2000f00441e8")]
+        public void TestExistingSpaces(string stringGuid)
+        {
+            var userId = Guid.Parse(stringGuid);
+            var expected = new List<Space>() { new Space()
+            {
+                OwnerId = userId
+            }
+            };
+
+            var expectedServiceResult = expected.ConvertSpace();
+            var mockSpaceRepository = new Mock<Repository<Space>>();
+            var mockSpaceShareRepository = new Mock<Repository<SpaceShare>>();
+
+            mockSpaceShareRepository
+                .Setup(n => n.Get(g => g.SharedUserId == userId, null, string.Empty))
+                .Returns(new List<SpaceShare>());
+
+            mockSpaceRepository
+                .Setup(n => n.Get(g => g.OwnerId == userId, null, string.Empty))
+                .Returns(expected);
+
+            var test = mockSpaceRepository.Object.Get(n=>n.OwnerId == userId);
+
+            var temporarySpaceService = new SpaceService(mockSpaceRepository.Object
+                                                        , mockSpaceShareRepository.Object);
+
+            var result = temporarySpaceService.GetSpaces(userId);
+
+            Assert.Equal(expectedServiceResult, result);
+
+
+        }
+
+        [Fact]
         public void TestSpaceCreation()
         {
             var userId = Guid.Empty;
-            new SpaceService().Create(userId);
+            _spaceService.Create(userId);
         }
 
-        [Test]
+        [Fact]
         public void TestShareSpaceCreation()
         {
             var userId = Guid.Empty;
             var spaceId = Guid.Empty;
-            new SpaceService().ShareSpace(spaceId,userId);
+            _spaceService.ShareSpace(spaceId, userId);
         }
 
-        [Test]
+        [Fact]
         public void TestSpaceCreationTwice()
         {
             var userId = Guid.Empty;
-            var spaceService = new SpaceService();
-            spaceService.Create(userId);
-            spaceService.Create(userId);
+
+            _spaceService.Create(userId);
+            _spaceService.Create(userId);
         }
 
-        [Test]
+        [Fact]
         public void TestShareSpaceTwice()
         {
             var userId = Guid.Empty;
             var spaceId = Guid.Empty;
-            var spaceService = new SpaceService();
-            spaceService.ShareSpace(spaceId, userId);
-            spaceService.ShareSpace(spaceId, userId);
+
+            _spaceService.ShareSpace(spaceId, userId);
+            _spaceService.ShareSpace(spaceId, userId);
         }
 
-        [Test]
-        [ExpectedException(typeof(ArgumentException))]
+        [Fact]
+        //[ExpectedException(typeof(ArgumentException))]
         public void TestCreatSpaceByNotExistingUser()
         {
-            new SpaceService().Create(Guid.Empty);
+            _spaceService.Create(Guid.Empty);
         }
-        [Test]
-        [ExpectedException(typeof(ArgumentException))]
+        [Fact]
+        //[ExpectedException(typeof(ArgumentException))]
         public void TestShareUserSpace()
         {
-            new SpaceService().ShareSpace(Guid.Empty, Guid.Empty);
+            _spaceService.ShareSpace(Guid.Empty, Guid.Empty);
         }
 
-        [Test]
+        [Fact]
         public void TestDeletingNotExistingSpaces()
         {
-            new SpaceService().Delete(Guid.Empty);
+            _spaceService.Delete(Guid.Empty);
         }
     }
 }

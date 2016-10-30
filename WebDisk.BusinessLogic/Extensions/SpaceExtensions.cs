@@ -29,5 +29,7 @@ namespace WebDisk.BusinessLogic.Extensions
                             Type = ViewModels.Types.SpaceType.SharedSpace
                         });
         }
+
+        //public static IEnumerable<Field>
     }
 }

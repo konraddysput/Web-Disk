@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using WebDisk.Database.DatabaseModel;
+using WebDisk.Database.BaseModels;
 
 namespace WebDisk.BusinessLogic.Interfaces
 {
-    public interface IFileServiceProvider
+    public interface IDirectoryService : IDisposable
     {
-        IEnumerable<File> GetUserDictionaryFiles(Guid dictionaryId);
+        IEnumerable<SpaceDataBase> GetAvailableFields(Guid userID);
+
     }
 }

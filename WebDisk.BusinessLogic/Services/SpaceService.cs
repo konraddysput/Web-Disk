@@ -31,9 +31,9 @@ namespace WebDisk.BusinessLogic.Services
         public IEnumerable<SpaceBusinessLogicViewModel> GetSpaces(Guid userId)
         {
             var currentUserSpaces = _spaceRepository
-                                        .Get(n => n.OwnerId == userId)
+                                        .Get(n => n.OwnerId == userId,null,string.Empty)
                                         .ConvertSpace();
-            if (currentUserSpaces == null)
+            if (currentUserSpaces == null || currentUserSpaces.Count() == 0)
             {
                 throw new ArgumentException($"user with id={userId} does not exists");
             }
