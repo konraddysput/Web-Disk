@@ -15,15 +15,18 @@ namespace WebDisk.Database.DatabaseModel
         Identity.IdentityUserLogin, Identity.IdentityUserRole, Identity.IdentityUserClaim>, IWebDiskDbContext
     {
         public WebDiskDbContext()
-            : base("DefaultConnection")
+            : base("WebDiskDb")
         {
         }
 
-        public DbSet<Blob> Blob { get; set; }
-        public DbSet<Directory> Directory { get; set; }
-        public DbSet<File> File { get; set; }
-        public DbSet<Space> Space { get; set; }
-        public DbSet<SpaceShare> SpaceShare { get; set; }
+        public virtual DbSet<Blob> Blob { get; set; }
+        public virtual DbSet<Directory> Directory { get; set; }
+        public virtual DbSet<File> File { get; set; }
+        public virtual DbSet<Space> Space { get; set; }
+        public virtual DbSet<DirectoryShareInformation> DirectoryShareInformation { get; set; }
+        public virtual DbSet<FileShareInformation> FileShareInformation { get; set; }
+
+
 
         public static WebDiskDbContext Create()
         {

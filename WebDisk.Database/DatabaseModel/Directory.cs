@@ -5,32 +5,23 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 using WebDisk.Database.BaseModels;
+using WebDisk.Database.DatabaseModel.Types;
 
 namespace WebDisk.Database.DatabaseModel
 {
-    public class Directory : SpaceDataBase
+    public class Directory : FieldBase
     {
         public Directory()
         {
-            DirectoryId = new Guid();
+            FieldId = new Guid();
         }
-        [Key]
-        public Guid DirectoryId { get; set; }
 
         [NotMapped]
-        public new FieldType Type { get; } = FieldType.Directory;
+        public new FieldType Type { get; private set; } = FieldType.Directory;
 
-        [Required]
-        [ForeignKey("Space")]
-        public Guid SpaceId { get; set; }
-        public virtual Space Space { get; set; }
+        public bool IsDirectLinkEnable { get; set; }
+        public string DirectLink { get; set; }
 
-        [ForeignKey("ModyfiedBy")]
-        public Guid? LastModifiedById { get; set; }
-        public virtual ApplicationUser ModyfiedBy { get; set; }
-
-
-
-
+        public virtual ICollection<DirectoryShareInformation> SharedInformations { get; set; }
     }
 }

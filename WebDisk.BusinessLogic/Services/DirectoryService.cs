@@ -17,7 +17,6 @@ namespace WebDisk.BusinessLogic.Services
 
         //Spaces
         private Repository<Space> _spaceRepository;
-        private Repository<SpaceShare> _spaceShareRepository;
 
         //Fields
         private Repository<Directory> _directoryRepository;
@@ -28,24 +27,34 @@ namespace WebDisk.BusinessLogic.Services
             _directoryRepository = new Repository<Directory>(_context);
             _fileRepository = new Repository<File>(_context);
             _spaceRepository = new Repository<Space>(_context);
-            _spaceShareRepository = new Repository<SpaceShare>(_context);
         }
 
-        public IEnumerable<SpaceDataBase> GetAvailableFields(Guid userId)
+        public DirectoryService(Repository<Space> spaceRepository,Repository<Directory> directoryRepository,
+                                Repository<File> fileRepository)
+        {
+            _directoryRepository = directoryRepository;
+            _fileRepository = fileRepository;
+            _spaceRepository = spaceRepository;
+        }
+
+
+        public IEnumerable<FieldBase> GetAvailableFields(Guid userId)
         {
             //var spaces = GetUserSpaces(userId);
             throw new NotImplementedException();
         }
 
-        private IEnumerable<SpaceBusinessLogicViewModel> GetUserSpaces(Guid userId)
+        public IEnumerable<FieldBase> GetAvailableFields(Guid userId, Guid directoryId)
         {
-            return _spaceRepository.Get(n => n.OwnerId == userId)
-                        .ConvertSpace()
-                        .Concat(_spaceShareRepository
-                                        .Get(n => n.SharedUserId == userId)
-                                        .ConvertSpace());
+            //var spaces = GetUserSpaces(userId);
+            throw new NotImplementedException();
         }
 
+
+        public IEnumerable<FieldBase> GetSharedFields(Guid userID)
+        {
+            throw new NotImplementedException();
+        }
 
 
 
@@ -75,6 +84,19 @@ namespace WebDisk.BusinessLogic.Services
             GC.SuppressFinalize(this);
         }
 
+        public void Cretea(Directory directory)
+        {
+            throw new NotImplementedException();
+        }
 
+        public void Delete(Guid directoryId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Update(Directory directory)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -6,6 +6,7 @@ using System.Web;
 using System.Web.Mvc;
 using WebDisk.BusinessLogic.Interfaces;
 using WebDisk.BusinessLogic.ViewModels;
+using WebDisk.Database.DatabaseModel;
 using WebDisk.Database.IdentityExtensions;
 using WebDisk.Web.Attributes;
 using WebDisk.Web.Models.Home;
@@ -24,11 +25,11 @@ namespace WebDisk.Web.Controllers
         }
 
         [Route("")]
-        [AutoMap(typeof(SpaceBusinessLogicViewModel), typeof(SpaceOverviewViewModel))]
+        [AutoMap(typeof(Space), typeof(SpaceOverviewViewModel))]
         public ActionResult Index()
         {
             
-            return View(_spaceService.GetSpaces(User.Identity.GetUserId()));
+            return View(_spaceService.GetSpace(User.Identity.GetUserId()));
         }
     }
 }

@@ -3,33 +3,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using WebDisk.BusinessLogic.ViewModels;
+using WebDisk.BusinessLogic.Services;
 using WebDisk.Database.DatabaseModel;
 
 namespace WebDisk.BusinessLogic.Extensions
 {
     public static class SpaceExtensions
     {
-        public static IEnumerable<SpaceBusinessLogicViewModel> ConvertSpace(this IEnumerable<Space> source)
+        public static Directory GetDefaultSpaceDirectory(this Repository<Space> source, Guid userId)
         {
-            return source.Select(n => new SpaceBusinessLogicViewModel()
-                        {
-                            Id = n.SpaceId,
-                            Name = n.Name,
-                            Type = ViewModels.Types.SpaceType.UserSpace
-                        });
+            return source
+                    .Get(n =>  n.SpaceId== userId)
+                    .FirstOrDefault()
+                    ?.Directory;
         }
-
-        public static IEnumerable<SpaceBusinessLogicViewModel> ConvertSpace(this IEnumerable<SpaceShare> source)
-        {
-            return source.Select(n => new SpaceBusinessLogicViewModel()
-                        {
-                            Id = n.ShareId,
-                            Name = n.Space.Name,
-                            Type = ViewModels.Types.SpaceType.SharedSpace
-                        });
-        }
-
-        //public static IEnumerable<Field>
     }
 }

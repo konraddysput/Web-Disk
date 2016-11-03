@@ -11,6 +11,10 @@ namespace WebDisk.Database.DatabaseModel
         }
         [Key]
         public Guid BlobId { get; set; }
-        public byte[] Data { get; set; }
+        [Required]
+        public string Localisation { get; set; }
+
+        public DateTime? LastBackupDate { get; set; }
+        
     }
 }

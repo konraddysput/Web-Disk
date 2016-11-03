@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WebDisk.BusinessLogic.Tests
+namespace WebDisk.BusinessLogic.Extensions
 {
-    class DirectoryServiceTests
+    class FieldExtensions
     {
     }
 }

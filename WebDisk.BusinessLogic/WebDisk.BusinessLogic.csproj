@@ -57,6 +57,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Extensions\FieldExtensions.cs" />
     <Compile Include="Extensions\SpaceExtensions.cs" />
     <Compile Include="Interfaces\IDirectoryService.cs" />
     <Compile Include="Interfaces\IRepository.cs" />
@@ -66,11 +67,12 @@
     <Compile Include="Services\DirectoryService.cs" />
     <Compile Include="Services\SpaceService.cs" />
     <Compile Include="ViewModels\FieldBusinessLogicViewModel.cs" />
-    <Compile Include="ViewModels\SpaceBusinessLogicViewModel.cs" />
     <Compile Include="ViewModels\Types\SpaceType.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

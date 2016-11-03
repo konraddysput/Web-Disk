@@ -14,33 +14,27 @@ namespace WebDisk.BusinessLogic.Services
     {
         private WebDiskDbContext _context = new WebDiskDbContext();
         private Repository<Space> _spaceRepository;
-        private Repository<SpaceShare> _sharedSpaceRepository;
 
         public SpaceService()
         {
             _spaceRepository = new Repository<Space>(_context);
-            _sharedSpaceRepository = new Repository<SpaceShare>(_context);
         }
 
-        public SpaceService(Repository<Space> spaceRepository, Repository<SpaceShare> shareSpaceRepository)
+        public SpaceService(Repository<Space> spaceRepository)
         {
             _spaceRepository = spaceRepository;
-            _sharedSpaceRepository = shareSpaceRepository;
         }
 
-        public IEnumerable<SpaceBusinessLogicViewModel> GetSpaces(Guid userId)
+        public Space GetSpace(Guid userId)
         {
             var currentUserSpaces = _spaceRepository
-                                        .Get(n => n.OwnerId == userId,null,string.Empty)
-                                        .ConvertSpace();
+                                        .Get(n => n.SpaceId == userId, null, string.Empty);
+
             if (currentUserSpaces == null || currentUserSpaces.Count() == 0)
             {
                 throw new ArgumentException($"user with id={userId} does not exists");
             }
-            return currentUserSpaces
-                    .Concat(_sharedSpaceRepository
-                        .Get(n => n.SharedUserId == userId)
-                        .ConvertSpace());
+            return currentUserSpaces.FirstOrDefault();
         }
 
         public void Create(Guid usedId)
@@ -58,37 +52,6 @@ namespace WebDisk.BusinessLogic.Services
             throw new NotImplementedException();
         }
 
-
-        //public IEnumerable<SpaceDataBase> GetFields(Guid? directoryId)
-        //{
-
-        //}
-
-        //public Repository<Directory> DirectoryRepository
-        //{
-        //    get
-        //    {
-
-        //        if (_directoryRepository == null)
-        //        {
-        //            _directoryRepository = new Repository<Directory>(_context);
-        //        }
-        //        return _directoryRepository;
-        //    }
-        //}
-
-        //public Repository<File> CourseRepository
-        //{
-        //    get
-        //    {
-
-        //        if (_fileRepository == null)
-        //        {
-        //            _fileRepository = new Repository<File>(_context);
-        //        }
-        //        return _fileRepository;
-        //    }
-        //}
 
         public void Save()
         {

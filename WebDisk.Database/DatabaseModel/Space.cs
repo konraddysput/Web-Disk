@@ -9,22 +9,18 @@ namespace WebDisk.Database.DatabaseModel
 {
     public class Space
     {
-        public Space()
-        {
-            SpaceId= new Guid();
-        }
-        [Key]
+      
+        [Key, ForeignKey("Owner")]
         public Guid SpaceId { get; set; }
-        [Required]
-        public DateTime CreationDate { get; set; }
-        public string LastLoginIp { get; set; }
-        public string Name { get; set; }
 
         [Required]
-        [ForeignKey("Owner")]
-        public Guid OwnerId { get; set; }        
+        [ForeignKey("Directory")]
+        public Guid DefaultDirectoryId { get; set; }
+
+        [Required]
+        public bool IsEnabled { get; set; }
+        public virtual Directory Directory { get; set; }
+      
         public virtual ApplicationUser Owner { get; set; }
-
-        public virtual ICollection<SpaceShare> Shares { get; set; }
     }
 }

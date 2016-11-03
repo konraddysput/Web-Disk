@@ -57,7 +57,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DatabaseModel\FieldType.cs" />
+    <Compile Include="BaseModels\ShareInformationBase.cs" />
+    <Compile Include="DatabaseModel\DirectoryShareInformation.cs" />
+    <Compile Include="DatabaseModel\FileShareInformation.cs" />
+    <Compile Include="DatabaseModel\Types\AccessType.cs" />
+    <Compile Include="DatabaseModel\Types\FieldType.cs" />
     <Compile Include="DatabaseModel\Identity\AppClaimsPrincipals.cs" />
     <Compile Include="DatabaseModel\Identity\IdentityRoleStore.cs" />
     <Compile Include="DatabaseModel\Identity\IdentityUserClaim.cs" />
@@ -71,19 +75,14 @@
     <Compile Include="DatabaseModel\Blob.cs" />
     <Compile Include="DatabaseModel\Directory.cs" />
     <Compile Include="DatabaseModel\File.cs" />
-    <Compile Include="DatabaseModel\ShareType.cs" />
+    <Compile Include="DatabaseModel\Types\ShareType.cs" />
     <Compile Include="DatabaseModel\Space.cs" />
-    <Compile Include="BaseModels\SpaceDataBase.cs" />
-    <Compile Include="DatabaseModel\SpaceShare.cs" />
+    <Compile Include="BaseModels\FieldBase.cs" />
     <Compile Include="IdentityExtensions\IdentityExtensions.cs" />
     <Compile Include="IdentityExtensions\UserManagerExtensions.cs" />
-    <Compile Include="Migrations\201610281947260_Initial.cs" />
-    <Compile Include="Migrations\201610281947260_Initial.Designer.cs">
-      <DependentUpon>201610281947260_Initial.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201610282213442_AddedSpaceNameAndType.cs" />
-    <Compile Include="Migrations\201610282213442_AddedSpaceNameAndType.Designer.cs">
-      <DependentUpon>201610282213442_AddedSpaceNameAndType.cs</DependentUpon>
+    <Compile Include="Migrations\201610312337376_Initial.cs" />
+    <Compile Include="Migrations\201610312337376_Initial.Designer.cs">
+      <DependentUpon>201610312337376_Initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -93,11 +92,8 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201610281947260_Initial.resx">
-      <DependentUpon>201610281947260_Initial.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201610282213442_AddedSpaceNameAndType.resx">
-      <DependentUpon>201610282213442_AddedSpaceNameAndType.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201610312337376_Initial.resx">
+      <DependentUpon>201610312337376_Initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
