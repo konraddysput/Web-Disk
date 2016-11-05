@@ -17,8 +17,7 @@ namespace WebDisk.Database.DatabaseModel
 
         public string LastLoginIp { get; set; }
 
-        public virtual ICollection<DirectoryShareInformation> SharedDirectiores { get; set; }
-        public virtual ICollection<FileShareInformation> SharedFiles { get; set; }
+        public virtual ICollection<FieldShareInformation> SharedFields { get; set; }
 
         [Required]
         public virtual Space Space { get; set; }

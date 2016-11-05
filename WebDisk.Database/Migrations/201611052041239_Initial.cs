@@ -18,27 +18,21 @@ namespace WebDisk.Database.Migrations
                 .PrimaryKey(t => t.BlobId);
             
             CreateTable(
-                "dbo.Directories",
+                "dbo.FieldShareInformations",
                 c => new
                     {
-                        FieldId = c.Guid(nullable: false),
-                        IsDirectLinkEnable = c.Boolean(nullable: false),
-                        DirectLink = c.String(),
-                        Name = c.String(nullable: false),
-                        CreationDate = c.DateTime(nullable: false),
-                        LastModifiedDate = c.DateTime(),
-                        LastBackupDate = c.DateTime(),
-                        Locked = c.Boolean(nullable: false),
-                        Disabled = c.Boolean(nullable: false),
-                        Hidden = c.Boolean(nullable: false),
-                        ParentDirectoryId = c.Guid(),
-                        LastModifiedById = c.Guid(),
+                        UserId = c.Guid(nullable: false),
+                        FileId = c.Guid(nullable: false),
+                        SharedDate = c.DateTime(nullable: false),
+                        SharedTime = c.Time(nullable: false, precision: 7),
+                        ShareType = c.Int(nullable: false),
+                        AccessType = c.Int(nullable: false),
                     })
-                .PrimaryKey(t => t.FieldId)
-                .ForeignKey("dbo.AspNetUsers", t => t.LastModifiedById)
-                .ForeignKey("dbo.Directories", t => t.ParentDirectoryId)
-                .Index(t => t.ParentDirectoryId)
-                .Index(t => t.LastModifiedById);
+                .PrimaryKey(t => new { t.UserId, t.FileId })
+                .ForeignKey("dbo.AspNetUsers", t => t.UserId)
+                .ForeignKey("dbo.Fields", t => t.FileId)
+                .Index(t => t.UserId)
+                .Index(t => t.FileId);
             
             CreateTable(
                 "dbo.AspNetUsers",
@@ -100,67 +94,6 @@ namespace WebDisk.Database.Migrations
                 .Index(t => t.RoleId);
             
             CreateTable(
-                "dbo.DirectoryShareInformations",
-                c => new
-                    {
-                        UserId = c.Guid(nullable: false),
-                        DirectoryId = c.Guid(nullable: false),
-                        SharedDate = c.DateTime(nullable: false),
-                        SharedTime = c.Time(nullable: false, precision: 7),
-                        ShareType = c.Int(nullable: false),
-                        AccessType = c.Int(nullable: false),
-                    })
-                .PrimaryKey(t => new { t.UserId, t.DirectoryId })
-                .ForeignKey("dbo.AspNetUsers", t => t.UserId)
-                .ForeignKey("dbo.Directories", t => t.DirectoryId)
-                .Index(t => t.UserId)
-                .Index(t => t.DirectoryId);
-            
-            CreateTable(
-                "dbo.FileShareInformations",
-                c => new
-                    {
-                        UserId = c.Guid(nullable: false),
-                        FileId = c.Guid(nullable: false),
-                        SharedDate = c.DateTime(nullable: false),
-                        SharedTime = c.Time(nullable: false, precision: 7),
-                        ShareType = c.Int(nullable: false),
-                        AccessType = c.Int(nullable: false),
-                    })
-                .PrimaryKey(t => new { t.UserId, t.FileId })
-                .ForeignKey("dbo.AspNetUsers", t => t.UserId)
-                .ForeignKey("dbo.Files", t => t.FileId)
-                .Index(t => t.UserId)
-                .Index(t => t.FileId);
-            
-            CreateTable(
-                "dbo.Files",
-                c => new
-                    {
-                        FieldId = c.Guid(nullable: false),
-                        Extension = c.String(),
-                        BlobId = c.Guid(nullable: false),
-                        Size = c.Double(nullable: false),
-                        Name = c.String(nullable: false),
-                        Type = c.Int(nullable: false),
-                        CreationDate = c.DateTime(nullable: false),
-                        LastModifiedDate = c.DateTime(),
-                        LastBackupDate = c.DateTime(),
-                        Locked = c.Boolean(nullable: false),
-                        Disabled = c.Boolean(nullable: false),
-                        Hidden = c.Boolean(nullable: false),
-                        ParentDirectoryId = c.Guid(),
-                        LastModifiedById = c.Guid(),
-                    })
-                .PrimaryKey(t => t.FieldId)
-                .ForeignKey("dbo.Blobs", t => t.BlobId)
-                .ForeignKey("dbo.AspNetUsers", t => t.LastModifiedById)
-                .ForeignKey("dbo.Directories", t => t.ParentDirectoryId)
-                .Index(t => t.BlobId)
-                .Index(t => t.ParentDirectoryId)
-                .Index(t => t.LastModifiedById);
-            
-            CreateTable(
                 "dbo.Spaces",
                 c => new
                     {
@@ -169,10 +102,46 @@ namespace WebDisk.Database.Migrations
                         IsEnabled = c.Boolean(nullable: false),
                     })
                 .PrimaryKey(t => t.SpaceId)
-                .ForeignKey("dbo.Directories", t => t.DefaultDirectoryId)
+                .ForeignKey("dbo.Fields", t => t.DefaultDirectoryId)
                 .ForeignKey("dbo.AspNetUsers", t => t.SpaceId)
                 .Index(t => t.SpaceId)
                 .Index(t => t.DefaultDirectoryId);
+            
+            CreateTable(
+                "dbo.Fields",
+                c => new
+                    {
+                        FieldId = c.Guid(nullable: false),
+                        Name = c.String(nullable: false),
+                        Type = c.Int(nullable: false),
+                        CreationDate = c.DateTime(nullable: false),
+                        LastModifiedDate = c.DateTime(),
+                        LastBackupDate = c.DateTime(),
+                        Attributes = c.Int(nullable: false),
+                        DirectLink = c.String(),
+                        Extension = c.String(),
+                        ParentDirectoryId = c.Guid(),
+                        LastModifiedById = c.Guid(),
+                    })
+                .PrimaryKey(t => t.FieldId)
+                .ForeignKey("dbo.AspNetUsers", t => t.LastModifiedById)
+                .ForeignKey("dbo.Fields", t => t.ParentDirectoryId)
+                .Index(t => t.ParentDirectoryId)
+                .Index(t => t.LastModifiedById);
+            
+            CreateTable(
+                "dbo.FieldInformations",
+                c => new
+                    {
+                        FieldId = c.Guid(nullable: false),
+                        Size = c.Double(nullable: false),
+                        BlobId = c.Guid(nullable: false),
+                    })
+                .PrimaryKey(t => t.FieldId)
+                .ForeignKey("dbo.Blobs", t => t.BlobId)
+                .ForeignKey("dbo.Fields", t => t.FieldId)
+                .Index(t => t.FieldId)
+                .Index(t => t.BlobId);
             
             CreateTable(
                 "dbo.AspNetRoles",
@@ -189,47 +158,40 @@ namespace WebDisk.Database.Migrations
         public override void Down()
         {
             DropForeignKey("dbo.AspNetUserRoles", "RoleId", "dbo.AspNetRoles");
-            DropForeignKey("dbo.Directories", "ParentDirectoryId", "dbo.Directories");
-            DropForeignKey("dbo.Directories", "LastModifiedById", "dbo.AspNetUsers");
             DropForeignKey("dbo.Spaces", "SpaceId", "dbo.AspNetUsers");
-            DropForeignKey("dbo.Spaces", "DefaultDirectoryId", "dbo.Directories");
-            DropForeignKey("dbo.FileShareInformations", "FileId", "dbo.Files");
-            DropForeignKey("dbo.Files", "ParentDirectoryId", "dbo.Directories");
-            DropForeignKey("dbo.Files", "LastModifiedById", "dbo.AspNetUsers");
-            DropForeignKey("dbo.Files", "BlobId", "dbo.Blobs");
-            DropForeignKey("dbo.FileShareInformations", "UserId", "dbo.AspNetUsers");
-            DropForeignKey("dbo.DirectoryShareInformations", "DirectoryId", "dbo.Directories");
-            DropForeignKey("dbo.DirectoryShareInformations", "UserId", "dbo.AspNetUsers");
+            DropForeignKey("dbo.Spaces", "DefaultDirectoryId", "dbo.Fields");
+            DropForeignKey("dbo.FieldShareInformations", "FileId", "dbo.Fields");
+            DropForeignKey("dbo.Fields", "ParentDirectoryId", "dbo.Fields");
+            DropForeignKey("dbo.Fields", "LastModifiedById", "dbo.AspNetUsers");
+            DropForeignKey("dbo.FieldInformations", "FieldId", "dbo.Fields");
+            DropForeignKey("dbo.FieldInformations", "BlobId", "dbo.Blobs");
+            DropForeignKey("dbo.FieldShareInformations", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserRoles", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserLogins", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserClaims", "UserId", "dbo.AspNetUsers");
             DropIndex("dbo.AspNetRoles", "RoleNameIndex");
+            DropIndex("dbo.FieldInformations", new[] { "BlobId" });
+            DropIndex("dbo.FieldInformations", new[] { "FieldId" });
+            DropIndex("dbo.Fields", new[] { "LastModifiedById" });
+            DropIndex("dbo.Fields", new[] { "ParentDirectoryId" });
             DropIndex("dbo.Spaces", new[] { "DefaultDirectoryId" });
             DropIndex("dbo.Spaces", new[] { "SpaceId" });
-            DropIndex("dbo.Files", new[] { "LastModifiedById" });
-            DropIndex("dbo.Files", new[] { "ParentDirectoryId" });
-            DropIndex("dbo.Files", new[] { "BlobId" });
-            DropIndex("dbo.FileShareInformations", new[] { "FileId" });
-            DropIndex("dbo.FileShareInformations", new[] { "UserId" });
-            DropIndex("dbo.DirectoryShareInformations", new[] { "DirectoryId" });
-            DropIndex("dbo.DirectoryShareInformations", new[] { "UserId" });
             DropIndex("dbo.AspNetUserRoles", new[] { "RoleId" });
             DropIndex("dbo.AspNetUserRoles", new[] { "UserId" });
             DropIndex("dbo.AspNetUserLogins", new[] { "UserId" });
             DropIndex("dbo.AspNetUserClaims", new[] { "UserId" });
             DropIndex("dbo.AspNetUsers", "UserNameIndex");
-            DropIndex("dbo.Directories", new[] { "LastModifiedById" });
-            DropIndex("dbo.Directories", new[] { "ParentDirectoryId" });
+            DropIndex("dbo.FieldShareInformations", new[] { "FileId" });
+            DropIndex("dbo.FieldShareInformations", new[] { "UserId" });
             DropTable("dbo.AspNetRoles");
+            DropTable("dbo.FieldInformations");
+            DropTable("dbo.Fields");
             DropTable("dbo.Spaces");
-            DropTable("dbo.Files");
-            DropTable("dbo.FileShareInformations");
-            DropTable("dbo.DirectoryShareInformations");
             DropTable("dbo.AspNetUserRoles");
             DropTable("dbo.AspNetUserLogins");
             DropTable("dbo.AspNetUserClaims");
             DropTable("dbo.AspNetUsers");
-            DropTable("dbo.Directories");
+            DropTable("dbo.FieldShareInformations");
             DropTable("dbo.Blobs");
         }
     }

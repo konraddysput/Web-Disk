@@ -19,44 +19,54 @@ namespace WebDisk.BusinessLogic.Services
         private Repository<Space> _spaceRepository;
 
         //Fields
-        private Repository<Directory> _directoryRepository;
-        private Repository<File> _fileRepository;
+        private Repository<Field> _fieldRepository;
 
         public DirectoryService()
         {
-            _directoryRepository = new Repository<Directory>(_context);
-            _fileRepository = new Repository<File>(_context);
+            _fieldRepository = new Repository<Field>(_context);
             _spaceRepository = new Repository<Space>(_context);
         }
 
-        public DirectoryService(Repository<Space> spaceRepository,Repository<Directory> directoryRepository,
-                                Repository<File> fileRepository)
+        public DirectoryService(Repository<Space> spaceRepository,Repository<Field> fileRepository)
         {
-            _directoryRepository = directoryRepository;
-            _fileRepository = fileRepository;
+            
+            _fieldRepository = fileRepository;
             _spaceRepository = spaceRepository;
         }
 
 
-        public IEnumerable<FieldBase> GetAvailableFields(Guid userId)
+        public IEnumerable<Field> GetAvailableFields(Guid userId)
         {
             //var spaces = GetUserSpaces(userId);
             throw new NotImplementedException();
         }
 
-        public IEnumerable<FieldBase> GetAvailableFields(Guid userId, Guid directoryId)
+        public IEnumerable<Field> GetAvailableFields(Guid userId, Guid directoryId)
         {
             //var spaces = GetUserSpaces(userId);
             throw new NotImplementedException();
         }
 
 
-        public IEnumerable<FieldBase> GetSharedFields(Guid userID)
+        public IEnumerable<Field> GetSharedFields(Guid userID)
         {
             throw new NotImplementedException();
         }
 
+        public void CreateDirectory(string name)
+        {
+            throw new NotImplementedException();
+        }
 
+        public void CreateField()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Delete(Guid directoryId)
+        {
+            throw new NotImplementedException();
+        }
 
 
         public void Save()
@@ -84,19 +94,6 @@ namespace WebDisk.BusinessLogic.Services
             GC.SuppressFinalize(this);
         }
 
-        public void Cretea(Directory directory)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Delete(Guid directoryId)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Update(Directory directory)
-        {
-            throw new NotImplementedException();
-        }
+       
     }
 }

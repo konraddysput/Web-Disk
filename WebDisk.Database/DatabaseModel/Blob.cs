@@ -15,6 +15,6 @@ namespace WebDisk.Database.DatabaseModel
         public string Localisation { get; set; }
 
         public DateTime? LastBackupDate { get; set; }
-        
+
     }
 }

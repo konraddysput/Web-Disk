@@ -8,6 +8,6 @@ namespace WebDisk.Database.DatabaseModel.Types
 {
     public enum FieldType
     {
-        File,Directory, Root
+        File,Directory, VolumeLabel, System
     }
 }

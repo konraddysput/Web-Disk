@@ -19,7 +19,7 @@ namespace WebDisk.Database.DatabaseModel
 
         [Required]
         public bool IsEnabled { get; set; }
-        public virtual Directory Directory { get; set; }
+        public virtual Field Directory { get; set; }
       
         public virtual ApplicationUser Owner { get; set; }
     }

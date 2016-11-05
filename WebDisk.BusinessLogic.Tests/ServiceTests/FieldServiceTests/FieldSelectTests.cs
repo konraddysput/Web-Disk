@@ -13,7 +13,7 @@ using Xunit;
 
 namespace WebDisk.BusinessLogic.Tests.ServiceTests.DirectoryServiceTests
 {
-    public class DirectoryServiceTests
+    public class DirectorySelectTests
     {
 
         //db ids
@@ -26,37 +26,35 @@ namespace WebDisk.BusinessLogic.Tests.ServiceTests.DirectoryServiceTests
 
         //default repository data
         private IEnumerable<Space> _userSpace;
-        private IEnumerable<Directory> _expectedDirectories;
-        private IEnumerable<File> _expectedFiles;
+        private IEnumerable<Field> _expectedFields;
 
 
         //mocks setup
         private Mock<Repository<Space>> _mockedSpaceRepository = new Mock<Repository<Space>>();
-        private Mock<Repository<Directory>> _mockedDirectoryRepository = new Mock<Repository<Directory>>();
-        private Mock<Repository<File>> _mockedFileRepository = new Mock<Repository<File>>();
+        private Mock<Repository<Field>> _mockedFieldRepository = new Mock<Repository<Field>>();
 
-        public DirectoryServiceTests()
+        public DirectorySelectTests()
         {
             //setup results
             _userSpace = new List<Space>() { new Space()
             {
                 SpaceId = _userId,
                 DefaultDirectoryId = _directoryId
-            } };
+            } };           
 
-            _expectedDirectories = new List<Directory>()
+            _expectedFields = new List<Field>()
             {
-                new Directory()
+                new Field()
                 {
-                    FieldId = Guid.Parse("1547a712-2ac9-495b-87d2-9f8a1884c319")
-                }
-            };
-
-            _expectedFiles = new List<File>()
-            {
-                new File()
+                    FieldId = Guid.Parse("59812153-e8bf-46ed-9110-e2a4e055c0bd"),
+                    Type = FieldType.File,
+                    Name= "file"
+                },
+                new Field()
                 {
-                    FieldId = Guid.Parse("59812153-e8bf-46ed-9110-e2a4e055c0bd")
+                    FieldId = Guid.Parse("1547a712-2ac9-495b-87d2-9f8a1884c319"),
+                    Type = FieldType.Directory,
+                    Name= "directory"
                 }
             };
         }
@@ -72,25 +70,18 @@ namespace WebDisk.BusinessLogic.Tests.ServiceTests.DirectoryServiceTests
         public void GetUserDirectoriesFromDefaultSpace()
         {
             //expecteResult
-            var expectedResult = _expectedFiles
-                                    .Cast<FieldBase>()
-                                    .Concat(_expectedDirectories
-                                                .Cast<FieldBase>());
+            var expectedResult = _expectedFields;
             //setup mocks logic
             _mockedSpaceRepository
                 .Setup(n => n.GetDefaultSpaceDirectory(_userId).FieldId)
                 .Returns(_directoryId);
 
-            _mockedDirectoryRepository
+            _mockedFieldRepository
                 .Setup(n => n.Get(g => g.ParentDirectoryId == _directoryId, null, string.Empty))
-                .Returns(_expectedDirectories);
+                .Returns(_expectedFields);
 
-            _mockedFileRepository
-                .Setup(n => n.Get(g => g.ParentDirectoryId == _directoryId, null, string.Empty))
-                .Returns(_expectedFiles);
 
-            var result = new DirectoryService(_mockedSpaceRepository.Object,
-                                              _mockedDirectoryRepository.Object, _mockedFileRepository.Object)
+            var result = new DirectoryService(_mockedSpaceRepository.Object, _mockedFieldRepository.Object)
                                             .GetAvailableFields(_userId);
 
             Assert.Contains(result, g => g.Type == FieldType.Directory && g.Name == "directory");
@@ -100,19 +91,13 @@ namespace WebDisk.BusinessLogic.Tests.ServiceTests.DirectoryServiceTests
         [Theory]
         public void GetUserSharedFields()
         {
-            var expectedResult = _expectedDirectories.Cast<FieldBase>()
-                                        .Concat(_expectedFiles.Cast<FieldBase>());
-            //setup mocks logic
-            _mockedDirectoryRepository
-                .Setup(n => n.Get(g => g.SharedInformations.Any(s => s.UserId == _userId), null, string.Empty))
-                .Returns(_expectedDirectories);
+       
 
-            _mockedFileRepository
+            _mockedFieldRepository
                 .Setup(n => n.Get(g => g.SharedInformations.Any(s => s.UserId == _userId), null, string.Empty))
-                .Returns(_expectedFiles);
+                .Returns(_expectedFields);
 
-            var result = new DirectoryService(_mockedSpaceRepository.Object, _mockedDirectoryRepository.Object
-                                            , _mockedFileRepository.Object).GetSharedFields(_userId);
+            var result = new DirectoryService(_mockedSpaceRepository.Object, _mockedFieldRepository.Object).GetSharedFields(_userId);
 
 
 
@@ -126,13 +111,14 @@ namespace WebDisk.BusinessLogic.Tests.ServiceTests.DirectoryServiceTests
         public void GetNotExistingUserShareFields()
         {
             var notExistingUserId = Guid.NewGuid();
-            Assert.Throws<ArgumentException>(() => new DirectoryService().GetSharedFields(notExistingUserId));
+            Assert.Throws<ArgumentException>(() => new DirectoryService()
+                                                        .GetSharedFields(notExistingUserId));
         }
 
         [Theory]
         public void GetFieldsFromDirectory()
         {
-            throw new NotImplementedException();
+            
             new DirectoryService().GetAvailableFields(_userId, _directoryId);
         }
 

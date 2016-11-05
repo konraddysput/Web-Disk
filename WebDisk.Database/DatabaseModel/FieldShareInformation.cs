@@ -10,7 +10,7 @@ using WebDisk.Database.DatabaseModel.Types;
 
 namespace WebDisk.Database.DatabaseModel
 {
-    public class DirectoryShareInformation : ShareInformationBase
+    public class FieldShareInformation
     {
         [Key]
         [Column(Order = 0)]
@@ -18,13 +18,24 @@ namespace WebDisk.Database.DatabaseModel
 
         [Key]
         [Column(Order = 1)]
-        public Guid DirectoryId { get; set; }
+        public Guid FileId { get; set; }
+
+        [Required]
+        [DataType(DataType.Date)]
+        public DateTime SharedDate { get; set; }
+
+        public TimeSpan SharedTime { get; set; } = new TimeSpan(0);// 0 - infinity
+
+        [Required]
+        public ShareType ShareType { get; set; }
+
+        [Required]
+        public AccessType AccessType { get; set; }
 
         [ForeignKey("UserId")]
         public virtual ApplicationUser ApplicationUser { get; set; }
 
-        [ForeignKey("DirectoryId")]
-        public virtual Directory Directory { get; set; }
-
+        [ForeignKey("FileId")]
+        public virtual Field File { get; set; }
     }
 }

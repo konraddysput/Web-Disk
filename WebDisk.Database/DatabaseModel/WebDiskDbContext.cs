@@ -20,11 +20,11 @@ namespace WebDisk.Database.DatabaseModel
         }
 
         public virtual DbSet<Blob> Blob { get; set; }
-        public virtual DbSet<Directory> Directory { get; set; }
-        public virtual DbSet<File> File { get; set; }
+        public virtual DbSet<Field> File { get; set; }
         public virtual DbSet<Space> Space { get; set; }
-        public virtual DbSet<DirectoryShareInformation> DirectoryShareInformation { get; set; }
-        public virtual DbSet<FileShareInformation> FileShareInformation { get; set; }
+        public virtual DbSet<FieldShareInformation> FieldShareInformation { get; set; }
+        public virtual FieldInformation FieldInformations { get; set; }
+
 
 
 

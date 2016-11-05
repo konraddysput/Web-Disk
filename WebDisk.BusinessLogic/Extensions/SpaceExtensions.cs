@@ -10,7 +10,7 @@ namespace WebDisk.BusinessLogic.Extensions
 {
     public static class SpaceExtensions
     {
-        public static Directory GetDefaultSpaceDirectory(this Repository<Space> source, Guid userId)
+        public static Field GetDefaultSpaceDirectory(this Repository<Space> source, Guid userId)
         {
             return source
                     .Get(n =>  n.SpaceId== userId)

@@ -10,14 +10,13 @@ namespace WebDisk.BusinessLogic.Interfaces
 {
     public interface IDirectoryService : IDisposable
     {
-        IEnumerable<FieldBase> GetAvailableFields(Guid userID);
-        IEnumerable<FieldBase> GetSharedFields(Guid userID);
-        IEnumerable<FieldBase> GetAvailableFields(Guid userId, Guid directoryId);
-        void Cretea(Directory directory);
+        IEnumerable<Field> GetAvailableFields(Guid userID);
+        IEnumerable<Field> GetSharedFields(Guid userID);
+        IEnumerable<Field> GetAvailableFields(Guid userId, Guid directoryId);
+        void CreateDirectory(string name);
+        void CreateField();
 
         void Delete(Guid directoryId);
-
-        void Update(Directory directory);
 
     }
 }
