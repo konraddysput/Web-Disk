@@ -4,15 +4,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WebDisk.BusinessLogic.Interfaces;
 
 namespace WebDisk.BusinessLogic.Aspects
 {
     [Serializable]
-    public class FieldAccessAspect : MethodInterceptionAspect
+    public class AfterDataChange : OnMethodBoundaryAspect
     {
-        public override void OnInvoke(MethodInterceptionArgs args)
+        public override void OnExit(MethodExecutionArgs args)
         {
-            base.OnInvoke(args);
+            ((ServiceBase)args.Instance).Save();
+            base.OnExit(args);
         }
     }
 }
