@@ -16,6 +16,6 @@ namespace WebDisk.BusinessLogic.Extensions
                     .Get(n =>  n.SpaceId== userId)
                     .FirstOrDefault()
                     ?.Directory;
-        }
+        }       
     }
 }

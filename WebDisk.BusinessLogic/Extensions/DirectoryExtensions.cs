@@ -13,8 +13,14 @@ namespace WebDisk.BusinessLogic.Extensions
     {
         public static IEnumerable<Field> GetFields(this Repository<Field> source, Guid directoryId)
         {
-            //return source.Get(n=> { n.ParentDirectoryId == directoryId && n.id)
-            throw new NotImplementedException();
+            return source.Get(n => n.ParentDirectoryId == directoryId);
+        }
+
+        public static Field GetFieldRoot(this Repository<Field> source, Guid fieldId)
+        {
+            return source.GetByID(fieldId).ParentDirectoryId.HasValue
+                                ? GetFieldRoot(source, source.GetByID(fieldId).ParentDirectoryId.Value)
+                                : source.GetByID(fieldId);
         }
     }
 }

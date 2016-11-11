@@ -18,7 +18,7 @@ namespace WebDisk.Database.DatabaseModel
 
         [Key]
         [Column(Order = 1)]
-        public Guid FileId { get; set; }
+        public Guid FieldId { get; set; }
 
         [Required]
         [DataType(DataType.Date)]
@@ -35,7 +35,7 @@ namespace WebDisk.Database.DatabaseModel
         [ForeignKey("UserId")]
         public virtual ApplicationUser ApplicationUser { get; set; }
 
-        [ForeignKey("FileId")]
-        public virtual Field File { get; set; }
+        [ForeignKey("FieldId")]
+        public virtual Field Field { get; set; }
     }
 }

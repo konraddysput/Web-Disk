@@ -14,7 +14,7 @@ using WebDisk.Web.Models.Home;
 namespace WebDisk.Web.Controllers
 {
     [Authorize]
-    [RoutePrefix("Home")]
+    [RoutePrefix("Space")]
     public class SpaceController : Controller
     {
         private ISpaceService _spaceService;

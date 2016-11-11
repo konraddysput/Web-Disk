@@ -15,6 +15,8 @@ namespace WebDisk.Database.DatabaseModel
         {
             FieldId = Guid.NewGuid();
             Attributes = Attributes.Empty;
+            CreationDate = DateTime.Now;
+
         }
 
         [Key]
@@ -26,7 +28,7 @@ namespace WebDisk.Database.DatabaseModel
 
         [Required]
         [DataType(DataType.Date)]
-        public DateTime CreationDate { get; set; }
+        public DateTime CreationDate { get; private set; }
         public DateTime? LastModifiedDate { get; set; }
         public DateTime? LastBackupDate { get; set; }
 

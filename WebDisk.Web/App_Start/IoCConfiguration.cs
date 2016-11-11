@@ -6,9 +6,9 @@ using System.Web;
 using System.Web.Mvc;
 using WebDisk.BusinessLogic.Interfaces;
 using WebDisk.BusinessLogic.Services;
+using WebDisk.Web.Configuration;
 
-
-namespace WebDisk.Web.Configuration
+namespace WebDisk.Web.App_Start
 {
     public class IoCConfiguration
     {
@@ -23,7 +23,8 @@ namespace WebDisk.Web.Configuration
 
         private static void RegisterServices(IUnityContainer container)
         {
-            container.RegisterType<ISpaceService, SpaceService>(new PerResolveLifetimeManager());
+            container.RegisterType<ISpaceService, SpaceService>();
+            container.RegisterType<IDirectoryService, DirectoryService>();
 
         }
     }
