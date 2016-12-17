@@ -16,27 +16,22 @@ namespace WebDisk.BusinessLogic.Services
 {
     public class DirectoryService : ServiceBase, IDirectoryService
     {
-
         //Repositories
         private Repository<Space> _spaceRepository;
         private Repository<Field> _fieldRepository;
-        private Repository<ApplicationUser> _userRepository;
-        
-
+        private Repository<FieldShareInformation> _sharedInformationRepository;
         public DirectoryService() : base()
         {
             _fieldRepository = new Repository<Field>(_context);
             _spaceRepository = new Repository<Space>(_context);
-            _userRepository = new Repository<ApplicationUser>(_context);
-            
-
-
+            _sharedInformationRepository = new Repository<FieldShareInformation>(_context);
         }
 
         public DirectoryService(Repository<Space> spaceRepository, Repository<Field> fileRepository) : base()
         {
             _fieldRepository = fileRepository;
             _spaceRepository = spaceRepository;
+            _sharedInformationRepository = new Repository<FieldShareInformation>(_context);
 
         }
         /// <summary>
@@ -44,7 +39,7 @@ namespace WebDisk.BusinessLogic.Services
         /// </summary>
         /// <param name="userId">current logged user Id</param>
         /// <returns></returns>
-        
+
         public IEnumerable<Field> GetAvailableFields(Guid userId)
         {
 
@@ -73,11 +68,17 @@ namespace WebDisk.BusinessLogic.Services
         /// <returns></returns>
         public IEnumerable<Field> GetSharedFields(Guid userId)
         {
-            return _userRepository
+            return new Repository<ApplicationUser>(_context)
                      .GetByID(userId)
                      .SharedFields
                      .Select(n => n.Field);
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="fieldId"></param>
+        /// <param name="name"></param>
         [FieldAccess]
         [AfterDataChange]
         public void CreateDirectory(Guid userId, Guid fieldId, string name)
@@ -93,7 +94,7 @@ namespace WebDisk.BusinessLogic.Services
                     });
         }
 
-      
+
         /// <summary>
         /// Create a new file in existing directory
         /// </summary>
@@ -106,6 +107,7 @@ namespace WebDisk.BusinessLogic.Services
         {
             //TODO 
             //UPLOAD FILE TO AZURE
+            string pathToAzureFile = AzureManager.UploadFile(fileViewModel.Content);
             _fieldRepository
                 .Insert(new Field()
                 {
@@ -119,7 +121,7 @@ namespace WebDisk.BusinessLogic.Services
                         Size = fileViewModel.Content.Length,
                         Blob = new Blob()
                         {
-                            Localisation = string.Empty
+                            Localisation = pathToAzureFile
                         }
                     }
                 });
@@ -133,19 +135,27 @@ namespace WebDisk.BusinessLogic.Services
         [AfterDataChange]
         public void Delete(Guid userId, Guid fieldId)
         {
-            if (_fieldRepository.GetByID(fieldId).Type == FieldType.Directory)
+            var field = _fieldRepository
+                            .GetByID(fieldId);
+            if (field == null)
             {
-                DeleteDirectory(fieldId);
+                throw new ArgumentException($"Field with id {fieldId} does not exists");
+            }
+            if (field.Type == FieldType.File)
+            {
+                DeleteFile(field.FieldId, field.FieldInformation.Blob.Localisation);
             }
             else
             {
-                DeleteFile(fieldId);
+                DeleteDirectory(fieldId);
             }
+
         }
 
-        private void DeleteFile(Guid fieldId)
+        private void DeleteFile(Guid fieldId, string path)
         {
-
+            AzureManager.DeleteFile(path);
+            _sharedInformationRepository.Delete(fieldId);
         }
 
         private void DeleteDirectory(Guid fieldId)
@@ -157,7 +167,6 @@ namespace WebDisk.BusinessLogic.Services
                     n.ParentDirectoryId = null;
                     return n;
                 });
-            Save();
         }
 
     }

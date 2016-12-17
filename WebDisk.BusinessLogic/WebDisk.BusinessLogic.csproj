@@ -65,9 +65,11 @@
     <Compile Include="Aspects\AfterDataChange.cs" />
     <Compile Include="Aspects\FieldAccess.cs" />
     <Compile Include="Common\AuthenticationManager.cs" />
+    <Compile Include="Common\AzureManager.cs" />
     <Compile Include="Extensions\DirectoryExtensions.cs" />
     <Compile Include="Extensions\FieldExtensions.cs" />
     <Compile Include="Extensions\PostSharpExceptions.cs" />
+    <Compile Include="Extensions\ShareInformationExtensions.cs" />
     <Compile Include="Extensions\SpaceExtensions.cs" />
     <Compile Include="Extensions\UserExtensions.cs" />
     <Compile Include="Interfaces\IDirectoryService.cs" />

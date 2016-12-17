@@ -8,7 +8,7 @@ using WebDisk.BusinessLogic.Services;
 
 namespace WebDisk.Web.Controllers
 {
-    //[Authorize]
+    [Authorize]
     public class HomeController : Controller
     {
         private DirectoryService _directoryService;
@@ -23,7 +23,7 @@ namespace WebDisk.Web.Controllers
             //var userId = IdentityExtensions.GetUserId(User.Identity);
             var userId = Guid.NewGuid();
 
-            _directoryService.GetAvailableFields(userId,Guid.NewGuid());
+            _directoryService.GetAvailableFields(userId);
             return View();
         }
     }

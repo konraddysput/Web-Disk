@@ -16,14 +16,24 @@ namespace WebDisk.Web
             bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
             "~/Scripts/modernizr-*"));
 
-            bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
-                      "~/Scripts/material.min.js",
-                      "~/Scripts/respond.js"));
+            bundles.Add(new ScriptBundle("~/bundles/scripts").Include(
+                    "~/Scripts/site/shared/bootstrap.min.js",
+                    "~/Scripts/site/shared/ripples.min.js",
+                    "~/Scripts/site/shared/material.min.js",
+                    "~/Scripts/site/shared/snackbar.min.js",
+                    "~/Scripts/site/shared/moment.js",
+                    "~/Scripts/site/shared/jquery.nouislider.min.js",
+                    "~/Scripts/site/shared/bootstrap-material-datetimepicker.js",
+                    "~/Scripts/site/scripts.js"
+               ));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
-                      "~/Content/material.min.css",
-                      "~/Content/icon.css",
-                      "~/Content/styles.min.css"));
+                      "~/Content/bootstrap.min.css",
+                      "~/Content/bootstrap-material-design.min.css",
+                      "~/Content/ripples.min.css",
+                      "~/Content/snackbar.min.css",
+                     "~/Content/bootstrap-material-datetimepicker.css",
+                     "~/Content/site.min.css"));
         }
     }
 }

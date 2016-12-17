@@ -27,7 +27,7 @@ namespace WebDisk.BusinessLogic.Common
         public bool IsUserHasRights(Guid userId, Guid fieldId)
         {
             var rootFieldId = _fieldRepository.GetFieldRoot(fieldId).FieldId;
-            return _userRepository.IsSharedOrUserRootDirectory(userId, rootFieldId);
+            return _userRepository.IsSharedOrUserRootDirectory(userId, rootFieldId,fieldId);
         }
     }
 }
