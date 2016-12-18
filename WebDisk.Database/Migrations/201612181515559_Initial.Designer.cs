@@ -13,7 +13,7 @@ namespace WebDisk.Database.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "201611052041239_Initial"; }
+            get { return "201612181515559_Initial"; }
         }
         
         string IMigrationMetadata.Source

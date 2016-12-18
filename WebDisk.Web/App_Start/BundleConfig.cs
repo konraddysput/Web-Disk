@@ -28,12 +28,12 @@ namespace WebDisk.Web
                ));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
-                      "~/Content/bootstrap.min.css",
-                      "~/Content/bootstrap-material-design.min.css",
-                      "~/Content/ripples.min.css",
-                      "~/Content/snackbar.min.css",
-                     "~/Content/bootstrap-material-datetimepicker.css",
-                     "~/Content/site.min.css"));
+                      "~/Content/libraries/bootstrap.min.css",
+                      "~/Content/libraries/bootstrap-material-design.min.css",
+                      "~/Content/libraries/ripples.min.css",
+                      "~/Content/libraries/snackbar.min.css",
+                      "~/Content/libraries/bootstrap-material-datetimepicker.css",
+                      "~/Content/site.min.css"));
         }
     }
 }

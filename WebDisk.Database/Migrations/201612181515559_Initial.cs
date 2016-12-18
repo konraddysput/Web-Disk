@@ -22,17 +22,17 @@ namespace WebDisk.Database.Migrations
                 c => new
                     {
                         UserId = c.Guid(nullable: false),
-                        FileId = c.Guid(nullable: false),
+                        FieldId = c.Guid(nullable: false),
                         SharedDate = c.DateTime(nullable: false),
                         SharedTime = c.Time(nullable: false, precision: 7),
                         ShareType = c.Int(nullable: false),
                         AccessType = c.Int(nullable: false),
                     })
-                .PrimaryKey(t => new { t.UserId, t.FileId })
+                .PrimaryKey(t => new { t.UserId, t.FieldId })
                 .ForeignKey("dbo.AspNetUsers", t => t.UserId)
-                .ForeignKey("dbo.Fields", t => t.FileId)
+                .ForeignKey("dbo.Fields", t => t.FieldId)
                 .Index(t => t.UserId)
-                .Index(t => t.FileId);
+                .Index(t => t.FieldId);
             
             CreateTable(
                 "dbo.AspNetUsers",
@@ -160,7 +160,7 @@ namespace WebDisk.Database.Migrations
             DropForeignKey("dbo.AspNetUserRoles", "RoleId", "dbo.AspNetRoles");
             DropForeignKey("dbo.Spaces", "SpaceId", "dbo.AspNetUsers");
             DropForeignKey("dbo.Spaces", "DefaultDirectoryId", "dbo.Fields");
-            DropForeignKey("dbo.FieldShareInformations", "FileId", "dbo.Fields");
+            DropForeignKey("dbo.FieldShareInformations", "FieldId", "dbo.Fields");
             DropForeignKey("dbo.Fields", "ParentDirectoryId", "dbo.Fields");
             DropForeignKey("dbo.Fields", "LastModifiedById", "dbo.AspNetUsers");
             DropForeignKey("dbo.FieldInformations", "FieldId", "dbo.Fields");
@@ -181,7 +181,7 @@ namespace WebDisk.Database.Migrations
             DropIndex("dbo.AspNetUserLogins", new[] { "UserId" });
             DropIndex("dbo.AspNetUserClaims", new[] { "UserId" });
             DropIndex("dbo.AspNetUsers", "UserNameIndex");
-            DropIndex("dbo.FieldShareInformations", new[] { "FileId" });
+            DropIndex("dbo.FieldShareInformations", new[] { "FieldId" });
             DropIndex("dbo.FieldShareInformations", new[] { "UserId" });
             DropTable("dbo.AspNetRoles");
             DropTable("dbo.FieldInformations");
