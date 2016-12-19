@@ -25,7 +25,7 @@ namespace WebDisk.Web.Controllers
         }
 
         [Route("")]
-        [AutoMap(typeof(Space), typeof(SpaceOverviewViewModel))]
+        //[AutoMap(typeof(Space), typeof(SpaceOverviewViewModel))]
         public ActionResult Index()
         {
             

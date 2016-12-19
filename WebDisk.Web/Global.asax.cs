@@ -18,6 +18,7 @@ namespace WebDisk.Web
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             IoCConfiguration.ConfigureIocUnityContainer();
+            MapperConfig.RegisterMaps();
         }
     }
 }

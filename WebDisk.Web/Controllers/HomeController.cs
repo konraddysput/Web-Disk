@@ -5,6 +5,11 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using WebDisk.BusinessLogic.Services;
+using WebDisk.Database.DatabaseModel;
+using WebDisk.Web.Attributes;
+using WebDisk.Web.Models.Home;
+using Identity = WebDisk.Database.IdentityExtensions.IdentityExtensions;
+
 
 namespace WebDisk.Web.Controllers
 {
@@ -18,13 +23,13 @@ namespace WebDisk.Web.Controllers
             _directoryService = directoryService;
         }
         // GET: Home
+        [AutoMap(typeof(IEnumerable<Field>), typeof(IEnumerable<FieldViewModel>))]
         public ActionResult Index()
         {
-            //var userId = IdentityExtensions.GetUserId(User.Identity);
-            var userId = Guid.NewGuid();
+            var userId = Identity.GetUserId(User.Identity);
 
-            _directoryService.GetAvailableFields(userId);
-            return View();
+            return View(_directoryService
+                            .GetAvailableFields(userId));
         }
     }
 }

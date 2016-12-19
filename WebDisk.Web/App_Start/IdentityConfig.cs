@@ -56,11 +56,11 @@ namespace WebDisk.Web
             // Configure validation logic for passwords
             manager.PasswordValidator = new PasswordValidator
             {
-                //RequiredLength = 6,
+                RequiredLength = 3,
                 //RequireNonLetterOrDigit = true,
                 //RequireDigit = true,
-                RequireLowercase = true,
-                RequireUppercase = true,
+                //RequireLowercase = true,
+                //RequireUppercase = true,
             };
 
             // Configure user lockout defaults

@@ -1,0 +1,14 @@
+﻿@using WebDisk.Web.Models.Home
+@using WebDisk.Database.DatabaseModel.Types
+@model FieldViewModel
+
+@switch (Model.Type)
+{
+    case FieldType.File:
+        <i class="material-icons @(Model.Attributes != 0?"badge":string.Empty)" 
+           data-field="@*@Model.AttributeShortcut*@"
+           onclick="openField(@Model.FieldId, @Model.Type)">
+        @Model.Name
+        </i>
+        break;
+}

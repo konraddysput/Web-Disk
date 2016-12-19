@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -21,7 +22,7 @@ namespace WebDisk.Web.Attributes.Common
         public override void OnActionExecuted(ActionExecutedContext filterContext)
         {
             var model = filterContext.Controller.ViewData.Model;
-
+            //handle situation where you have no items in model
             object viewModel = Mapper.Map(model, _sourceType, _destType);
 
             filterContext.Controller.ViewData.Model = viewModel;

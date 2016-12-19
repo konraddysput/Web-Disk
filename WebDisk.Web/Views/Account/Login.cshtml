@@ -12,6 +12,7 @@
                     <h2>Zaloguj</h2>
                 </div>
                 <hr />
+                @Html.ValidationSummary("", new { @class = "text-danger" })
                 <div class="row">
                     <div class="col-md-10 col-xs-10 col-md-offset-1 col-xs-offset-1">
                         <div class="form-group label-floating">
@@ -46,8 +47,8 @@
                 </div>
                 <div class="modal-footer">
                     <div class="options">
-                        <p class="pull-left">Rejestracja <a href="#">konta</a></p>
-                        <p class="pull-right">Przypomnienie <a href="#">hasła</a></p>
+                        <p class="pull-left">Rejestracja <a href="@Url.Action("Register","Account")">konta</a></p>
+                        <p class="pull-right">Przypomnienie <a href="@Url.Action("Forgot","Account")">hasła</a></p>
                     </div>
                 </div>
             }
