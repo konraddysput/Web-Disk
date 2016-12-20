@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using WebDisk.Database.DatabaseModel.Types;
 using DbModel = WebDisk.Database.DatabaseModel.Types;
 namespace WebDisk.Web.Models.Home
@@ -13,12 +11,12 @@ namespace WebDisk.Web.Models.Home
         public DbModel.Attributes Attributes { get; set; }
         public string Extension { get; set; }
         public FieldType Type { get; set; }
-        //public char AttributeShortcut
-        //{
-        //    get
-        //    {
-        //        return Attributes.ToString().ToUpper().First();
-        //    }
-        //}
+        public char AttributeShortcut
+        {
+            get
+            {
+                return Attributes.ToString().ToUpper().First();
+            }
+        }
     }
 }

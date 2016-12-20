@@ -1,5 +1,4 @@
-﻿using System.Web;
-using System.Web.Optimization;
+﻿using System.Web.Optimization;
 
 namespace WebDisk.Web
 {
@@ -31,7 +30,8 @@ namespace WebDisk.Web
                       "~/Content/libraries/bootstrap.min.css",
                       "~/Content/libraries/bootstrap-material-design.min.css",
                       "~/Content/libraries/ripples.min.css",
-                      "~/Content/libraries/snackbar.min.css",
+                      "~/Content/libraries/ripples.min.css",
+                      "~/Content/libraries/icon.css",
                       "~/Content/libraries/bootstrap-material-datetimepicker.css",
                       "~/Content/site.min.css"));
         }

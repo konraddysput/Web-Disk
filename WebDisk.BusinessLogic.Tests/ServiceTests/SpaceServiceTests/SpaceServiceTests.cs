@@ -2,21 +2,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Principal;
-using System.Text;
-using System.Threading.Tasks;
-using System.Web;
-using WebDisk.BusinessLogic.Extensions;
+using System.Linq.Expressions;
 using WebDisk.BusinessLogic.Services;
-using WebDisk.BusinessLogic.ViewModels;
-using WebDisk.BusinessLogic.Interfaces;
-using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.Owin;
-using Microsoft.Owin.Security;
-
 using WebDisk.Database.DatabaseModel;
 using Xunit;
-using System.Linq.Expressions;
 
 namespace WebDisk.BusinessLogic.Tests.ServiceTests.SpaceServiceTests
 {

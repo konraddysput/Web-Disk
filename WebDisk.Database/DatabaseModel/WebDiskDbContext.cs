@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-using Microsoft.AspNet.Identity.EntityFramework;
-using WebDisk.Database.DatabaseModel.Identity;
+﻿using Microsoft.AspNet.Identity.EntityFramework;
+using System;
 using System.Data.Entity;
-using WebDisk.Database.BaseModels;
 using System.Data.Entity.ModelConfiguration.Conventions;
+using WebDisk.Database.BaseModels;
+using WebDisk.Database.DatabaseModel.Identity;
 
 namespace WebDisk.Database.DatabaseModel
 {

@@ -1,15 +1,13 @@
-﻿using System;
-using System.Globalization;
+﻿using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
+using Microsoft.Owin.Security;
+using System;
 using System.Linq;
-using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
-using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.Owin;
-using Microsoft.Owin.Security;
-using WebDisk.Web.Models;
 using WebDisk.Database.DatabaseModel;
+using WebDisk.Web.Models;
 using WebDisk.Web.Models.Login;
 
 namespace WebDisk.Web.Controllers

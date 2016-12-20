@@ -1,8 +1,4 @@
-﻿using Microsoft.AspNet.Identity;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Collections.Generic;
 using System.Web.Mvc;
 using WebDisk.BusinessLogic.Services;
 using WebDisk.Database.DatabaseModel;

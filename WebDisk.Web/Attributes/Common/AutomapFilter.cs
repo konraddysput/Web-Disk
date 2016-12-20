@@ -1,9 +1,5 @@
 ﻿using AutoMapper;
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace WebDisk.Web.Attributes.Common

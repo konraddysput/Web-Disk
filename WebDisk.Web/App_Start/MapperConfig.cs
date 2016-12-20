@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using WebDisk.Database.DatabaseModel;
+﻿using WebDisk.Database.DatabaseModel;
 using WebDisk.Web.Models.Home;
 
 namespace WebDisk.Web.App_Start

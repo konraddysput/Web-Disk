@@ -2,9 +2,6 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Threading.Tasks;
-using WebDisk.Database.BaseModels;
 using WebDisk.Database.DatabaseModel.Types;
 
 namespace WebDisk.Database.DatabaseModel

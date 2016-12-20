@@ -4,10 +4,8 @@ namespace WebDisk.Database.Migrations
     using Microsoft.AspNet.Identity;
     using Microsoft.AspNet.Identity.EntityFramework;
     using System;
-    using System.Data.Entity;
     using System.Data.Entity.Migrations;
     using System.Linq;
-    using System.Threading.Tasks;
 
     internal sealed class Configuration : DbMigrationsConfiguration<WebDisk.Database.DatabaseModel.WebDiskDbContext>
     {

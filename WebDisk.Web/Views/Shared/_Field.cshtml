@@ -5,10 +5,22 @@
 @switch (Model.Type)
 {
     case FieldType.File:
-        <i class="material-icons @(Model.Attributes != 0?"badge":string.Empty)" 
-           data-field="@*@Model.AttributeShortcut*@"
+        <i class="material-icons md-24 @(Model.Attributes != 0?"badge":string.Empty)"
+           data-field="@Model.AttributeShortcut"
            onclick="openField(@Model.FieldId, @Model.Type)">
-        @Model.Name
+            @(Model.Extension == "pdf" ? "picture_as_pdf" : "description")
         </i>
+        <p>@Model.Name</p>
+        break;
+    case FieldType.Directory:
+        <i class="material-icons md-24 @(Model.Attributes != 0?"badge":string.Empty)"
+           data-field="@Model.AttributeShortcut"
+           onclick="openField(@Model.FieldId, @Model.Type)">
+            folder
+        </i>
+        <p>@Model.Name</p>
+        break;
+    default:
+        <i class="material-icons">build</i>
         break;
 }
