@@ -230,6 +230,7 @@
     <Compile Include="Configuration\WebDiskDependencyResolver.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\DirectoryController.cs" />
+    <Compile Include="Controllers\FieldController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\SpaceController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -339,10 +340,11 @@
     <Content Include="Service References\Application Insights\ConnectedService.json" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\_Field.cshtml" />
+    <Content Include="Views\Directory\_Directory.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Directory\" />
+    <Folder Include="Views\Field\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

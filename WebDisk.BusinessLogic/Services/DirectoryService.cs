@@ -29,8 +29,20 @@ namespace WebDisk.BusinessLogic.Services
             _fieldRepository = fileRepository;
             _spaceRepository = spaceRepository;
             _sharedInformationRepository = new Repository<FieldShareInformation>(_context);
-
         }
+        
+        /// <summary>
+        /// Get specific informations about fields 
+        /// </summary>
+        /// <param name="userId">current logged user</param>
+        /// <param name="fieldId">expected field ID</param>
+        /// <returns>Field object</returns>
+        [FieldAccess]
+        public Field GetFieldDetails(Guid userId, Guid fieldId)
+        {
+            return _fieldRepository.GetByID(fieldId);
+        }
+
         /// <summary>
         /// Get fields for default user directory
         /// </summary>

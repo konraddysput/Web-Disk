@@ -1,16 +1,7 @@
-﻿@using WebDisk.Web.Models.Home
-@model IEnumerable<FieldViewModel>
-
-
-<div class="row">
+﻿<div class="row">
     <div class="col-md-3 col-xs-3 col-md-offset-1 col-xs-offset-1">
         <a class="btn btn-raised"><i class="fa fa-plus" aria-hidden="true"></i>Dodaj</a>
     </div>
 </div>
 
-@foreach (var field in Model)
-{
-    <div class="col-md-2 col-xs-4">
-        @{Html.RenderPartial("_Field", field);}
-    </div>
-            }
+@{Html.RenderAction("Index", "Directory");}
