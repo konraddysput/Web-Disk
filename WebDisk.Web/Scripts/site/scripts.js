@@ -10,5 +10,5 @@ function initMaterialDesign() {
 
 
 function displayToast(message) {
-    toastr["info"](message);
+    //toast["info"](message);
 }
