@@ -25,17 +25,35 @@
     <div class="navbar navbar-inverse">
         <div class="container">
             <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
                 @Html.ActionLink("WebDisk", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>link</li>
-                </ul>
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                @if (Request.IsAuthenticated)
+                {
+                    <ul id="nav1" class="nav navbar-nav waves-effect">
+                        <li>@Html.ActionLink("Przestrzeń", "Index", "Space")</li>
+                        <li>@Html.ActionLink("Konto", "Index", "Manage")</li>
+                        <li class="pull-right">@Html.ActionLink("Wyloguj", "LogOff", "Account")</li>
+                    </ul>
+
+                }
+                else
+                {
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>
+                            @Html.ActionLink("Rejestracja", "Register", "Account")
+                        </li>
+                        <li>@Html.ActionLink("Logowanie", "Index", "Home")</li>
+                    </ul>
+                }
+
+
             </div>
         </div>
     </div>

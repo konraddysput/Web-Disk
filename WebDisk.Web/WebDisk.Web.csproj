@@ -343,6 +343,7 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\_Field.cshtml" />
     <Content Include="Views\Directory\_Directory.cshtml" />
+    <Content Include="Views\Shared\_ContextMenu.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

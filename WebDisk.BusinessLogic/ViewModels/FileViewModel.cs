@@ -1,16 +1,18 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.IO;
 
 namespace WebDisk.BusinessLogic.ViewModels
 {
     public class FileViewModel
     {
         [Required]
-        public byte[] Content { get; set; }
+        public Stream InputStream { get; set; }
 
         [Required]
-        [MinLength(1,ErrorMessage = "File should have name")]
-        public string Name { get; set; }
-        public string Extensions { get; set; }
+        [MinLength(1, ErrorMessage = "FileName is required")]
+        public string FileName { get; set; }
+        public string ContentType { get; set; }
+        public double ContentLength { get; set; }
 
     }
 }

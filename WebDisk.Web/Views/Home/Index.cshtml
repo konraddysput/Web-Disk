@@ -1,46 +1,44 @@
 ﻿<div class="row">
     <div class="col-md-3 col-xs-3 col-md-offset-1 col-xs-offset-1">
-        <a class="btn btn-raised"><i class="fa fa-plus" aria-hidden="true"></i>Dodaj</a>
+        <a data-toggle="tooltip" data-placement="bottom" onclick="startUpload()" data-original-title="Dodaj nowe pliki do dysku" class="btn btn-raised"><i class="fa fa-plus" aria-hidden="true"></i>Dodaj</a>
+        <form enctype="multipart/form-data" id="file-form">
+            <input type="hidden" name="directoryId" id="directoryId" value="@ViewBag.DirectoryId" />
+            <input type="file" multiple style="display:none" id="file" name="files" onchange="uploadFiles()" />
+        </form>
     </div>
+    <div class="col-md-3 col-xs-3 col-md-offset-1 col-xs-offset-1">
+        <a @*data-toggle="tooltip"*@ data-placement="bottom" data-original-title="Dodaj nowy katalog" data-toggle="modal" data-target="#modal" class="btn btn-raised" onclick="createDictionary()"><i class="fa fa-plus" aria-hidden="true"></i>Utwórz katalog</a>
+    </div>
+
 </div>
 
 <div class="fields">
     @{Html.RenderAction("Index", "Directory");}
 </div>
 
-<nav id="context-menu" class="context-menu">
-    <ul class="context-menu__items">
-        <li class="context-menu__item">
-            <a href="#" class="context-menu__link" data-action="View">
-                <i class="fa fa-eye"></i>Otwórz
-            </a>
-        </li>
-        <li class="context-menu__item">
-            <a href="#" class="context-menu__link" data-action="Edit">
-                <i class="fa fa-edit"></i>Zmień nazwę
-            </a>
-        </li>
-        <li class="context-menu__item">
-            <a href="#" class="context-menu__link" data-action="Copy">
-                <i class="fa fa-times"></i>Kopiuj
-            </a>
-        </li>
-        <li class="context-menu__item">
-            <a href="#" class="context-menu__link" data-action="Cut">
-                <i class="fa fa-times"></i>Wytnij
-            </a>
-        </li>
-        <li class="context-menu__item">
-            <a href="#" class="context-menu__link" data-action="Delete">
-                <i class="fa fa-times"></i>Usuń
-            </a>
-        </li>
-        <li class="context-menu__item">
-            <a href="#" class="context-menu__link" data-action="Details">
-                <i class="fa fa-times"></i>Właściwości
-            </a>
-        </li>
-        
-    </ul>
-</nav>
+<div class="modal" id="modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title">Nowy katalog</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="inputEmail" class="col-md-2 control-label">Nazwa katalogu</label>
+
+                    <div class="col-md-10">
+                        <input type="text" class="form-control" id="directory-name" placeholder="Nazwa">
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Anuluj</button>
+                <button type="button" class="btn btn-primary" onclick="createDirectory()">Utwórz</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@{Html.RenderPartial("_ContextMenu");}
 <script src="~/Scripts/site/fileOperations.js"></script>

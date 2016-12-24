@@ -7,7 +7,7 @@ namespace WebDisk.Database.DatabaseModel
     {
         public Blob()
         {
-            BlobId = new Guid();
+            BlobId = Guid.NewGuid();
         }
         [Key]
         public Guid BlobId { get; set; }

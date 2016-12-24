@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Web.Mvc;
 using WebDisk.BusinessLogic.Services;
 using WebDisk.Database.DatabaseModel;
@@ -25,9 +26,10 @@ namespace WebDisk.Web.Controllers
         [AutoMap(typeof(IEnumerable<Field>), typeof(IEnumerable<FieldViewModel>))]
         public ActionResult Index()
         {
-
             var userId = Identity.GetUserId(User.Identity);
-            return PartialView("_Directory",_directoryService
+            ViewBag.DirectoryId = _directoryService.GetRootField(userId)
+                                                    .FieldId;
+            return PartialView("_Directory", _directoryService
                                 .GetAvailableFields(userId));
         }
 
@@ -37,8 +39,27 @@ namespace WebDisk.Web.Controllers
         public ActionResult Index(Guid directoryId)
         {
             var userId = Identity.GetUserId(User.Identity);
-            return PartialView("_Directory",_directoryService
+            ViewBag.DirectoryId = directoryId;
+            return PartialView("_Directory", _directoryService
                                 .GetAvailableFields(userId, directoryId));
+        }
+
+
+        [HttpPost]
+        [Route("Create")]
+        public ActionResult Create(Guid rootId, string directoryName)
+        {
+            try
+            {
+                var userId = Identity.GetUserId(User.Identity);
+                _directoryService.CreateDirectory(userId, rootId, directoryName);
+                return RedirectToAction("Index", new { directoryId = rootId });
+            }
+            catch
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest); 
+            }
+
         }
 
     }

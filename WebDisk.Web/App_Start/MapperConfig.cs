@@ -1,4 +1,6 @@
-﻿using WebDisk.Database.DatabaseModel;
+﻿using System.Web;
+using WebDisk.BusinessLogic.ViewModels;
+using WebDisk.Database.DatabaseModel;
 using WebDisk.Web.Models.Home;
 
 namespace WebDisk.Web.App_Start
@@ -10,6 +12,7 @@ namespace WebDisk.Web.App_Start
             AutoMapper.Mapper.Initialize(n =>
             {
                 n.CreateMap<Field, FieldViewModel>();
+                n.CreateMap<HttpPostedFileBase, FileViewModel>();
             });
         }
     }

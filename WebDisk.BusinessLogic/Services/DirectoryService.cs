@@ -11,6 +11,9 @@ using WebDisk.Database.DatabaseModel.Types;
 
 namespace WebDisk.BusinessLogic.Services
 {
+    /// <summary>
+    /// base directory operations
+    /// </summary>
     public class DirectoryService : ServiceBase, IDirectoryService
     {
         //Repositories
@@ -30,7 +33,7 @@ namespace WebDisk.BusinessLogic.Services
             _spaceRepository = spaceRepository;
             _sharedInformationRepository = new Repository<FieldShareInformation>(_context);
         }
-        
+
         /// <summary>
         /// Get specific informations about fields 
         /// </summary>
@@ -69,6 +72,17 @@ namespace WebDisk.BusinessLogic.Services
         {
             return _fieldRepository.GetFields(fieldId);
         }
+        /// <summary>
+        /// Returns the root directory of current logged user
+        /// </summary>
+        /// <param name="userId">current logged user Id</param>
+        /// <returns>Root directory folder - Field</returns>
+        public Field GetRootField(Guid userId)
+        {
+            return _spaceRepository.Get(n => n.Owner.Id == userId)
+                                    .FirstOrDefault()
+                                    .Directory;
+        }
 
         /// <summary>
         /// Get fields that are shared with user
@@ -103,80 +117,6 @@ namespace WebDisk.BusinessLogic.Services
                     });
         }
 
-
-        /// <summary>
-        /// Create a new file in existing directory
-        /// </summary>
-        /// <param name="userId">current user Id</param>
-        /// <param name="fieldId">directory where file should exists</param>
-        /// <param name="fileViewModel">information about file - bytes, name, extensions</param>
-        [AfterDataChange]
-        [FieldAccess]
-        public void CreateField(Guid userId, Guid fieldId, FileViewModel fileViewModel)
-        {
-            //TODO 
-            //UPLOAD FILE TO AZURE
-            string pathToAzureFile = AzureManager.UploadFile(fileViewModel.Content);
-            _fieldRepository
-                .Insert(new Field()
-                {
-                    ParentDirectoryId = fieldId,
-                    Name = fileViewModel.Name,
-                    Extension = fileViewModel.Extensions,
-                    Type = FieldType.File,
-                    LastModifiedById = userId,
-                    FieldInformation = new FieldInformation()
-                    {
-                        Size = fileViewModel.Content.Length,
-                        Blob = new Blob()
-                        {
-                            Localisation = pathToAzureFile
-                        }
-                    }
-                });
-        }
-        /// <summary>
-        /// Deleting existing file or directory
-        /// </summary>
-        /// <param name="userId">current logged user id</param>
-        /// <param name="fieldId">field Id </param>
-        [FieldAccess]
-        [AfterDataChange]
-        public void Delete(Guid userId, Guid fieldId)
-        {
-            var field = _fieldRepository
-                            .GetByID(fieldId);
-            if (field == null)
-            {
-                throw new ArgumentException($"Field with id {fieldId} does not exists");
-            }
-            if (field.Type == FieldType.File)
-            {
-                DeleteFile(field.FieldId, field.FieldInformation.Blob.Localisation);
-            }
-            else
-            {
-                DeleteDirectory(fieldId);
-            }
-
-        }
-
-        private void DeleteFile(Guid fieldId, string path)
-        {
-            AzureManager.DeleteFile(path);
-            _sharedInformationRepository.Delete(fieldId);
-        }
-
-        private void DeleteDirectory(Guid fieldId)
-        {
-            _fieldRepository
-                .Get(n => n.ParentDirectoryId == fieldId)
-                .Select(n =>
-                {
-                    n.ParentDirectoryId = null;
-                    return n;
-                });
-        }
 
     }
 }

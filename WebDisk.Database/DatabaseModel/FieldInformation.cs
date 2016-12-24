@@ -7,65 +7,31 @@ namespace WebDisk.Database.DatabaseModel
 {
     public class FieldInformation
     {
-        [Key,ForeignKey("Field")]
+        [Key, ForeignKey("Field")]
         public Guid FieldId { get; set; }
-        public double Size
-        {
-            get
-            {
-                if (Field.Type == FieldType.File)
-                {
-                    return Size;
-                }
-                else
-                {
-                    throw new NotSupportedException("Field that isnt file cannot have size");
-                }
-            }
-            set
-            {
-                if (Field.Type == FieldType.File)
-                {
-                    Size = value;
-                }
-                else
-                {
-                    throw new NotSupportedException("Field that isnt file cannot have size");
-                }
-            }
-        }
+        public Field Field { get; set; }
+        public double Size { get; set; }
+        //{
+        //    get
+        //    {
+        //        if (Field.Type == FieldType.File)
+        //        {
+        //            return Size;
+        //        }
+        //        else
+        //        {
+        //            throw new NotSupportedException("Field that isnt file cannot have size");
+        //        }
+        //    }
+        //    set
+        //    {
+        //        Size = value;
+        //    }
+        //}
 
 
         [ForeignKey("Blob")]
-        public Guid BlobId
-        {
-            get
-            {
-                return BlobId;
-            }
-            set
-            {
-                if (Field.Type != FieldType.File)
-                {
-                    throw new NotSupportedException("Field that isnt file cannot have data");
-                }
-            }
-        }
-        public Blob Blob
-        {
-            get
-            {
-                return Blob;
-            }
-            set
-            {
-                if (Field.Type != FieldType.File)
-                {
-                    throw new NotSupportedException("Field that isnt file cannot have data");
-                }
-            }
-        }
-        public Field Field { get; set; }
-
+        public Guid BlobId { get; set; }
+        public virtual Blob Blob { get; set; }
     }
 }

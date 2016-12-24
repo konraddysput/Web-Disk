@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using WebDisk.BusinessLogic.Services;
+using WebDisk.BusinessLogic.ViewModels;
 using Identity = WebDisk.Database.IdentityExtensions.IdentityExtensions;
 
 namespace WebDisk.Web.Controllers
@@ -20,10 +22,13 @@ namespace WebDisk.Web.Controllers
         /// service that allow us to make a operations on fields
         /// </summary>
         private DirectoryService _directoryService;
-        
-        public FieldController(DirectoryService directoryService)
+
+        private FieldService _fieldService;
+        public FieldController(DirectoryService directoryService, FieldService fieldService)
         {
             _directoryService = directoryService;
+            _fieldService = fieldService;
+
         }
 
         /// <summary>
@@ -59,10 +64,22 @@ namespace WebDisk.Web.Controllers
             throw new NotImplementedException();
         }
 
-        [Route("Create/{fieldId}/{fieldName}")]
-        public ActionResult Create(Guid fieldId, string fieldName)
+
+        [HttpPost]
+        [Route("Update/{directoryId}")]
+        public ActionResult Update(IEnumerable<HttpPostedFileBase> files, Guid directoryId)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var fileViewModel = AutoMapper.Mapper.Map<IEnumerable<FileViewModel>>(files);
+                Guid userId = Identity.GetUserId(User.Identity);
+                _fieldService.CreateField(userId, directoryId, fileViewModel);
+                return new HttpStatusCodeResult(HttpStatusCode.OK);
+            }
+            catch(Exception ex)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
         }
     }
 }

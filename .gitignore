@@ -22,6 +22,7 @@ bld/
 [Bb]in/
 [Oo]bj/
 
+
 # Visual Studo 2015 cache/options directory
 .vs/
 
@@ -129,6 +130,8 @@ DocProject/Help/html
 
 # Click-Once directory
 publish/
+# Private keys
+keys/*
 
 # Publish Web Output
 *.[Pp]ublish.xml
@@ -204,3 +207,4 @@ FakesAssemblies/
 
 # Visual Studio 6 workspace options file
 *.opt
+/WebDisk.BusinessLogic/Keys/AzureKeys.cs

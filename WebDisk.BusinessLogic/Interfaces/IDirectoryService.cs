@@ -11,9 +11,6 @@ namespace WebDisk.BusinessLogic.Interfaces
         IEnumerable<Field> GetSharedFields(Guid userID);
         IEnumerable<Field> GetAvailableFields(Guid userId, Guid directoryId);
         void CreateDirectory(Guid userId, Guid directoryId, string name);
-        void CreateField(Guid userId, Guid directoryId, FileViewModel fileViewModel);
-
-        void Delete(Guid userId, Guid fieldId);
 
     }
 }

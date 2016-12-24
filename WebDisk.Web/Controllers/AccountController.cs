@@ -86,7 +86,7 @@ namespace WebDisk.Web.Controllers
                     return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
                 case SignInStatus.Failure:
                 default:
-                    ModelState.AddModelError("", "Invalid login attempt.");
+                    ModelState.AddModelError("", "Niepoprawna próba logowania.");
                     return View(model);
             }
         }
@@ -157,43 +157,35 @@ namespace WebDisk.Web.Controllers
             var user = new ApplicationUser()
             {
                 UserName = model.UserName,
-                Id= Guid.NewGuid(),
+                Id = Guid.NewGuid(),
                 Email = model.Email,
                 Space = new Space()
                 {
                     IsEnabled = false,
                     Directory = new Field()
                     {
-                        Name= "root",
+                        Name = "root",
                         Type = Database.DatabaseModel.Types.FieldType.Directory
                     }
                 }
             };
-            try
+            var result = await UserManager.CreateAsync(user, model.Password);
+
+
+            if (result.Succeeded)
             {
-                var result = await UserManager.CreateAsync(user, model.Password);
+                await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
 
+                // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
+                // Send an email with this link
+                // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+                // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+                // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
 
-                if (result.Succeeded)
-                {
-                    await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
-
-                    // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
-                    // Send an email with this link
-                    // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                    // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                    // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
-
-                    return RedirectToAction("Index", "Home");
-                }
-                AddErrors(result);
-                return View(model);
+                return RedirectToAction("Index", "Home");
             }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-
+            AddErrors(result);
+            return View(model);
         }
 
         //
@@ -411,8 +403,8 @@ namespace WebDisk.Web.Controllers
 
         //
         // POST: /Account/LogOff
-        [HttpPost]
-        [ValidateAntiForgeryToken]
+        [HttpGet]
+        //[ValidateAntiForgeryToken]
         public ActionResult LogOff()
         {
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);

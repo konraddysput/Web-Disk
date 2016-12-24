@@ -54,3 +54,74 @@ function selectFile(object) {
 function removePreviousSelectedFiles() {
     $("." + fieldInformations.defaultFieldColor).removeClass(fieldInformations.defaultFieldColor);
 }
+
+function startUpload() {
+    $("#file").click();
+}
+
+function uploadFiles() {
+    var formData = new FormData(),
+        directoryId = $("#directoryId").val();
+
+    if (!directoryId) {
+        displayToast("Napotkano na problemy. Proszę o odświeżenie strony");
+    }
+
+    for (var i = 0 ; i < document.getElementById("file").files.length; i++) {
+        console.log(document.getElementById("file").files[i]);
+        formData.append("files[" + i + "]", document.getElementById("file").files[i]);
+    }
+    $.ajax({
+        url: 'Field/Update/' + directoryId,
+        type: 'POST',
+        data: formData,
+        xhr: function () {
+            var myXhr = $.ajaxSettings.xhr();
+            if (myXhr.upload) { // Check if upload property exists
+                // For handling the progress of the upload
+                myXhr.upload.addEventListener('progress', uploadStatus, false);
+
+            }
+            return myXhr;
+        },
+        success: function (data) {
+            console.log(data);
+        },
+        error: function (data) {
+            console.log(data);
+        },
+        contentType: false,
+        cache: false,
+        processData: false
+    });
+}
+
+function uploadStatus(e) {
+    if (e.lengthComputable) {
+        var percentage = Math.floor((e.loaded / e.total) * 100);
+        //update progressbar percent complete
+        //statustxt1.html(percentage + '%');
+        console.log(percentage);
+        console.log("Value = " + e.loaded + " :: Max =" + e.total);
+    }
+}
+
+
+function createDirectory() {
+    var directoryName = $("#directory-name").val(),
+        rootId = $("#directoryId").val();
+    $.ajax({
+        type: "POST",
+        url: "Directory/Create",
+        data: JSON.stringify({
+            "directoryName": directoryName,
+            "rootId": rootId
+        }),
+        contentType: "application/json",
+        success: function (data) {
+            //refresh current window
+            //close modal
+            console.log("ok");
+        }
+    })
+}
