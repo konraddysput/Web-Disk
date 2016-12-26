@@ -61,7 +61,7 @@ namespace WebDisk.Database.DatabaseModel
         public Guid? LastModifiedById { get; set; }
         public virtual ApplicationUser ModyfiedBy { get; set; }
 
-        public FieldInformation FieldInformation { get; set; }
+        public virtual FieldInformation FieldInformation { get; set; }
 
         public virtual ICollection<FieldShareInformation> SharedInformations { get; set; }
 

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Routing;
 using WebDisk.BusinessLogic.Services;
 using WebDisk.BusinessLogic.ViewModels;
 using Identity = WebDisk.Database.IdentityExtensions.IdentityExtensions;
@@ -74,9 +75,9 @@ namespace WebDisk.Web.Controllers
                 var fileViewModel = AutoMapper.Mapper.Map<IEnumerable<FileViewModel>>(files);
                 Guid userId = Identity.GetUserId(User.Identity);
                 _fieldService.CreateField(userId, directoryId, fileViewModel);
-                return new HttpStatusCodeResult(HttpStatusCode.OK);
+                return RedirectToAction("IndexDetails", "Directory", new { directoryId = directoryId });
             }
-            catch(Exception ex)
+            catch
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }

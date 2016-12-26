@@ -16,10 +16,10 @@ namespace WebDisk.Database.DatabaseModel
         }
 
         public virtual DbSet<Blob> Blob { get; set; }
-        public virtual DbSet<Field> File { get; set; }
+        public virtual DbSet<Field> Field { get; set; }
         public virtual DbSet<Space> Space { get; set; }
         public virtual DbSet<FieldShareInformation> FieldShareInformation { get; set; }
-        public virtual FieldInformation FieldInformations { get; set; }
+        public virtual FieldInformation FieldInformation { get; set; }
 
 
 

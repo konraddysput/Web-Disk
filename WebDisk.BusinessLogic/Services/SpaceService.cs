@@ -5,24 +5,32 @@ using WebDisk.Database.DatabaseModel;
 
 namespace WebDisk.BusinessLogic.Services
 {
-    public class SpaceService : ISpaceService
+    public class SpaceService : ServiceBase, ISpaceService
     {
-        private WebDiskDbContext _context = new WebDiskDbContext();
+
         private Repository<Space> _spaceRepository;
 
-        public SpaceService()
+        public Repository<Space> SpaceRepository
         {
-            _spaceRepository = new Repository<Space>(_context);
+            get
+            {
+                if (_spaceRepository == null)
+                {
+                    _spaceRepository = new Repository<Space>(_context);
+                }
+                return _spaceRepository;
+            }
         }
 
-        public SpaceService(Repository<Space> spaceRepository)
+
+        public SpaceService(WebDiskDbContext context) : base(context)
         {
-            _spaceRepository = spaceRepository;
+
         }
 
         public Space GetSpace(Guid userId)
         {
-            var currentUserSpaces = _spaceRepository
+            var currentUserSpaces = SpaceRepository
                                         .Get(n => n.SpaceId == userId, null, string.Empty);
 
             if (currentUserSpaces == null || currentUserSpaces.Count() == 0)
@@ -45,32 +53,6 @@ namespace WebDisk.BusinessLogic.Services
         public void ShareSpace(Guid spaceId, Guid userId)
         {
             throw new NotImplementedException();
-        }
-
-
-        public void Save()
-        {
-            _context.SaveChanges();
-        }
-
-        private bool disposed = false;
-
-        protected virtual void Dispose(bool disposing)
-        {
-            if (!this.disposed)
-            {
-                if (disposing)
-                {
-                    _context.Dispose();
-                }
-            }
-            this.disposed = true;
-        }
-
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
         }
     }
 }

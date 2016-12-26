@@ -21,6 +21,7 @@ namespace WebDisk.Web.App_Start
         {
             container.RegisterType<ISpaceService, SpaceService>();
             container.RegisterType<IDirectoryService, DirectoryService>();
+            container.RegisterType<IFieldService, FieldService>();
 
         }
     }

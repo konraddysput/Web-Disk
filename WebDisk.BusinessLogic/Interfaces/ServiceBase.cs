@@ -10,6 +10,11 @@ namespace WebDisk.BusinessLogic.Interfaces
 
         //Authentication Manager
         internal AuthenticationManager _authManager;
+        public ServiceBase(WebDiskDbContext context)
+        {
+            _context = context;
+            _authManager = new AuthenticationManager(_context);
+        }
         public ServiceBase()
         {
             _context = new WebDiskDbContext();

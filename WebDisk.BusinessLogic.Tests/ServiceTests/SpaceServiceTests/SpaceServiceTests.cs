@@ -12,10 +12,10 @@ namespace WebDisk.BusinessLogic.Tests.ServiceTests.SpaceServiceTests
     public class SpaceServiceTests
     {
         private SpaceService _spaceService;
-
+        private Mock<WebDiskDbContext> _dbContext = new Mock<WebDiskDbContext>();
         public SpaceServiceTests()
         {
-            _spaceService = new SpaceService();
+            _spaceService = new SpaceService(_dbContext.Object);
         }
 
         [Fact]
@@ -51,7 +51,7 @@ namespace WebDisk.BusinessLogic.Tests.ServiceTests.SpaceServiceTests
                 .Setup(n => n.Get(It.IsAny<Expression<Func<Space, bool>>>(), It.IsAny<Func<IQueryable<Space>, IOrderedQueryable<Space>>>(), string.Empty))
                 .Returns(expectedServiceResult);
 
-            var temporarySpaceService = new SpaceService(mockSpaceRepository.Object);
+            var temporarySpaceService = new SpaceService(_dbContext.Object);
 
             var result = temporarySpaceService.GetSpace(userId);
             Assert.Equal(expected, result);

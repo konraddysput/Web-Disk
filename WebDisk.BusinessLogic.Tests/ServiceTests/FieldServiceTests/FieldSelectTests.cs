@@ -30,6 +30,7 @@ namespace WebDisk.BusinessLogic.Tests.ServiceTests.DirectoryServiceTests
         private Mock<Repository<Space>> _mockedSpaceRepository = new Mock<Repository<Space>>();
         private Mock<Repository<Field>> _mockedFieldRepository = new Mock<Repository<Field>>();
 
+        private Mock<WebDiskDbContext> _dbContext = new Mock<WebDiskDbContext>();
         public DirectorySelectTests()
         {
             //setup results
@@ -37,7 +38,7 @@ namespace WebDisk.BusinessLogic.Tests.ServiceTests.DirectoryServiceTests
             {
                 SpaceId = _userId,
                 DefaultDirectoryId = _directoryId
-            } };           
+            } };
 
             _expectedFields = new List<Field>()
             {
@@ -60,7 +61,7 @@ namespace WebDisk.BusinessLogic.Tests.ServiceTests.DirectoryServiceTests
         public void GetNotExistingUserSpaceDirectory()
         {
             var notExistingUserId = Guid.NewGuid();
-            Assert.Throws<ArgumentException>(() => new DirectoryService().GetAvailableFields(notExistingUserId));
+            Assert.Throws<ArgumentException>(() => new DirectoryService(_dbContext.Object).GetAvailableFields(notExistingUserId));
         }
 
         [Theory]
@@ -78,7 +79,7 @@ namespace WebDisk.BusinessLogic.Tests.ServiceTests.DirectoryServiceTests
                 .Returns(_expectedFields);
 
 
-            var result = new DirectoryService(_mockedSpaceRepository.Object, _mockedFieldRepository.Object)
+            var result = new DirectoryService(_dbContext.Object)
                                             .GetAvailableFields(_userId);
 
             Assert.Contains(result, g => g.Type == FieldType.Directory && g.Name == "directory");
@@ -88,13 +89,14 @@ namespace WebDisk.BusinessLogic.Tests.ServiceTests.DirectoryServiceTests
         [Theory]
         public void GetUserSharedFields()
         {
-       
+
 
             _mockedFieldRepository
                 .Setup(n => n.Get(g => g.SharedInformations.Any(s => s.UserId == _userId), null, string.Empty))
                 .Returns(_expectedFields);
 
-            var result = new DirectoryService(_mockedSpaceRepository.Object, _mockedFieldRepository.Object).GetSharedFields(_userId);
+            var result = new DirectoryService(_dbContext.Object)
+                                        .GetSharedFields(_userId);
 
 
 
@@ -108,33 +110,33 @@ namespace WebDisk.BusinessLogic.Tests.ServiceTests.DirectoryServiceTests
         public void GetNotExistingUserShareFields()
         {
             var notExistingUserId = Guid.NewGuid();
-            Assert.Throws<ArgumentException>(() => new DirectoryService()
+            Assert.Throws<ArgumentException>(() => new DirectoryService(_dbContext.Object)
                                                         .GetSharedFields(notExistingUserId));
         }
 
         [Theory]
         public void GetFieldsFromDirectory()
         {
-            
-            new DirectoryService().GetAvailableFields(_userId, _directoryId);
+
+            new DirectoryService(_dbContext.Object).GetAvailableFields(_userId, _directoryId);
         }
 
         [Theory]
         public void GetOnlyFieldsFromRoot()
         {
             throw new NotImplementedException();
-            new DirectoryService().GetAvailableFields(_userId, _directoryId);
+            
         }
 
         [Theory]
         public void GetOnlyDirectoryFromRoot()
         {
             throw new NotImplementedException();
-            new DirectoryService().GetAvailableFields(_userId, _directoryId);
+            
         }
 
 
-    
+
 
     }
 }

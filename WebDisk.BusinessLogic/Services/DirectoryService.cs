@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Data.Entity;
 using System.Linq;
 using WebDisk.BusinessLogic.Aspects;
 using WebDisk.BusinessLogic.Common;
@@ -20,18 +22,46 @@ namespace WebDisk.BusinessLogic.Services
         private Repository<Space> _spaceRepository;
         private Repository<Field> _fieldRepository;
         private Repository<FieldShareInformation> _sharedInformationRepository;
-        public DirectoryService() : base()
+
+        public Repository<Space> SpaceRepository
         {
-            _fieldRepository = new Repository<Field>(_context);
-            _spaceRepository = new Repository<Space>(_context);
-            _sharedInformationRepository = new Repository<FieldShareInformation>(_context);
+            get
+            {
+                if (_spaceRepository == null)
+                {
+                    _spaceRepository = new Repository<Space>(_context);
+                }
+                return _spaceRepository;
+            }
         }
 
-        public DirectoryService(Repository<Space> spaceRepository, Repository<Field> fileRepository) : base()
+        public Repository<Field> FieldRepository
         {
-            _fieldRepository = fileRepository;
-            _spaceRepository = spaceRepository;
-            _sharedInformationRepository = new Repository<FieldShareInformation>(_context);
+            get
+            {
+                if (_fieldRepository == null)
+                {
+                    _fieldRepository = new Repository<Field>(_context);
+                }
+                return _fieldRepository;
+            }
+        }
+
+        public Repository<FieldShareInformation> SharedInformationRepository
+        {
+            get
+            {
+                if (_sharedInformationRepository == null)
+                {
+                    _sharedInformationRepository = new Repository<FieldShareInformation>(_context);
+                }
+                return _sharedInformationRepository;
+            }
+        }
+
+
+        public DirectoryService(WebDiskDbContext context) : base(context)
+        {
         }
 
         /// <summary>
@@ -43,7 +73,7 @@ namespace WebDisk.BusinessLogic.Services
         [FieldAccess]
         public Field GetFieldDetails(Guid userId, Guid fieldId)
         {
-            return _fieldRepository.GetByID(fieldId);
+            return FieldRepository.GetByID(fieldId);
         }
 
         /// <summary>
@@ -55,7 +85,7 @@ namespace WebDisk.BusinessLogic.Services
         public IEnumerable<Field> GetAvailableFields(Guid userId)
         {
 
-            var defaultDirectoryId = _spaceRepository
+            var defaultDirectoryId = SpaceRepository
                                         .GetDefaultSpaceDirectory(userId)
                                         .FieldId;
 
@@ -70,7 +100,7 @@ namespace WebDisk.BusinessLogic.Services
         [FieldAccess]
         public IEnumerable<Field> GetAvailableFields(Guid userId, Guid fieldId)
         {
-            return _fieldRepository.GetFields(fieldId);
+            return FieldRepository.GetFields(fieldId);
         }
         /// <summary>
         /// Returns the root directory of current logged user
@@ -79,7 +109,7 @@ namespace WebDisk.BusinessLogic.Services
         /// <returns>Root directory folder - Field</returns>
         public Field GetRootField(Guid userId)
         {
-            return _spaceRepository.Get(n => n.Owner.Id == userId)
+            return SpaceRepository.Get(n => n.Owner.Id == userId)
                                     .FirstOrDefault()
                                     .Directory;
         }
@@ -106,15 +136,16 @@ namespace WebDisk.BusinessLogic.Services
         [AfterDataChange]
         public void CreateDirectory(Guid userId, Guid fieldId, string name)
         {
-            _fieldRepository
-                    .Insert(new Field()
-                    {
-                        ParentDirectoryId = fieldId,
-                        LastModifiedById = userId,
-                        Type = FieldType.Directory,
-                        FieldInformation = null,
-                        Name = name
-                    });
+            FieldRepository
+                   .Insert(new Field()
+                   {
+                       ParentDirectoryId = fieldId,
+                       LastModifiedDate = DateTime.Now,
+                       Extension = string.Empty,
+                       Type = FieldType.Directory,
+                       FieldInformation = null,
+                       Name = name
+                   });
         }
 
 

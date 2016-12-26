@@ -36,7 +36,7 @@ namespace WebDisk.Web.Controllers
         [HttpGet]
         [Route("{directoryId}")]
         [AutoMap(typeof(IEnumerable<Field>), typeof(IEnumerable<FieldViewModel>))]
-        public ActionResult Index(Guid directoryId)
+        public ActionResult IndexDetails(Guid directoryId)
         {
             var userId = Identity.GetUserId(User.Identity);
             ViewBag.DirectoryId = directoryId;
@@ -47,15 +47,16 @@ namespace WebDisk.Web.Controllers
 
         [HttpPost]
         [Route("Create")]
+        [AutoMap(typeof(IEnumerable<Field>), typeof(IEnumerable<FieldViewModel>))]
         public ActionResult Create(Guid rootId, string directoryName)
         {
             try
             {
                 var userId = Identity.GetUserId(User.Identity);
                 _directoryService.CreateDirectory(userId, rootId, directoryName);
-                return RedirectToAction("Index", new { directoryId = rootId });
+                return IndexDetails(rootId);
             }
-            catch
+            catch(Exception ex)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest); 
             }

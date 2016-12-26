@@ -153,6 +153,6 @@ function getPosition(e) {
 
 function resizeListener() {
     window.onresize = function (e) {
-        toggleMenuOff();
+        hideMenu();
     };
 }

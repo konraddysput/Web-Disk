@@ -19,11 +19,45 @@ namespace WebDisk.BusinessLogic.Services
         private Repository<Space> _spaceRepository;
         private Repository<Field> _fieldRepository;
         private Repository<FieldShareInformation> _sharedInformationRepository;
-        public FieldService() : base()
+
+        public Repository<Space> SpaceRepository
         {
-            _fieldRepository = new Repository<Field>(_context);
-            _spaceRepository = new Repository<Space>(_context);
-            _sharedInformationRepository = new Repository<FieldShareInformation>(_context);
+            get
+            {
+                if(_spaceRepository == null)
+                {
+                    _spaceRepository = new Repository<Space>(_context);
+                }
+                return _spaceRepository;
+            }
+        }
+
+        public Repository<Field> FieldRepository
+        {
+            get
+            {
+                if (_fieldRepository == null)
+                {
+                    _fieldRepository = new Repository<Field>(_context);
+                }
+                return _fieldRepository;
+            }
+        }
+
+        public Repository<FieldShareInformation> SharedInformationRepository
+        {
+            get
+            {
+                if (_sharedInformationRepository == null)
+                {
+                    _sharedInformationRepository = new Repository<FieldShareInformation>(_context);
+                }
+                return _sharedInformationRepository;
+            }
+        }
+
+        public FieldService(WebDiskDbContext context) : base(context)
+        {
         }
 
         /// <summary>
@@ -51,13 +85,12 @@ namespace WebDisk.BusinessLogic.Services
         public void CreateField(Guid userId, Guid fieldId, FileViewModel fileViewModel)
         {
 
-            //string pathToAzureFile = new AzureManager()
-            //                                .UploadFile(fileViewModel.InputStream);
-            string pathToAzureFile = "temp";
+            string pathToAzureFile = new AzureManager()
+                                            .UploadFile(fileViewModel.InputStream);
             string fileName = Path.GetFileNameWithoutExtension(fileViewModel.FileName);
             string extension = Path.GetExtension(fileViewModel.FileName);
 
-            _fieldRepository
+            FieldRepository
                 .Insert(new Field()
                 {
                     ParentDirectoryId = fieldId,
@@ -84,7 +117,7 @@ namespace WebDisk.BusinessLogic.Services
         [AfterDataChange]
         public void Delete(Guid userId, Guid fieldId)
         {
-            var field = _fieldRepository
+            var field = FieldRepository
                             .GetByID(fieldId);
             if (field == null)
             {
@@ -103,12 +136,12 @@ namespace WebDisk.BusinessLogic.Services
         private void DeleteFile(Guid fieldId, string path)
         {
             AzureManager.DeleteFile(path);
-            _sharedInformationRepository.Delete(fieldId);
+            SharedInformationRepository.Delete(fieldId);
         }
 
         private void DeleteDirectory(Guid fieldId)
         {
-            _fieldRepository
+            FieldRepository
                 .Get(n => n.ParentDirectoryId == fieldId)
                 .Select(n =>
                 {

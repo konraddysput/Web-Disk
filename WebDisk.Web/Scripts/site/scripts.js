@@ -9,6 +9,6 @@ function initMaterialDesign() {
 }
 
 
-function displayToast(message) {
-    //toast["info"](message);
+function displayToast(message, type) {
+    //toast[type](message);
 }

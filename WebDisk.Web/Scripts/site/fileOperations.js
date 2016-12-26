@@ -85,7 +85,10 @@ function uploadFiles() {
             return myXhr;
         },
         success: function (data) {
-            console.log(data);
+            displayToast("Dodano pliki", "success");
+            //refresh current window
+            $("#fields").html(data);
+
         },
         error: function (data) {
             console.log(data);
@@ -110,6 +113,8 @@ function uploadStatus(e) {
 function createDirectory() {
     var directoryName = $("#directory-name").val(),
         rootId = $("#directoryId").val();
+
+    console.log("in directory");
     $.ajax({
         type: "POST",
         url: "Directory/Create",
@@ -119,9 +124,16 @@ function createDirectory() {
         }),
         contentType: "application/json",
         success: function (data) {
+            
             //refresh current window
+            $("#fields").html(data);
             //close modal
-            console.log("ok");
+            $("#directory-name").val('');
+            $("#close-new-directory-modal").click();
+            
+        },
+        error: function (a, b, c) {
+            displayToast("Napotkano problemy, spróbuj ponownie", "error");
         }
     })
 }
