@@ -7,10 +7,20 @@
 
 $(function () {
     initMaterialDesign();
+    initAjaxPreloading();
 });
 
 function initMaterialDesign() {
     $.material.init();
+}
+
+function initAjaxPreloading() {
+    $(document).ajaxStart(function () {
+        loading();
+    });
+    $(document).ajaxComplete(function (event, request, settings) {
+        endLoading();
+    });
 }
 
 
@@ -31,4 +41,12 @@ function displayToast(message, type) {
             break;
 
     }
+}
+
+function loading() {
+    $('#preloading-Modal').modal('show');
+}
+
+function endLoading() {
+    $('#preloading-Modal').modal('hide');
 }

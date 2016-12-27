@@ -12,18 +12,18 @@
         height: 0
     },
     coords: {
-        x:0,
-        y:0
+        x: 0,
+        y: 0
     }
-}
+};
 
 
-$(function () {
+function initializeContextMenu() {
     setupContext();
     clickOutsideContext();
     handleEscapeClick();
     resizeListener();
-});
+}
 
 
 function setupContext() {
@@ -40,6 +40,7 @@ function contextMenuListener(item) {
             e.preventDefault();
             //show field menu
             showMenu();
+            selectFile(e.currentTarget);
             positionMenu(e);
             return;
         }
@@ -49,8 +50,9 @@ function contextMenuListener(item) {
 
 function hideMenu() {
     if (contextMenu.menuState === 1) {
+        removePreviousSelectedFiles();
         contextMenu.menuState = 0;
-        $(contextMenu.menu).removeClass(contextMenu.activeClassName)
+        $(contextMenu.menu).removeClass(contextMenu.activeClassName);
     }
 }
 
@@ -67,7 +69,7 @@ function clickInsideElement(e) {
     if (el.classList.contains(contextMenu.contextClassName)) {
         return el;
     } else {
-        while (el = el.parentNode) {
+        while (el === el.parentNode) {
             if (el.classList && el.classList.contains(contextMenu.contextClassName)) {
                 return el;
             }
@@ -86,7 +88,7 @@ function clickOutsideContext() {
         if (button === 1) {
             hideMenu();
         }
-    })
+    });
 
 }
 
@@ -95,7 +97,7 @@ function handleEscapeClick() {
         if (e.keyCode === 27) {
             hideMenu();
         }
-    }
+    };
 }
 
 function positionMenu(e) {
@@ -103,10 +105,10 @@ function positionMenu(e) {
 
     contextMenu.menuSize.width = $(contextMenu.menu).offsetWidth + 4;
     contextMenu.menuSize.height = $(contextMenu.menu).offsetHeight + 4;
-    var top=0;
+    var top = 0;
     var left = 0;
     if ((window.innerWidth - contextMenu.coords.x) < contextMenu.menuSize.width) {
-        left= window.innerWidth - contextMenu.menuSize.width + "px";
+        left = window.innerWidth - contextMenu.menuSize.width + "px";
     } else {
         left = contextMenu.coords.x + "px";
     }
@@ -116,7 +118,6 @@ function positionMenu(e) {
     } else {
         top = contextMenu.coords.y + "px";
     }
-    console.log({"left":left,"top":top})
     $(contextMenu.menu).css({
         left: left,
         top: top
@@ -132,7 +133,7 @@ function getPosition(e) {
     var posy = 0;
 
     if (!e) {
-        var e = window.event;
+        e = window.event;
     }
 
     if (e.pageX || e.pageY) {
@@ -148,7 +149,7 @@ function getPosition(e) {
     return {
         x: posx,
         y: posy
-    }
+    };
 }
 
 function resizeListener() {

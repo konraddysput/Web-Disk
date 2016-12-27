@@ -9,10 +9,10 @@
 
 </div>
 <div id="history" class="row">
-    <i onclick="backToPreviousDirectory()" class="material-icons pull-left pointer">navigate_before</i>
     <div class="col-md-11 col-xs-11 " id="history-items">
-         <div class="history-item">
-            <p class="link-selected" onclick="openDirectory('@Url.Action("Index","Directory")',true,'@User.Identity.Name: folder domowy')">@User.Identity.Name</p>
+        <div class="history-item">
+            <i onclick="backToPreviousDirectory()" class="material-icons pull-left pointer">navigate_before</i>
+            <p class="link-selected" onclick="backToDirectory($(this),'@Url.Action("Index","Directory")')">@User.Identity.Name</p>
         </div>
     </div>
 </div>
@@ -48,3 +48,5 @@
 @{Html.RenderPartial("_ContextMenu");}
 <script src="@Url.Content("~/Scripts/site/navigation.js")"></script>
 <script src="@Url.Content("~/Scripts/site/fileOperations.js")"></script>
+<script src="@Url.Content("~/Scripts/site/contextMenuActions.js")"></script>
+<script src="@Url.Content("~/Scripts/site/contextMenu.js")"></script>

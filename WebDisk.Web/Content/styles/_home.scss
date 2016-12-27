@@ -1,11 +1,36 @@
 ﻿@import "_utils.scss";
 
 
+.link-selected {
+    font-weight: bold;
+}
 
 .history-item {
     color: $default-color !important;
     font-size: 16px;
     cursor: pointer;
+    max-width: 10%;
     display: inline-flex;
+    //truncate text inside div
+    p {
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+    }
     /*transform: translateY(25%);*/
+}
+
+.context-field {
+    max-height:70px;
+    /*overflow:hidden;*/
+    i {
+        text-align: center;
+        width: 100%;
+    }
+
+    p {
+         overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+    }
 }

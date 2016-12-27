@@ -4,7 +4,13 @@
 
 @foreach (var field in Model)
 {
-    <div class="col-md-2 col-xs-4">
+    <div class="col-md-2 col-xs-4 context-field">
         @{Html.RenderPartial("_Field", field);}
     </div>
             }
+
+<script>
+    $(function () {
+        initializeContextMenu();
+    })
+</script>

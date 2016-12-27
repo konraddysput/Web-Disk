@@ -7,8 +7,8 @@
     case FieldType.File:
         <i class="material-icons pointer field md-24 @(Model.Attributes != 0?"badge":string.Empty)"
            data-field="@Model.AttributeShortcut"
-           @*ondblclick="alert('test')"*@
-           onclick="openField('@Model.FieldId', '@Model.Type',$(this))">
+           onclick="selectFile($(this))"
+           ondblclick="openField('@Model.FieldId', '@Model.Type',$(this))">
             @(Model.Extension == "pdf" ? "picture_as_pdf" : "description")
         </i>
         <p>@Model.Name</p>
@@ -16,8 +16,8 @@
     case FieldType.Directory:
         <i class="material-icons pointer field md-24 @(Model.Attributes != 0?"badge":string.Empty)"
            data-field="@Model.AttributeShortcut"
-           @*ondblclick="alert('test')"*@
-           onclick="openField('@Model.FieldId', '@Model.Type',$(this))">
+           onclick="selectFile($(this))"
+           ondblclick="openField('@Model.FieldId', '@Model.Type',$(this))">
             folder
         </i>
         <p>@Model.Name</p>

@@ -17,6 +17,28 @@
   color: white;
   border: 1px solid blue; }
 
+.preloader-content {
+  background-color: transparent !important;
+  box-shadow: none !important; }
+
+.loader {
+  border: 9px solid #f3f3f3;
+  /* Light grey */
+  border-top: 9px solid #3f51b5;
+  /* Blue */
+  border-bottom: 9px solid #3f51b5;
+  border-radius: 50%;
+  width: 120px;
+  height: 120px;
+  animation: spin 2s linear infinite;
+  margin: 0 auto; }
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg); }
+  100% {
+    transform: rotate(360deg); } }
+
 label.required::after {
   content: "*";
   margin-left: 2px; }
@@ -37,9 +59,6 @@ label.required::after {
 
 .pointer {
   cursor: pointer; }
-
-.link-selected {
-  font-weight: bold; }
 
 /* Rules for sizing the icon. */
 .material-icons.md-18 {
@@ -144,9 +163,6 @@ label.required::after {
 .pointer {
   cursor: pointer; }
 
-.link-selected {
-  font-weight: bold; }
-
 /* Rules for sizing the icon. */
 .material-icons.md-18 {
   font-size: 18px; }
@@ -174,10 +190,29 @@ label.required::after {
 .material-icons.md-light.md-inactive {
   color: rgba(255, 255, 255, 0.3); }
 
+.link-selected {
+  font-weight: bold; }
+
 .history-item {
   color: #3f51b5 !important;
   font-size: 16px;
   cursor: pointer;
+  max-width: 10%;
   display: inline-flex;
   /*transform: translateY(25%);*/ }
+  .history-item p {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis; }
+
+.context-field {
+  max-height: 70px;
+  /*overflow:hidden;*/ }
+  .context-field i {
+    text-align: center;
+    width: 100%; }
+  .context-field p {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis; }
 

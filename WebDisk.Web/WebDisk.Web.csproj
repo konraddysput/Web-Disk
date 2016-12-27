@@ -296,6 +296,7 @@
     <Content Include="Scripts\respond.matchmedia.addListener.min.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\site\contextMenu.js" />
+    <Content Include="Scripts\site\contextMenuActions.js" />
     <Content Include="Scripts\site\fileOperations.js" />
     <Content Include="Scripts\site\navigation.js" />
     <Content Include="Scripts\site\scripts.js" />
@@ -348,6 +349,7 @@
     <Content Include="Views\Shared\_Field.cshtml" />
     <Content Include="Views\Directory\_Directory.cshtml" />
     <Content Include="Views\Shared\_ContextMenu.cshtml" />
+    <Content Include="Views\Shared\_Preloader.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

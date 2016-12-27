@@ -78,7 +78,7 @@ function uploadFiles() {
         displayToast("Napotkano na problemy. Proszę o odświeżenie strony", toastType.ERROR);
     }
 
-    for (var i = 0 ; i < document.getElementById("file").files.length; i++) {
+    for (var i = 0; i < document.getElementById("file").files.length; i++) {
         console.log(document.getElementById("file").files[i]);
         formData.append("files[" + i + "]", document.getElementById("file").files[i]);
     }
