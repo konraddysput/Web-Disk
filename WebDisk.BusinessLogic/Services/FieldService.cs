@@ -85,8 +85,10 @@ namespace WebDisk.BusinessLogic.Services
         public void CreateField(Guid userId, Guid fieldId, FileViewModel fileViewModel)
         {
 
-            string pathToAzureFile = new AzureManager()
-                                            .UploadFile(fileViewModel.InputStream);
+            //string pathToAzureFile = new AzureManager()
+            //                                .UploadFile(fileViewModel.InputStream);
+
+            string pathToAzureFile = "test";
             string fileName = Path.GetFileNameWithoutExtension(fileViewModel.FileName);
             string extension = Path.GetExtension(fileViewModel.FileName);
 

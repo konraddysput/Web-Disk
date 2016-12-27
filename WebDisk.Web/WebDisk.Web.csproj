@@ -251,6 +251,7 @@
     <Content Include="Content\libraries\bootstrap.min.css" />
     <Content Include="Content\libraries\icon.css" />
     <Content Include="Content\libraries\ripples.min.css" />
+    <Content Include="Content\libraries\toastr.min.css" />
     <Content Include="Content\site.css">
       <DependentUpon>site.scss</DependentUpon>
     </Content>
@@ -282,6 +283,7 @@
     <Content Include="Content\styles\_variables.scss" />
     <Content Include="Content\styles\_shared-components.scss" />
     <Content Include="Content\styles\_context-box.scss" />
+    <Content Include="Content\styles\_home.scss" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
@@ -295,6 +297,7 @@
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\site\contextMenu.js" />
     <Content Include="Scripts\site\fileOperations.js" />
+    <Content Include="Scripts\site\navigation.js" />
     <Content Include="Scripts\site\scripts.js" />
     <Content Include="Scripts\site\shared\bootstrap-material-datetimepicker.js" />
     <Content Include="Scripts\site\shared\bootstrap.min.js" />
@@ -304,6 +307,7 @@
     <Content Include="Scripts\site\shared\ripples.min.js" />
     <Content Include="Scripts\site\shared\scripts.js" />
     <Content Include="Scripts\site\shared\snackbar.min.js" />
+    <Content Include="Scripts\site\shared\toastr.min.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">

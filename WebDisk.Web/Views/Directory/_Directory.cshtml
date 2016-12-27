@@ -1,6 +1,6 @@
 ﻿@using WebDisk.Web.Models.Home
 @model IEnumerable<FieldViewModel>
-
+<input type="hidden" name="directoryId" id="directoryId" value="@ViewBag.DirectoryId" />
 
 @foreach (var field in Model)
 {

@@ -23,6 +23,7 @@ namespace WebDisk.Web
                     "~/Scripts/site/shared/moment.js",
                     "~/Scripts/site/shared/jquery.nouislider.min.js",
                     "~/Scripts/site/shared/bootstrap-material-datetimepicker.js",
+                    "~/Scripts/site/shared/toastr.min.js",
                     "~/Scripts/site/scripts.js"
                ));
 
@@ -33,6 +34,7 @@ namespace WebDisk.Web
                       "~/Content/libraries/ripples.min.css",
                       "~/Content/libraries/icon.css",
                       "~/Content/libraries/bootstrap-material-datetimepicker.css",
+                      "~/Content/libraries/toastr.min.css",
                       "~/Content/site.min.css"));
         }
     }

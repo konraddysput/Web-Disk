@@ -7,14 +7,6 @@ $(function () {
 });
 
 function removeSelectedMark() {
-
-    //$(document).on("click", function (e) {
-    //    console.log("in");
-    //    var button = e.which || e.button;
-    //    if (button === 1) {
-    //        removePreviousSelectedFiles();
-    //    }
-    //});
     window.onkeyup = function (e) {
         if (e.keyCode === 27) {
             removePreviousSelectedFiles();
@@ -23,23 +15,42 @@ function removeSelectedMark() {
 }
 
 function openField(id, type, object) {
-    console.log("in");
     selectFile(object);
     switch (type) {
-        case 1:
-            openDirectory(id);
+        case 'Directory':
+            var nextDirectoryName = $(object).next().text();
+            LoadNextDirectory(id, nextDirectoryName);
             break;
-        case 0:
+        case 'File':
             openFile(id);
             break;
         default:
-            displayToast("Plik jest nie możliwym do podglądu");
+            displayToast("Plik jest nie możliwym do podglądu", toastType.INFO);
             break;
     }
 }
+function LoadNextDirectory(id, nextDirectoryName) {
+    var url = "Directory/" + id;
+    addHistoryItem(url, nextDirectoryName);
+    openDirectory(url);
+}
 
-function openDirectory(id) {
+function openDirectory(url, inform, directoryName) {
+    $.ajax({
+        type: "GET",
+        url: url,
+        success: function (data) {
 
+            $("#fields").html(data);
+            if (inform !== undefined && inform) {
+                displayToast("Przeszedłeś do folderu:" + '\n' + directoryName);
+            }
+        },
+        error: function () {
+            displayToast("Nie można zaladować katalogu", toastType.ERROR);
+        }
+
+    });
 }
 
 function openFile(id) {
@@ -64,7 +75,7 @@ function uploadFiles() {
         directoryId = $("#directoryId").val();
 
     if (!directoryId) {
-        displayToast("Napotkano na problemy. Proszę o odświeżenie strony");
+        displayToast("Napotkano na problemy. Proszę o odświeżenie strony", toastType.ERROR);
     }
 
     for (var i = 0 ; i < document.getElementById("file").files.length; i++) {
@@ -85,7 +96,7 @@ function uploadFiles() {
             return myXhr;
         },
         success: function (data) {
-            displayToast("Dodano pliki", "success");
+            displayToast("Dodano pliki", toastType.SUCCESS);
             //refresh current window
             $("#fields").html(data);
 
@@ -124,16 +135,17 @@ function createDirectory() {
         }),
         contentType: "application/json",
         success: function (data) {
-            
+
             //refresh current window
             $("#fields").html(data);
             //close modal
             $("#directory-name").val('');
             $("#close-new-directory-modal").click();
-            
+            displayToast("Dodano katalog", toastType.INFO);
+
         },
         error: function (a, b, c) {
-            displayToast("Napotkano problemy, spróbuj ponownie", "error");
+            displayToast("Napotkano problemy, spróbuj ponownie", toastType.ERROR);
         }
-    })
+    });
 }

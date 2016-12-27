@@ -11,7 +11,7 @@ namespace WebDisk.BusinessLogic.Extensions
         {
             return source
                     .Get(n => n.Id == userId && 
-                            (n.SharedFields.Any(g => g.FieldId == sharedFieldId) || n.Space.DefaultDirectoryId == sharedFieldId))
+                            (n.SharedFields.Any(g => g.FieldId == sharedFieldId) || n.Space.DefaultDirectoryId == fieldId))
                     .Any();
         }
     }
