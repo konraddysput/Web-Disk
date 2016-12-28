@@ -38,13 +38,13 @@ Technologies used in current project:
 * Visual Studio 2015 update 3
 * Web browser
 
-Not neccessary, but usefull: 
-* Web Essential - Add on to Visual Studio
+Not neccessary, but useful: 
+* Web Essentials - Add-on for Visual Studio
 
 
 ## 4. How to run
 
-After you download source code from github, open project in Visual Studio 2015 and run by clicking F5.
+After you download source code from Github, open project in Visual Studio 2015 and run it by clicking F5.
 
 ## 5. Licence
 
