@@ -8,6 +8,7 @@
         <i class="material-icons pointer field md-24 @(Model.Attributes != 0?"badge":string.Empty)"
            data-field="@Model.AttributeShortcut"
            onclick="selectFile($(this))"
+           data-id="@Model.FieldId"
            ondblclick="openField('@Model.FieldId', '@Model.Type',$(this))">
             @(Model.Extension == "pdf" ? "picture_as_pdf" : "description")
         </i>
@@ -17,6 +18,7 @@
         <i class="material-icons pointer field md-24 @(Model.Attributes != 0?"badge":string.Empty)"
            data-field="@Model.AttributeShortcut"
            onclick="selectFile($(this))"
+           data-id="@Model.FieldId"
            ondblclick="openField('@Model.FieldId', '@Model.Type',$(this))">
             folder
         </i>

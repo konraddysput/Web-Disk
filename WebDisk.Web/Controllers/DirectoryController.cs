@@ -56,9 +56,9 @@ namespace WebDisk.Web.Controllers
                 _directoryService.CreateDirectory(userId, rootId, directoryName);
                 return IndexDetails(rootId);
             }
-            catch(Exception ex)
+            catch (Exception)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest); 
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
         }

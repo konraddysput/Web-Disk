@@ -27,9 +27,19 @@ function initializeContextMenu() {
 
 
 function setupContext() {
+    $("#fields").bind("contextmenu", function (e) {
+        console.log("click");
+        if (!$(e.target).parents(".context-field").exists()) {
+            e.preventDefault();
+            
+        }
+    });
+
     $(".field").each(function () {
         contextMenuListener($(this));
     });
+
+
 }
 
 function contextMenuListener(item) {

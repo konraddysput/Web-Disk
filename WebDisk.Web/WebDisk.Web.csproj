@@ -223,6 +223,7 @@
     <Compile Include="App_Start\MapperConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="Attributes\AjaxActionAttribute.cs" />
     <Compile Include="Attributes\AutoMapAttribute.cs" />
     <Compile Include="Attributes\Common\AutoMapFilter.cs" />
     <Compile Include="Attributes\Common\BaseActionFilter.cs" />
@@ -234,10 +235,13 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\SpaceController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Extensions\EnumExtensions.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\FieldShareViewModel.cs" />
+    <Compile Include="Models\Field\FieldDescriptionViewModel.cs" />
     <Compile Include="Models\Home\FieldViewModel.cs" />
     <Compile Include="Models\Login\LoginViewModel.cs" />
     <Compile Include="Models\Login\RegisterViewModel.cs" />
@@ -262,6 +266,7 @@
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
+    <Content Include="images\favicon.ico" />
     <Content Include="Scripts\ai.0.22.19-build00125.js" />
     <Content Include="Scripts\ai.0.22.19-build00125.min.js" />
     <Content Include="ApplicationInsights.config">
@@ -350,10 +355,11 @@
     <Content Include="Views\Directory\_Directory.cshtml" />
     <Content Include="Views\Shared\_ContextMenu.cshtml" />
     <Content Include="Views\Shared\_Preloader.cshtml" />
+    <Content Include="Views\Field\_FieldProperty.cshtml" />
+    <Content Include="Views\Field\_FieldPropertyDescription.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Field\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

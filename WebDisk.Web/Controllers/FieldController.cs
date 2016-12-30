@@ -7,6 +7,9 @@ using System.Web.Mvc;
 using System.Web.Routing;
 using WebDisk.BusinessLogic.Services;
 using WebDisk.BusinessLogic.ViewModels;
+using WebDisk.Database.DatabaseModel;
+using WebDisk.Web.Attributes;
+using WebDisk.Web.Models.Field;
 using Identity = WebDisk.Database.IdentityExtensions.IdentityExtensions;
 
 namespace WebDisk.Web.Controllers
@@ -38,12 +41,13 @@ namespace WebDisk.Web.Controllers
         /// <param name="fieldId">id of field that we're looking for</param>
         /// <returns>Json with field informations</returns>
         [Route("Details/{fieldId}")]
+        [AjaxAction]
+        [AutoMap(typeof(Field),typeof(FieldDescriptionViewModel))]
         public ActionResult Details(Guid fieldId)
         {
             Guid userId = Identity.GetUserId(User.Identity);
-            return Json(_directoryService
-                            .GetFieldDetails(userId, fieldId),
-                            JsonRequestBehavior.AllowGet);
+            return PartialView("_FieldPropertyDescription",_directoryService
+                                                            .GetFieldDetails(userId, fieldId));
         }
 
         /// <summary>

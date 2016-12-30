@@ -50,3 +50,7 @@ function loading() {
 function endLoading() {
     $('#preloading-Modal').modal('hide');
 }
+
+$.fn.exists = function () {
+    return this.length !== 0;
+}

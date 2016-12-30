@@ -1,0 +1,32 @@
+﻿@using WebDisk.Web.Models.Field;
+@model FieldDescriptionViewModel
+<div class="row">
+    <div class="row">
+        @Html.LabelFor(n => n.Name)
+        @Html.DisplayFor(n => n.Name)
+    </div>
+    <div class="row">
+        @Html.LabelFor(n => n.CreationDate)
+        @Html.DisplayFor(n => n.CreationDate)
+    </div>
+    <div class="row">
+        @Html.LabelFor(n => n.LastModifiedDate)
+        @Html.DisplayFor(n => n.LastModifiedDate)
+    </div>
+    @if (!string.IsNullOrEmpty(Model.Extension))
+    {
+        <div class="row">
+            @Html.LabelFor(n => n.Extension)
+            @Html.DisplayFor(n => n.Extension)
+        </div>
+
+        <div class="row">
+            @Html.LabelFor(n => n.Name)
+            @Html.DisplayFor(n => n.Name)
+        </div>
+    }
+    <div class="row">
+        @Html.LabelFor(n => n.Attribute)
+        @Html.DisplayFor(n => n.Attribute)
+    </div>
+</div>
