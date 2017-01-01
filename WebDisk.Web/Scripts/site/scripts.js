@@ -8,6 +8,7 @@
 $(function () {
     initMaterialDesign();
     initAjaxPreloading();
+    initBackgroundClick();
 });
 
 function initMaterialDesign() {
@@ -51,6 +52,23 @@ function endLoading() {
     $('#preloading-Modal').modal('hide');
 }
 
-$.fn.exists = function () {
-    return this.length !== 0;
+
+function initFieldClick() {
+    $(".field").contextMenu({
+        correctClick: selectClickedField
+    });
+}
+
+function initBackgroundClick() {
+    $("#fields:not(.field)").contextMenu({
+        menu: "#app-menu",
+        clickCondition: backgroundClickCondition,
+        onOpen: function () {
+            console.log("opening");
+        }
+    });
+}
+
+function getCurrentDirectoryId() {
+    return $("#directoryId").val();
 }

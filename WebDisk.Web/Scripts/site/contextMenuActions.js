@@ -1,4 +1,16 @@
-﻿function getCurrentFile() {
+﻿var fieldOperationInformation = {
+    currentFieldId: undefined
+};
+
+function backgroundClickCondition(e) {
+    return !$(e.currentTarget).hasAncestor(".context-field").exists();
+}
+
+function selectClickedField(e) {
+    selectFile(e.currentTarget);
+}
+
+function getCurrentFile() {
     return $("." + fieldInformations.defaultFieldColor).first();
 }
 
@@ -9,21 +21,38 @@ function openFile() {
 
 function openFileDetails() {
     var currentFieldId = getCurrentFile().attr("data-id");
-    console.log(currentFieldId);
     $.ajax({
         type: "GET",
         url: "Field/Details/" + currentFieldId,
         success: function (data) {
-            debugger;
             $("#field-property .modal-body").html(data);
             openDetailsModal();
+        },
+        error: function () {
+            displayToast("Nie udało się wczytać właściwości", toastType.ERROR);
         }
-        //error: function () {
-        //    displayToast("Nie udało się wczytać właściwości", toastType.ERROR);
-        //}
     });
 }
 
 function openDetailsModal() {
     $('#field-property').modal('show');
+}
+
+function copyFile() {
+    fieldOperationInformation.currentFieldId = getCurrentFile().attr("data-id");
+    displayToast("Skopiowano plik do schowka", toastType.INFO);
+}
+
+function canPaste() {
+    return fieldOperationInformation.currentFieldId !== undefined;
+}
+
+function pasteFile() {
+    if (!canPaste) {
+        displayToast("W schowku brakuje plików", toastType.WARNING);
+    }
+    var currentDirectoryId = 
+    $.ajax({
+
+    })
 }

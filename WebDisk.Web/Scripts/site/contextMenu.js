@@ -1,144 +1,166 @@
-﻿var contextMenu = {
-    menu: $("#context-menu"),
-    menuState: 0,
-    activeClassName: "context-menu--active",
-    contextClassName: "field",
-    position: {
-        x: 0,
-        y: 0
-    },
-    menuSize: {
-        width: 0,
-        height: 0
-    },
-    coords: {
-        x: 0,
-        y: 0
+﻿//library helper
+function isFunction(item) {
+    return !(item === undefined || typeof item !== 'function');
+}
+
+function ContextMenu(selector, options) {
+    this.states = {
+        menuState: 0,
+        menuSize: {
+            width: 0,
+            height: 0
+        },
+        coords: {
+            x: 0,
+            y: 0
+        }
+    };
+
+    this.contextMenu = {
+        selector: $(".field"),
+        menu: $("#context-menu"),
+        clickCondition: this._clickInsideElement,
+        activeClassName: "context-menu--active",
+        contextClassName: "field",
+    };
+
+    this._setOptions(selector,options);
+    this._setupContext();
+    this._clickOutsideContext();
+    this._handleEscapeClick();
+    this._resizeListener();
+}
+
+ContextMenu.prototype._setOptions = function (selector, options) {
+    if (!options) {
+        return;
+    }
+    if (selector !== undefined) {
+        this.contextMenu.selector = selector;
+    }
+    if (options.menu !== undefined) {
+        this.contextMenu.menu = options.menu;
+    }
+    if (options.activeClassName !== undefined) {
+        this.contextMenu.activeClassName = options.activeClassName;
+    }
+    if (options.contextClassName !== undefined) {
+        this.contextMenu.contextClassName = options.contextClassName;
+    }
+    if (options.clickCondition !== undefined) {
+        this.contextMenu.clickCondition = options.clickCondition;
+    }
+    if (options.correctClick !== undefined) {
+        this.contextMenu.correctClick = options.correctClick;
+    }
+    if (options.onOpen !== undefined) {
+        this.contextMenu.onOpen = options.onOpen;
     }
 };
 
 
-function initializeContextMenu() {
-    setupContext();
-    clickOutsideContext();
-    handleEscapeClick();
-    resizeListener();
-}
-
-
-function setupContext() {
-    $("#fields").bind("contextmenu", function (e) {
-        console.log("click");
-        if (!$(e.target).parents(".context-field").exists()) {
-            e.preventDefault();
-            
-        }
+ContextMenu.prototype._setupContext = function () {
+    var $this = this;
+    $(this.contextMenu.selector).each(function () {
+        $this._contextMenuListener($(this));
     });
+};
 
-    $(".field").each(function () {
-        contextMenuListener($(this));
-    });
-
-
-}
-
-function contextMenuListener(item) {
+ContextMenu.prototype._contextMenuListener = function (item) {
+    var $this = this;
     $(item).bind("contextmenu", function (e) {
-        //check if we click inside element
-        if (clickInsideElement(e)) {
-            //stop default browser context menu
+        if ($this.contextMenu.clickCondition(e)) {
             e.preventDefault();
-            //show field menu
-            showMenu();
-            selectFile(e.currentTarget);
-            positionMenu(e);
+            $this._showMenu();
+            if (isFunction($this.contextMenu.correctClick)) {
+                $this.contextMenu.correctClick(e);
+            }
+            //selectFile(e.currentTarget);
+            $this._positionMenu(e);
             return;
         }
-        hideMenu();
+        $this._hideMenu();
     });
-}
+};
 
-function hideMenu() {
-    if (contextMenu.menuState === 1) {
+
+ContextMenu.prototype._resizeListener = function () {
+    var $this = this;
+    window.onresize = function (e) {
+        $this._hideMenu();
+    };
+};
+
+ContextMenu.prototype._hideMenu = function () {
+    if (this.states.menuState === 1) {
         removePreviousSelectedFiles();
-        contextMenu.menuState = 0;
-        $(contextMenu.menu).removeClass(contextMenu.activeClassName);
+        this.states.menuState = 0;
+
+       
+        $(this.contextMenu.menu).removeClass(this.contextMenu.activeClassName);
     }
-}
+};
 
-function showMenu() {
-    if (contextMenu.menuState === 0) {
-        contextMenu.menuState = 1;
-        $(contextMenu.menu).addClass(contextMenu.activeClassName);
-    }
-}
-
-function clickInsideElement(e) {
-    var el = e.srcElement || e.target;
-
-    if (el.classList.contains(contextMenu.contextClassName)) {
-        return el;
-    } else {
-        while (el === el.parentNode) {
-            if (el.classList && el.classList.contains(contextMenu.contextClassName)) {
-                return el;
-            }
+ContextMenu.prototype._showMenu = function () {
+    if (this.states.menuState === 0) {
+        this.states.menuState = 1;
+        if (isFunction(this.contextMenu.onOpen)) {
+            this.contextMenu.onOpen();
         }
+
+        $(this.contextMenu.menu).addClass(this.contextMenu.activeClassName);
     }
+};
 
-    return false;
-}
-
-
-function clickOutsideContext() {
+ContextMenu.prototype._clickOutsideContext = function () {
+    var $this = this;
     $(document).on("click", function (e) {
         var button = e.which || e.button;
         //if user didnt click on context
         // we hide context
         if (button === 1) {
-            hideMenu();
+            $this._hideMenu();
         }
     });
 
-}
+};
 
-function handleEscapeClick() {
+ContextMenu.prototype._handleEscapeClick = function () {
+    var $this = this;
     window.onkeyup = function (e) {
         if (e.keyCode === 27) {
-            hideMenu();
+            $this._hideMenu();
         }
     };
-}
+};
 
-function positionMenu(e) {
-    contextMenu.coords = getPosition(e);
 
-    contextMenu.menuSize.width = $(contextMenu.menu).offsetWidth + 4;
-    contextMenu.menuSize.height = $(contextMenu.menu).offsetHeight + 4;
+ContextMenu.prototype._positionMenu = function (e) {
+    this.states.coords = this._getPosition(e);
+
+    this.states.menuSize.width = $(this.contextMenu.menu).offsetWidth + 4;
+    this.states.menuSize.height = $(this.contextMenu.menu).offsetHeight + 4;
     var top = 0;
     var left = 0;
-    if ((window.innerWidth - contextMenu.coords.x) < contextMenu.menuSize.width) {
-        left = window.innerWidth - contextMenu.menuSize.width + "px";
+    if ((window.innerWidth - this.states.coords.x) < this.states.menuSize.width) {
+        left = window.innerWidth - this.states.menuSize.width + "px";
     } else {
-        left = contextMenu.coords.x + "px";
+        left = this.states.coords.x + "px";
     }
 
-    if ((window.innerHeight - contextMenu.coords.y) < contextMenu.menuSize.height) {
-        top = window.innerHeight - contextMenu.menuSize.height + "px";
+    if ((window.innerHeight - this.states.coords.y) < this.states.menuSize.height) {
+        top = window.innerHeight - this.states.menuSize.height + "px";
     } else {
-        top = contextMenu.coords.y + "px";
+        top = this.states.coords.y + "px";
     }
-    $(contextMenu.menu).css({
+    $(this.contextMenu.menu).css({
         left: left,
         top: top
     });
+};
 
 
-
-}
-
-
-function getPosition(e) {
+ContextMenu.prototype._getPosition = function (e) {
     var posx = 0;
     var posy = 0;
 
@@ -160,10 +182,19 @@ function getPosition(e) {
         x: posx,
         y: posy
     };
-}
+};
 
-function resizeListener() {
-    window.onresize = function (e) {
-        hideMenu();
-    };
-}
+ContextMenu.prototype._clickInsideElement = function (e) {
+    var el = e.srcElement || e.target;
+
+    if (el.classList.contains(this.contextClassName)) {
+        return el;
+    } else {
+        while (el === el.parentNode) {
+            if (el.classList && el.classList.contains(this.contextMenu.contextClassName)) {
+                return el;
+            }
+        }
+    }
+    return false;
+};

@@ -42,6 +42,7 @@ function openDirectory(url, inform, directoryName) {
         success: function (data) {
 
             $("#fields").html(data);
+            initFieldClick();
             if (inform !== undefined && inform) {
                 displayToast("Przeszedłeś do folderu:" + '\n' + directoryName);
             }
@@ -72,7 +73,7 @@ function startUpload() {
 
 function uploadFiles() {
     var formData = new FormData(),
-        directoryId = $("#directoryId").val();
+        directoryId = getCurrentDirectoryId();
 
     if (!directoryId) {
         displayToast("Napotkano na problemy. Proszę o odświeżenie strony", toastType.ERROR);
@@ -123,7 +124,7 @@ function uploadStatus(e) {
 
 function createDirectory() {
     var directoryName = $("#directory-name").val(),
-        rootId = $("#directoryId").val();
+        rootId = getCurrentDirectoryId();
 
     console.log("in directory");
     $.ajax({

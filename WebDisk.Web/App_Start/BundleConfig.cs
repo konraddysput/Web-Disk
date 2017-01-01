@@ -24,7 +24,8 @@ namespace WebDisk.Web
                     "~/Scripts/site/shared/jquery.nouislider.min.js",
                     "~/Scripts/site/shared/bootstrap-material-datetimepicker.js",
                     "~/Scripts/site/shared/toastr.min.js",
-                    "~/Scripts/site/scripts.js"
+                    "~/Scripts/site/scripts.js",
+                    "~/Scripts/site/extensions.js"
                ));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
