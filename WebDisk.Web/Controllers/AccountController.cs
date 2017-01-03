@@ -197,7 +197,7 @@ namespace WebDisk.Web.Controllers
         [AllowAnonymous]
         public async Task<ActionResult> ConfirmEmail(Guid userId, string code)
         {
-            if (userId == null || code == null)
+            if (userId == Guid.Empty || code == null)
             {
                 return View("Error");
             }
@@ -308,7 +308,7 @@ namespace WebDisk.Web.Controllers
         public async Task<ActionResult> SendCode(string returnUrl, bool rememberMe)
         {
             var userId = await SignInManager.GetVerifiedUserIdAsync();
-            if (userId == null)
+            if (userId == Guid.Empty)
             {
                 return View("Error");
             }

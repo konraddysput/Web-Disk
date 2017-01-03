@@ -9,6 +9,8 @@ $(function () {
     initMaterialDesign();
     initAjaxPreloading();
     initBackgroundClick();
+    //handle right click on field on starting window
+    initFieldClick();
 });
 
 function initMaterialDesign() {

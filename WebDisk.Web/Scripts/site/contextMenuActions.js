@@ -19,20 +19,16 @@ function openFile() {
          .dblclick();
 }
 
+function openDirectoryDetails() {
+    var currentDirectoryId = getCurrentDirectoryId();
+    loadFielDescription(currentDirectoryId);
+}
+
 function openFileDetails() {
     var currentFieldId = getCurrentFile().attr("data-id");
-    $.ajax({
-        type: "GET",
-        url: "Field/Details/" + currentFieldId,
-        success: function (data) {
-            $("#field-property .modal-body").html(data);
-            openDetailsModal();
-        },
-        error: function () {
-            displayToast("Nie udało się wczytać właściwości", toastType.ERROR);
-        }
-    });
+    loadFielDescription(currentFieldId);
 }
+
 
 function openDetailsModal() {
     $('#field-property').modal('show');
@@ -47,12 +43,17 @@ function canPaste() {
     return fieldOperationInformation.currentFieldId !== undefined;
 }
 
-function pasteFile() {
+function tryPasteField() {
     if (!canPaste) {
         displayToast("W schowku brakuje plików", toastType.WARNING);
     }
-    var currentDirectoryId = 
-    $.ajax({
+    pasteField(fieldOperationInformation.currentFieldId);
+    fieldOperationInformation.currentFieldId = undefined;
+}
 
-    })
+function deleteFile() {
+    var fileToDelete = getCurrentFile().attr("data-id");
+    var currentDirectoryId = getCurrentDirectoryId();
+    deleteField(currentDirectoryId,fileToDelete);
+
 }

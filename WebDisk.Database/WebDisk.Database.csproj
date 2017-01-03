@@ -72,7 +72,6 @@
     <Compile Include="BaseModels\IWebDiskDbContext.cs" />
     <Compile Include="DatabaseModel\WebDiskDbContext.cs" />
     <Compile Include="DatabaseModel\ApplicationUser.cs" />
-    <Compile Include="DatabaseModel\Blob.cs" />
     <Compile Include="DatabaseModel\Field.cs" />
     <Compile Include="DatabaseModel\Types\ShareType.cs" />
     <Compile Include="DatabaseModel\Space.cs" />
@@ -81,6 +80,10 @@
     <Compile Include="Migrations\201612181515559_Initial.cs" />
     <Compile Include="Migrations\201612181515559_Initial.Designer.cs">
       <DependentUpon>201612181515559_Initial.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201701022312451_ChangedBlobModel.cs" />
+    <Compile Include="Migrations\201701022312451_ChangedBlobModel.Designer.cs">
+      <DependentUpon>201701022312451_ChangedBlobModel.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -92,6 +95,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201612181515559_Initial.resx">
       <DependentUpon>201612181515559_Initial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701022312451_ChangedBlobModel.resx">
+      <DependentUpon>201701022312451_ChangedBlobModel.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

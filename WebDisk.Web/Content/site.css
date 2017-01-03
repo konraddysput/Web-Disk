@@ -216,3 +216,7 @@ label.required::after {
     white-space: nowrap;
     text-overflow: ellipsis; }
 
+#fields {
+  width: 100% !important;
+  height: 85vh; }
+

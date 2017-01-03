@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.Web;
 using WebDisk.BusinessLogic.ViewModels;
 using WebDisk.Database.DatabaseModel;
@@ -27,6 +28,13 @@ namespace WebDisk.Web.App_Start
                 n.CreateMap<Field, FieldDescriptionViewModel>()
                 .ForMember(dest => dest.Attribute, opts => opts.MapFrom(from => from.Attributes.GetAttribute<DisplayAttribute>().Name));
 
+                n.CreateMap<Field, Field>()
+                .ForMember(dest => dest.FieldId, opts => opts.MapFrom(from => Guid.NewGuid()))
+                .ForMember(dest => dest.LastModifiedDate, opts => opts.MapFrom(from => DateTime.Now))
+                .ForMember(dest => dest.CreationDate, opts => opts.MapFrom(from => DateTime.Now));
+
+                
+                
             });
         }
     }

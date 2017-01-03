@@ -11,8 +11,8 @@ namespace WebDisk.BusinessLogic.Services
 
     public class Repository<TEntity> : IRepository<TEntity> where TEntity : class
     {
-        private WebDiskDbContext _context;
-        private DbSet<TEntity> dbSet;
+        private readonly WebDiskDbContext _context;
+        private readonly DbSet<TEntity> dbSet;
 
         public Repository(WebDiskDbContext context)
         {

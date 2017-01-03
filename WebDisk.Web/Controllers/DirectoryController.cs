@@ -14,7 +14,7 @@ namespace WebDisk.Web.Controllers
     [RoutePrefix("Directory")]
     public class DirectoryController : Controller
     {
-        private DirectoryService _directoryService;
+        private readonly DirectoryService _directoryService;
 
         public DirectoryController(DirectoryService directoryService)
         {

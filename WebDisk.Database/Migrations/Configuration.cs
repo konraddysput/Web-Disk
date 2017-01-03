@@ -54,7 +54,7 @@ namespace WebDisk.Database.Migrations
                     DatabaseModel.Identity.IdentityUserRole,
                     DatabaseModel.Identity.IdentityUserClaim>(context);
                 var userManager = new UserManager<ApplicationUser, Guid>(userStore);
-                var result = userManager.Create(userToCreate, realPassword);
+                userManager.Create(userToCreate, realPassword);
                 //var context
             }
         }

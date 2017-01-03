@@ -21,7 +21,7 @@ function ContextMenu(selector, options) {
         menu: $("#context-menu"),
         clickCondition: this._clickInsideElement,
         activeClassName: "context-menu--active",
-        contextClassName: "field",
+        contextClassName: "field"
     };
 
     this._setOptions(selector,options);

@@ -1,13 +1,14 @@
-﻿<div class="row">
+﻿@*<div class="row">
     <div class="col-md-3 col-xs-3 col-md-offset-1 col-xs-offset-1">
         <a data-toggle="tooltip" data-placement="bottom" onclick="startUpload()" data-original-title="Dodaj nowe pliki do dysku" class="btn btn-raised"><i class="fa fa-plus" aria-hidden="true"></i>Dodaj</a>
-        <input type="file" multiple style="display:none" id="file" name="files" onchange="uploadFiles()" />
+        
     </div>
     <div class="col-md-3 col-xs-3 col-md-offset-1 col-xs-offset-1">
-        <a @*data-toggle="tooltip"*@ data-placement="bottom" data-original-title="Dodaj nowy katalog" data-toggle="modal" data-target="#modal" class="btn btn-raised"><i class="fa fa-plus" aria-hidden="true"></i>Utwórz katalog</a>
+        <a data-placement="bottom" data-original-title="Dodaj nowy katalog" data-toggle="modal" data-target="#modal" class="btn btn-raised"><i class="fa fa-plus" aria-hidden="true"></i>Utwórz katalog</a>
     </div>
 
-</div>
+</div>*@
+<input type="file" multiple style="display:none" id="file" name="files" onchange="uploadFiles()" />
 <div id="history" class="row">
     <div class="col-md-11 col-xs-11 " id="history-items">
         <div class="history-item">

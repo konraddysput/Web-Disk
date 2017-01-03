@@ -24,7 +24,7 @@ namespace WebDisk.BusinessLogic.Services
         {
             get
             {
-                if(_spaceRepository == null)
+                if (_spaceRepository == null)
                 {
                     _spaceRepository = new Repository<Space>(_context);
                 }
@@ -85,10 +85,10 @@ namespace WebDisk.BusinessLogic.Services
         public void CreateField(Guid userId, Guid fieldId, FileViewModel fileViewModel)
         {
 
-            //string pathToAzureFile = new AzureManager()
-            //                                .UploadFile(fileViewModel.InputStream);
+            string pathToAzureFile = new AzureManager()
+                                            .UploadFile(fileViewModel.InputStream);
 
-            string pathToAzureFile = "test";
+
             string fileName = Path.GetFileNameWithoutExtension(fileViewModel.FileName);
             string extension = Path.GetExtension(fileViewModel.FileName);
 
@@ -103,10 +103,7 @@ namespace WebDisk.BusinessLogic.Services
                     FieldInformation = new FieldInformation()
                     {
                         Size = fileViewModel.ContentLength,
-                        Blob = new Blob()
-                        {
-                            Localisation = pathToAzureFile
-                        }
+                        Localisation = pathToAzureFile
                     }
                 });
         }
@@ -125,31 +122,73 @@ namespace WebDisk.BusinessLogic.Services
             {
                 throw new ArgumentException($"Field with id {fieldId} does not exists");
             }
+            DeleteField(field);
+
+        }
+
+        private void DeleteField(Field field)
+        {
             if (field.Type == FieldType.File)
             {
-                DeleteFile(field.FieldId, field.FieldInformation.Blob.Localisation);
+                DeleteFile(field);
             }
             else
             {
-                DeleteDirectory(fieldId);
+                DeleteDirectory(field);
             }
         }
-
-        private void DeleteFile(Guid fieldId, string path)
+        private void DeleteFile(Field field)
         {
-            AzureManager.DeleteFile(path);
-            SharedInformationRepository.Delete(fieldId);
+            AzureManager.DeleteFile(field.FieldInformation.Localisation);
+            FieldRepository.Delete(field);
         }
 
-        private void DeleteDirectory(Guid fieldId)
+        private void DeleteDirectory(Field field)
         {
-            FieldRepository
-                .Get(n => n.ParentDirectoryId == fieldId)
-                .Select(n =>
-                {
-                    n.ParentDirectoryId = null;
-                    return n;
-                });
+            var childs = FieldRepository.Get(n => n.ParentDirectoryId == field.FieldId);
+            foreach (var child in childs)
+            {
+                DeleteField(child);
+            }
+            FieldRepository.Delete(field);
+        }
+
+        [FieldAccess]
+        [AfterDataChange]
+        public void Copy(Guid userId, Guid destinationId, Guid fieldId)
+        {
+            var destinationDirectory = FieldRepository.GetByID(destinationId);
+            var currentField = FieldRepository.GetByID(fieldId);
+
+            if (destinationDirectory == null || currentField == null)
+            {
+                throw new ArgumentException("directory or field does not exists");
+            }
+            if (currentField.ParentDirectoryId == destinationId)
+            {
+                return;
+            }
+            var copy = AutoMapper.Mapper.Map<Field>(currentField);
+
+            //todo
+            //copy all files in directories in dictorany
+            if (copy.Type == FieldType.Directory)
+            {
+                throw new NotImplementedException();
+            }
+            else
+            {
+
+            }
+
+            FieldRepository.Insert(copy);
+        }
+
+        [FieldAccess]
+        [AfterDataChange]
+        public void Cut(Guid userId, Guid destinationId, Guid fieldId)
+        {
+            throw new NotImplementedException();
         }
     }
 }

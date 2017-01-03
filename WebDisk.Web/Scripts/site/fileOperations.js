@@ -71,6 +71,10 @@ function startUpload() {
     $("#file").click();
 }
 
+function initCreateDirectoryModal() {
+    $('#modal').modal('show');
+}
+
 function uploadFiles() {
     var formData = new FormData(),
         directoryId = getCurrentDirectoryId();
@@ -121,12 +125,24 @@ function uploadStatus(e) {
     }
 }
 
+function refreshWindow(directoryId) {
+    $.ajax({
+        type: "GET",
+        url: "Directory/" + directoryId,
+        success: function (data) {
+            $("#fields").html(data);
+        },
+        error: function () {
+            displayToast("Napotkano problemy, spróbuj ponownie", toastType.ERROR);
+        }
+    });
+}
+
 
 function createDirectory() {
     var directoryName = $("#directory-name").val(),
         rootId = getCurrentDirectoryId();
 
-    console.log("in directory");
     $.ajax({
         type: "POST",
         url: "Directory/Create",
@@ -147,6 +163,50 @@ function createDirectory() {
         },
         error: function (a, b, c) {
             displayToast("Napotkano problemy, spróbuj ponownie", toastType.ERROR);
+        }
+    });
+}
+
+function pasteField(fieldId) {
+    var currentDirectoryId = getCurrentDirectoryId();
+
+    $.ajax({
+        type: "POST",
+        url: "Field/Copy/" + currentDirectoryId + "/" + fieldId,
+        success: function () {
+            displayToast("Pomyślnie skopiowano dane", toastType.INFO);
+            refreshWindow(currentDirectoryId);
+        },
+        error: function () {
+            displayToast("Napotkano problemy, spróbuj ponownie", toastType.ERROR);
+        }
+    });
+}
+
+function loadFielDescription(currentFieldId) {
+    $.ajax({
+        type: "GET",
+        url: "Field/Details/" + currentFieldId,
+        success: function (data) {
+            $("#field-property .modal-body").html(data);
+            openDetailsModal();
+        },
+        error: function () {
+            displayToast("Nie udało się wczytać właściwości", toastType.ERROR);
+        }
+    });
+}
+
+
+function deleteField(currentDirectoryId,currentFieldId) {
+    $.ajax({
+        type: "GET",
+        url: "Field/Delete/" + currentFieldId,
+        success: function () {            
+            refreshWindow(currentDirectoryId);
+        },
+        error: function () {
+            displayToast("Nie udało się usunąć pliku", toastType.ERROR);
         }
     });
 }

@@ -31,6 +31,23 @@ namespace WebDisk.BusinessLogic.Common
             return UploadFile(ByteHelper.ByteArrayToStream(content));
         }
 
+        public string Copy(string blobId)
+        {
+            var newBlobId = $"{Guid.NewGuid()}{Guid.NewGuid()}";
+            return Copy(blobId, newBlobId);
+        }
+
+        public string Copy(string blobId, string newBlobId)
+        {
+            CloudBlobContainer container = _blobClient.GetContainerReference(AzureKeys.ContainerName);
+
+            // Retrieve reference to a blob by using blobid".
+            CloudBlockBlob sourceBlob = container.GetBlockBlobReference(blobId);
+            CloudBlockBlob targetBlob = container.GetBlockBlobReference(newBlobId);
+            targetBlob.StartCopy(sourceBlob);
+            return newBlobId;
+        }
+
 
         public string UploadFile(Stream content)
         {
@@ -44,9 +61,26 @@ namespace WebDisk.BusinessLogic.Common
             blockBlob.UploadFromStream(content);
             return blobId;
         }
-        public static void DeleteFile(string filePath)
+        public static void DeleteFile(string blobReference)
         {
-            throw new NotImplementedException();
+            if (string.IsNullOrWhiteSpace(blobReference))
+            {
+                throw new ArgumentException("Invalid blob reference");
+            }
+            // Retrieve storage account from connection string.
+            CloudStorageAccount storageAccount = CloudStorageAccount.Parse(AzureKeys.CloudStorageAccountConnectionString);
+
+            // Create the blob client.
+            CloudBlobClient blobClient = storageAccount.CreateCloudBlobClient();
+
+            // Retrieve reference to a previously created container.
+            CloudBlobContainer container = blobClient.GetContainerReference(AzureKeys.ContainerName);
+
+            // Retrieve reference to a blob named "myblob.txt".
+            CloudBlockBlob blockBlob = container.GetBlockBlobReference(blobReference);
+            
+            // Delete the blob.
+            blockBlob.Delete();
         }
 
         public byte[] Download(string blobId)
@@ -54,7 +88,7 @@ namespace WebDisk.BusinessLogic.Common
             // Retrieve reference to a previously created container.
             CloudBlobContainer container = _blobClient.GetContainerReference(AzureKeys.ContainerName);
 
-            // Retrieve reference to a blob named "photo1.jpg".
+            // Retrieve reference to a blob by using blobid.
             CloudBlockBlob blockBlob = container.GetBlockBlobReference(blobId);
 
             using (var memoryStream = new MemoryStream())

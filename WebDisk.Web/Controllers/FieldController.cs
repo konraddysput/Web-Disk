@@ -25,9 +25,8 @@ namespace WebDisk.Web.Controllers
         /// <summary>
         /// service that allow us to make a operations on fields
         /// </summary>
-        private DirectoryService _directoryService;
-
-        private FieldService _fieldService;
+        private readonly DirectoryService _directoryService;
+        private readonly FieldService _fieldService;
         public FieldController(DirectoryService directoryService, FieldService fieldService)
         {
             _directoryService = directoryService;
@@ -42,11 +41,11 @@ namespace WebDisk.Web.Controllers
         /// <returns>Json with field informations</returns>
         [Route("Details/{fieldId}")]
         [AjaxAction]
-        [AutoMap(typeof(Field),typeof(FieldDescriptionViewModel))]
+        [AutoMap(typeof(Field), typeof(FieldDescriptionViewModel))]
         public ActionResult Details(Guid fieldId)
         {
             Guid userId = Identity.GetUserId(User.Identity);
-            return PartialView("_FieldPropertyDescription",_directoryService
+            return PartialView("_FieldPropertyDescription", _directoryService
                                                             .GetFieldDetails(userId, fieldId));
         }
 
@@ -56,17 +55,24 @@ namespace WebDisk.Web.Controllers
         /// <param name="fieldId">id of fie.d</param>
         /// <param name="fieldName">new field name</param>
         /// <returns>Status code - 200 OK, for a good result, 401 - BadRequest, when receive an exception</returns>
-        [Route("Update/{fieldId}/{fieldName}")]
-        public ActionResult Update(Guid fieldId, string fieldName)
+        [HttpPost]
+        [AjaxAction]
+        [Route("Copy/{destinationId}/{fieldId}")]
+        public ActionResult Update(Guid fieldId, Guid destinationId)
         {
-            throw new NotImplementedException();
+            Guid userId = Identity.GetUserId(User.Identity);
+            _fieldService.Copy(userId, destinationId, fieldId);
+            _fieldService.Dispose();
+            return new HttpStatusCodeResult(HttpStatusCode.OK);
         }
 
 
         [Route("Delete/{fieldId}")]
         public ActionResult Delete(Guid fieldId)
         {
-            throw new NotImplementedException();
+            Guid userId = Identity.GetUserId(User.Identity);
+            _fieldService.Delete(userId, fieldId);
+            return new HttpStatusCodeResult(HttpStatusCode.OK);
         }
 
 

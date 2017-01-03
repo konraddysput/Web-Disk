@@ -12,5 +12,8 @@ namespace WebDisk.BusinessLogic.Interfaces
         void CreateField(Guid userId, Guid fieldId, IEnumerable<FileViewModel> fileViewModels);
         void CreateField(Guid userId, Guid fieldId, FileViewModel fileViewModel);
         void Delete(Guid userId, Guid fieldId);
+
+        void Copy(Guid userId, Guid destinationId, Guid fieldId);
+        void Cut(Guid userId, Guid destinationId, Guid fieldId);
     }
 }

@@ -173,7 +173,7 @@ namespace WebDisk.Web.Controllers
         {
 
             var userId = Database.IdentityExtensions.IdentityExtensions.GetUserId(User.Identity);
-            var code = await UserManager.GenerateChangePhoneNumberTokenAsync(userId, phoneNumber);
+            await UserManager.GenerateChangePhoneNumberTokenAsync(userId, phoneNumber);
             // Send an SMS through the SMS provider to verify the phone number
             return phoneNumber == null ? View("Error") : View(new VerifyPhoneNumberViewModel { PhoneNumber = phoneNumber });
         }
