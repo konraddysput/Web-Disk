@@ -136,16 +136,7 @@ namespace WebDisk.BusinessLogic.Services
         [AfterDataChange]
         public void CreateDirectory(Guid userId, Guid fieldId, string name)
         {
-            FieldRepository
-                   .Insert(new Field()
-                   {
-                       ParentDirectoryId = fieldId,
-                       LastModifiedDate = DateTime.Now,
-                       Extension = string.Empty,
-                       Type = FieldType.Directory,
-                       FieldInformation = null,
-                       Name = name
-                   });
+            FieldRepository.CreateDirectory(userId, fieldId, name);
         }
 
 

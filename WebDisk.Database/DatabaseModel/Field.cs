@@ -63,6 +63,8 @@ namespace WebDisk.Database.DatabaseModel
 
         public virtual FieldInformation FieldInformation { get; set; }
 
+        public virtual ICollection<Field> Fields { get; set; }
+
         public virtual ICollection<FieldShareInformation> SharedInformations { get; set; }
 
 

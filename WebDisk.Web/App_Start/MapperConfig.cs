@@ -1,8 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.IO;
 using System.Web;
 using WebDisk.BusinessLogic.ViewModels;
 using WebDisk.Database.DatabaseModel;
+using WebDisk.Database.DatabaseModel.Types;
 using WebDisk.Web.Extensions;
 using WebDisk.Web.Models;
 using WebDisk.Web.Models.Field;
@@ -31,10 +34,22 @@ namespace WebDisk.Web.App_Start
                 n.CreateMap<Field, Field>()
                 .ForMember(dest => dest.FieldId, opts => opts.MapFrom(from => Guid.NewGuid()))
                 .ForMember(dest => dest.LastModifiedDate, opts => opts.MapFrom(from => DateTime.Now))
-                .ForMember(dest => dest.CreationDate, opts => opts.MapFrom(from => DateTime.Now));
+                .ForMember(dest => dest.CreationDate, opts => opts.MapFrom(from => DateTime.Now))
+                .ForMember(dest => dest.Fields, opts => opts.MapFrom(from => new List<Field>()))
+                .ForMember(dest => dest.Fields, opts => opts.MapFrom(dest => dest.Fields));
 
-                
-                
+                n.CreateMap<FieldInformation, FieldInformation>()
+                .ForMember(dest => dest.FieldInformationId, opts => opts.MapFrom(from => Guid.NewGuid()))
+                .ForMember(dest => dest.Field, opts => opts.Ignore());
+
+                n.CreateMap<FileViewModel, Field>()
+                .ForMember(dest => dest.Name, opts => opts.MapFrom(from => Path.GetFileNameWithoutExtension(from.FileName)))
+                .ForMember(dest => dest.Type, opts => opts.MapFrom(from => FieldType.File))
+                .ForMember(dest => dest.Extension, opts => opts.MapFrom(from => Path.GetExtension(from.FileName)))
+                .ForMember(dest => dest.FieldInformation, opts => opts.ResolveUsing(from => new FieldInformation() { Size = from.ContentLength }));
+
+
+
             });
         }
     }

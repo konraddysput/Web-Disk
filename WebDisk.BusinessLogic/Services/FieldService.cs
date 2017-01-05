@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using WebDisk.BusinessLogic.Aspects;
 using WebDisk.BusinessLogic.Common;
+using WebDisk.BusinessLogic.Extensions;
 using WebDisk.BusinessLogic.Interfaces;
 using WebDisk.BusinessLogic.ViewModels;
 using WebDisk.Database.DatabaseModel;
@@ -84,29 +85,10 @@ namespace WebDisk.BusinessLogic.Services
         [FieldAccess]
         public void CreateField(Guid userId, Guid fieldId, FileViewModel fileViewModel)
         {
-
-            string pathToAzureFile = new AzureManager()
-                                            .UploadFile(fileViewModel.InputStream);
-
-
-            string fileName = Path.GetFileNameWithoutExtension(fileViewModel.FileName);
-            string extension = Path.GetExtension(fileViewModel.FileName);
-
-            FieldRepository
-                .Insert(new Field()
-                {
-                    ParentDirectoryId = fieldId,
-                    Name = fileName,
-                    Extension = extension,
-                    Type = FieldType.File,
-                    LastModifiedById = userId,
-                    FieldInformation = new FieldInformation()
-                    {
-                        Size = fileViewModel.ContentLength,
-                        Localisation = pathToAzureFile
-                    }
-                });
+            var field = AutoMapper.Mapper.Map<Field>(fileViewModel);
+            FieldRepository.CreateField(userId, fieldId, field, fileViewModel.InputStream);
         }
+
         /// <summary>
         /// Deleting existing file or directory
         /// </summary>
@@ -122,35 +104,7 @@ namespace WebDisk.BusinessLogic.Services
             {
                 throw new ArgumentException($"Field with id {fieldId} does not exists");
             }
-            DeleteField(field);
-
-        }
-
-        private void DeleteField(Field field)
-        {
-            if (field.Type == FieldType.File)
-            {
-                DeleteFile(field);
-            }
-            else
-            {
-                DeleteDirectory(field);
-            }
-        }
-        private void DeleteFile(Field field)
-        {
-            AzureManager.DeleteFile(field.FieldInformation.Localisation);
-            FieldRepository.Delete(field);
-        }
-
-        private void DeleteDirectory(Field field)
-        {
-            var childs = FieldRepository.Get(n => n.ParentDirectoryId == field.FieldId);
-            foreach (var child in childs)
-            {
-                DeleteField(child);
-            }
-            FieldRepository.Delete(field);
+            field.DeleteField(FieldRepository);
         }
 
         [FieldAccess]
@@ -168,20 +122,7 @@ namespace WebDisk.BusinessLogic.Services
             {
                 return;
             }
-            var copy = AutoMapper.Mapper.Map<Field>(currentField);
-
-            //todo
-            //copy all files in directories in dictorany
-            if (copy.Type == FieldType.Directory)
-            {
-                throw new NotImplementedException();
-            }
-            else
-            {
-
-            }
-
-            FieldRepository.Insert(copy);
+            currentField.CopyField(destinationDirectory, userId, FieldRepository);
         }
 
         [FieldAccess]
@@ -190,5 +131,7 @@ namespace WebDisk.BusinessLogic.Services
         {
             throw new NotImplementedException();
         }
+
+
     }
 }

@@ -29,12 +29,10 @@ namespace WebDisk.BusinessLogic.Interfaces
 
         protected virtual void Dispose(bool disposing)
         {
-            if (!disposed)
+            if (!disposed && disposing)
             {
-                if (disposing)
-                {
-                    _context.Dispose();
-                }
+                _context.Dispose();
+
             }
             disposed = true;
         }

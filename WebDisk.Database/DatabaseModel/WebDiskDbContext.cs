@@ -12,8 +12,7 @@ namespace WebDisk.Database.DatabaseModel
     {
         public WebDiskDbContext()
             : base("WebDiskDb")
-        {
-        }
+        {}
         public virtual DbSet<Field> Field { get; set; }
         public virtual DbSet<Space> Space { get; set; }
         public virtual DbSet<FieldShareInformation> FieldShareInformation { get; set; }

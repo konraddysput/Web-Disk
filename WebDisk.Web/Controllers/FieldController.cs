@@ -58,11 +58,10 @@ namespace WebDisk.Web.Controllers
         [HttpPost]
         [AjaxAction]
         [Route("Copy/{destinationId}/{fieldId}")]
-        public ActionResult Update(Guid fieldId, Guid destinationId)
+        public ActionResult Copy(Guid fieldId, Guid destinationId)
         {
             Guid userId = Identity.GetUserId(User.Identity);
             _fieldService.Copy(userId, destinationId, fieldId);
-            _fieldService.Dispose();
             return new HttpStatusCodeResult(HttpStatusCode.OK);
         }
 

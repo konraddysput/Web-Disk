@@ -128,6 +128,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="ServiceTests\FieldServiceTests\FieldOperationTest.cs" />
     <Compile Include="ServiceTests\FieldServiceTests\FieldTests.cs" />
     <Compile Include="ServiceTests\FieldServiceTests\FieldSelectTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

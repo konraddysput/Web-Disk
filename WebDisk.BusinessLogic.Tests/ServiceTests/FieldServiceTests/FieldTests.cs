@@ -38,7 +38,7 @@ namespace WebDisk.BusinessLogic.Tests.ServiceTests.DirectoryServiceTests
             Assert.Throws<ArgumentException>(() =>
             {
                 correctField.Type = Database.DatabaseModel.Types.FieldType.Directory;
-                return correctField.FieldInformation.FieldId;
+                return correctField.FieldInformation;
             });
         }
 

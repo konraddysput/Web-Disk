@@ -52,6 +52,7 @@ function loading() {
 
 function endLoading() {
     $('#preloading-Modal').modal('hide');
+    initFieldClick();
 }
 
 

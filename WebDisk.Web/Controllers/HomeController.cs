@@ -25,8 +25,7 @@ namespace WebDisk.Web.Controllers
         public ActionResult Index()
         {
             var userId = Identity.GetUserId(User.Identity);
-            ViewBag.DirectoryId = _directoryService.GetRootField(userId)
-                                                    .FieldId;
+            ViewBag.DirectoryId = _directoryService.GetRootField(userId)?.FieldId;
             return View();
         }
     }

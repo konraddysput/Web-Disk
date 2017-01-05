@@ -23,17 +23,14 @@ namespace WebDisk.BusinessLogic.Services
         }
 
 
-        public SpaceService(WebDiskDbContext context) : base(context)
-        {
-
-        }
+        public SpaceService(WebDiskDbContext context) : base(context) { }
 
         public Space GetSpace(Guid userId)
         {
             var currentUserSpaces = SpaceRepository
                                         .Get(n => n.SpaceId == userId, null, string.Empty);
 
-            if (currentUserSpaces == null || currentUserSpaces.Count() == 0)
+            if (currentUserSpaces == null || currentUserSpaces.Any())
             {
                 throw new ArgumentException($"user with id={userId} does not exists");
             }
