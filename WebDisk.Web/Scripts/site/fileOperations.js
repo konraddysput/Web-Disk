@@ -169,12 +169,20 @@ function createDirectory() {
 
 function pasteField(fieldId) {
     var currentDirectoryId = getCurrentDirectoryId();
+    moveField( "Field/Copy/",currentDirectoryId,fieldId);
+}
 
+function cutField(fieldId) {
+    var currentDirectoryId = getCurrentDirectoryId();
+    moveField("Field/Cut/",currentDirectoryId,fieldId);
+}
+
+function moveField(domainUrl,currentDirectoryId, fieldId) {
     $.ajax({
         type: "POST",
-        url: "Field/Copy/" + currentDirectoryId + "/" + fieldId,
+        url: domainUrl +"/"+ currentDirectoryId + "/" + fieldId,
         success: function () {
-            displayToast("Pomyślnie skopiowano dane", toastType.INFO);
+            displayToast("Pomyślnie przeniesiono dane", toastType.INFO);
             refreshWindow(currentDirectoryId);
         },
         error: function () {
@@ -198,11 +206,11 @@ function loadFielDescription(currentFieldId) {
 }
 
 
-function deleteField(currentDirectoryId,currentFieldId) {
+function deleteField(currentDirectoryId, currentFieldId) {
     $.ajax({
         type: "GET",
         url: "Field/Delete/" + currentFieldId,
-        success: function () {            
+        success: function () {
             refreshWindow(currentDirectoryId);
         },
         error: function () {

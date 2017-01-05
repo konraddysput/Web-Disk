@@ -129,7 +129,18 @@ namespace WebDisk.BusinessLogic.Services
         [AfterDataChange]
         public void Cut(Guid userId, Guid destinationId, Guid fieldId)
         {
-            throw new NotImplementedException();
+            var destinationDirectory = FieldRepository.GetByID(destinationId);
+            var currentField = FieldRepository.GetByID(fieldId);
+
+            if (destinationDirectory == null || currentField == null)
+            {
+                throw new ArgumentException("directory or field does not exists");
+            }
+            if (currentField.ParentDirectoryId == destinationId)
+            {
+                return;
+            }
+            currentField.CutField(destinationDirectory);
         }
 
 

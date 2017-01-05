@@ -64,6 +64,16 @@ namespace WebDisk.Web.Controllers
             _fieldService.Copy(userId, destinationId, fieldId);
             return new HttpStatusCodeResult(HttpStatusCode.OK);
         }
+        [HttpPost]
+        [AjaxAction]
+        [Route("Cut/{destinationId}/{fieldId}")]
+        public ActionResult Cut(Guid fieldId, Guid destinationId)
+        {
+            Guid userId = Identity.GetUserId(User.Identity);
+            _fieldService.Cut(userId, destinationId, fieldId);
+            return new HttpStatusCodeResult(HttpStatusCode.OK);
+        }
+
 
 
         [Route("Delete/{fieldId}")]

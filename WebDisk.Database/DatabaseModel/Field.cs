@@ -67,6 +67,5 @@ namespace WebDisk.Database.DatabaseModel
 
         public virtual ICollection<FieldShareInformation> SharedInformations { get; set; }
 
-
     }
 }

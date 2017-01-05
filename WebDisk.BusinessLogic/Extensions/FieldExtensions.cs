@@ -11,6 +11,10 @@ namespace WebDisk.BusinessLogic.Extensions
 {
     public static class FieldExtensions
     {
+        public static void CutField(this Field field, Field destination)
+        {
+            field.ParentDirectory = destination;
+        }
         public static void DeleteField(this Field field, Repository<Field> fieldRepository)
         {
             FieldAction(field, fieldRepository, DeleteFile, fieldRepository.Delete);
@@ -18,7 +22,7 @@ namespace WebDisk.BusinessLogic.Extensions
 
         public static void CopyField(this Field field, Field destination, Guid userId, Repository<Field> fieldRepository)
         {
-            var copy = field.Copy(destination,userId);
+            var copy = field.Copy(destination, userId);
             FieldAction(copy, userId, fieldRepository, fieldRepository.CreateField, fieldRepository.CreateDirectory);
         }
 
@@ -148,7 +152,7 @@ namespace WebDisk.BusinessLogic.Extensions
                 ParentDirectory = destination,
                 Type = source.Type,
             };
-            
+
             if (source.Type == FieldType.File)
             {
                 copy.FieldInformation = new FieldInformation()

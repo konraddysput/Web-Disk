@@ -1,5 +1,6 @@
 ﻿var fieldOperationInformation = {
-    currentFieldId: undefined
+    currentFieldId: undefined,
+    currentCutField: undefined
 };
 
 function backgroundClickCondition(e) {
@@ -33,27 +34,43 @@ function openFileDetails() {
 function openDetailsModal() {
     $('#field-property').modal('show');
 }
-
-function copyFile() {
+function saveCutFile() {
+    clearOperationFields();
+    fieldOperationInformation.currentCutField = getCurrentFile().attr("data-id");
+    displayToast("Skopiowano plik do schowka", toastType.INFO);
+}
+function saveCopyFile() {
+    clearOperationFields();
     fieldOperationInformation.currentFieldId = getCurrentFile().attr("data-id");
     displayToast("Skopiowano plik do schowka", toastType.INFO);
 }
 
 function canPaste() {
-    return fieldOperationInformation.currentFieldId !== undefined;
+    return fieldOperationInformation.currentFieldId !== undefined || fieldOperationInformation.currentCutField !== undefined;
 }
 
 function tryPasteField() {
-    if (!canPaste) {
+    if (!canPaste()) {
         displayToast("W schowku brakuje plików", toastType.WARNING);
     }
-    pasteField(fieldOperationInformation.currentFieldId);
-    fieldOperationInformation.currentFieldId = undefined;
-}
+    if (fieldOperationInformation.currentFieldId !== undefined) {
+        pasteField(fieldOperationInformation.currentFieldId);
 
+    }
+    else {
+        cutField(fieldOperationInformation.currentCutField);
+
+    }
+    clearOperationFields();
+}
 function deleteFile() {
     var fileToDelete = getCurrentFile().attr("data-id");
     var currentDirectoryId = getCurrentDirectoryId();
-    deleteField(currentDirectoryId,fileToDelete);
+    deleteField(currentDirectoryId, fileToDelete);
 
+}
+
+function clearOperationFields() {
+    fieldOperationInformation.currentFieldId = undefined;
+    fieldOperationInformation.currentCutField = undefined;
 }
