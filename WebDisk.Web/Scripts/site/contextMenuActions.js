@@ -74,3 +74,14 @@ function clearOperationFields() {
     fieldOperationInformation.currentFieldId = undefined;
     fieldOperationInformation.currentCutField = undefined;
 }
+
+function downloadFile() {
+    var currentField = getCurrentFile();
+    //if (getFileType(currentField) !== "File") {
+    //    displayToast("Nie można pobrać tego typu pliku", toastType.WARNING);
+    //    return;
+    //}
+
+    var currentFieldId = $(currentField).attr("data-id");
+    downloadField(currentFieldId);
+}

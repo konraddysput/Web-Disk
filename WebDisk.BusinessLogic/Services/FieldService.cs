@@ -21,19 +21,7 @@ namespace WebDisk.BusinessLogic.Services
         private Repository<Field> _fieldRepository;
         private Repository<FieldShareInformation> _sharedInformationRepository;
 
-        public Repository<Space> SpaceRepository
-        {
-            get
-            {
-                if (_spaceRepository == null)
-                {
-                    _spaceRepository = new Repository<Space>(_context);
-                }
-                return _spaceRepository;
-            }
-        }
-
-        public Repository<Field> FieldRepository
+        private Repository<Field> FieldRepository
         {
             get
             {
@@ -42,18 +30,6 @@ namespace WebDisk.BusinessLogic.Services
                     _fieldRepository = new Repository<Field>(_context);
                 }
                 return _fieldRepository;
-            }
-        }
-
-        public Repository<FieldShareInformation> SharedInformationRepository
-        {
-            get
-            {
-                if (_sharedInformationRepository == null)
-                {
-                    _sharedInformationRepository = new Repository<FieldShareInformation>(_context);
-                }
-                return _sharedInformationRepository;
             }
         }
 
@@ -141,6 +117,19 @@ namespace WebDisk.BusinessLogic.Services
                 return;
             }
             currentField.CutField(destinationDirectory);
+        }
+
+        [FieldAccess]
+        public FileViewModel Get(Guid userId, Guid fieldId)
+        {
+            var currentField = FieldRepository.GetByID(fieldId);
+            if (currentField == null)
+            {
+                throw new ArgumentException("You cannot download directory or field that does not exists");
+            }
+            
+            return currentField.Download();
+
         }
 
 

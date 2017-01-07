@@ -12,6 +12,7 @@ namespace WebDisk.Web.Models.Login
         [Display(Name = "Hasło")]
         [DataType(DataType.Password)]
         public string Password { get; set; }
+        
 
         [Display(Name = "Zapamiętaj mnie")]
         public bool RememberMe { get; set; }

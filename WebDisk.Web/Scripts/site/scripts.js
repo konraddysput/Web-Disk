@@ -75,3 +75,7 @@ function initBackgroundClick() {
 function getCurrentDirectoryId() {
     return $("#directoryId").val();
 }
+
+function getFileType(file) {
+    return $(file).attr("data-type");
+}

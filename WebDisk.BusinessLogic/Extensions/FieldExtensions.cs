@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Ionic.Zip;
+using System;
 using System.IO;
 using System.Linq;
 using WebDisk.BusinessLogic.Common;
@@ -50,7 +51,10 @@ namespace WebDisk.BusinessLogic.Extensions
                 DirectoryAction(field, fieldRepository, fileAction, directoryAction);
             }
         }
-        private static void DirectoryAction(Field field, Repository<Field> fieldRepository, Action<Field, Repository<Field>> fileAction, Action<Field> directoryAction)
+        private static void DirectoryAction(Field field,
+            Repository<Field> fieldRepository,
+            Action<Field, Repository<Field>> fileAction, 
+            Action<Field> directoryAction)
         {
             foreach (var child in field.Fields)
             {
@@ -65,7 +69,6 @@ namespace WebDisk.BusinessLogic.Extensions
             Action<Guid, Guid, Field> fileAction,
             Action<Field, Guid> directoryAction)
         {
-            //var childs = fieldRepository.Get(n => n.ParentDirectoryId == field.FieldId);
             foreach (var child in field.Fields)
             {
                 FieldAction(child, userId, fieldRepository, fileAction, directoryAction);
@@ -138,6 +141,53 @@ namespace WebDisk.BusinessLogic.Extensions
             fieldRepository.Insert(field);
         }
 
+        internal static FileViewModel Download(this Field source)
+        {
+            return source.Type == FieldType.File
+                        ? DownloadFile(source)
+                        : DownloadDirectory(source);
+        }
+        private static FileViewModel DownloadFile(this Field source)
+        {
+            if (source.Type != FieldType.File)
+            {
+                throw new InvalidOperationException("You cannot copy a directory by using CopyFile method");
+            }
+            var file = new AzureManager()
+                               .Download(source.FieldInformation.Localisation);
+            var fileStream = ByteHelper.ByteArrayToStream(file);
+            var result = AutoMapper.Mapper.Map<FileViewModel>(source);
+            result.InputStream = fileStream;
+            return result;
+        }
+
+        private static FileViewModel DownloadDirectory(this Field source)
+        {
+            var outputStream = new MemoryStream();
+            var azureManager = new AzureManager();
+
+            using (var zip = new ZipFile())
+            {
+                foreach (var field in source.Fields)
+                {
+                    if (field.Type == FieldType.File && field.FieldInformation != null)
+                    {
+                        var file = azureManager.Download(field.FieldInformation.Localisation);
+                        string fileName = ZipHelper.GetFileName($"{field.Name}{field.Extension}",zip.Entries);
+                        
+                        zip.AddEntry(fileName, file);
+                    }
+                }
+                zip.Save(outputStream);
+            }           
+
+            outputStream.Position = 0;
+            var result = AutoMapper.Mapper.Map<FileViewModel>(source);
+            result.InputStream = outputStream;
+            result.FileName = result.FileName + "zip";
+            return result;
+
+        }
 
         private static Field Copy(this Field source, Field destination, Guid userId)
         {
@@ -164,7 +214,6 @@ namespace WebDisk.BusinessLogic.Extensions
             }
             copy.Fields = source.Fields.Select(n => n.Copy(copy, userId)).ToList();
             return copy;
-
         }
     }
 }

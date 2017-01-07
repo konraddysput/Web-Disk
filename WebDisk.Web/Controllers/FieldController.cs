@@ -64,6 +64,7 @@ namespace WebDisk.Web.Controllers
             _fieldService.Copy(userId, destinationId, fieldId);
             return new HttpStatusCodeResult(HttpStatusCode.OK);
         }
+
         [HttpPost]
         [AjaxAction]
         [Route("Cut/{destinationId}/{fieldId}")]
@@ -87,7 +88,7 @@ namespace WebDisk.Web.Controllers
 
         [HttpPost]
         [Route("Update/{directoryId}")]
-        public ActionResult Update(IEnumerable<HttpPostedFileBase> files, Guid directoryId)
+        public ActionResult Create(IEnumerable<HttpPostedFileBase> files, Guid directoryId)
         {
             try
             {
@@ -101,5 +102,31 @@ namespace WebDisk.Web.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
         }
+        [HttpGet]
+        [Route("Download/{fieldId}")]
+        public ActionResult Download(Guid fieldId)
+        {
+            Guid userId = Identity.GetUserId(User.Identity);
+            try
+            {
+                var fileModel = _fieldService.Get(userId, fieldId);
+                return File(fileModel.InputStream,
+                            System.Net.Mime.MediaTypeNames.Application.Octet,
+                            fileModel.FileName);
+            }
+            catch (ArgumentException ex)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+        }
+
+
+        //[HttpGet]
+        //[Route("Display/{fieldId")]
+        //public ActionResult Display(Guid fieldId)
+        //{
+
+        //}
     }
 }

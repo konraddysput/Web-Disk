@@ -21,6 +21,10 @@ namespace WebDisk.Web.App_Start
             {
                 n.CreateMap<Field, FieldViewModel>();
                 n.CreateMap<HttpPostedFileBase, FileViewModel>();
+                n.CreateMap<Field, FileViewModel>()
+                .ForMember(dest => dest.FileName, opts => opts.MapFrom(from => $"{from.Name}.{from.Extension}"))
+                .ForMember(dest => dest.ContentType, opts => opts.MapFrom(from => "Application.Octet"))
+                .ForMember(dest => dest.ContentLength, opts => opts.MapFrom(from => from.FieldInformation.Size));
 
                 n.CreateMap<FieldShareInformation, FieldShareViewModel>()
                 .ForMember(dest => dest.FileName, opts => opts.MapFrom(from => from.Field.Name))

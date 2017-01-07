@@ -218,3 +218,7 @@ function deleteField(currentDirectoryId, currentFieldId) {
         }
     });
 }
+
+function downloadField(currentFieldId) {
+    window.location = "Field/Download/" + currentFieldId;
+}
