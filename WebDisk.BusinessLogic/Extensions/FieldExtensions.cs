@@ -12,6 +12,18 @@ namespace WebDisk.BusinessLogic.Extensions
 {
     public static class FieldExtensions
     {
+        private static AzureManager _azureManager;
+        private static AzureManager AzureManager
+        {
+            get
+            {
+                if (_azureManager == null)
+                {
+                    _azureManager = new AzureManager();
+                }
+                return _azureManager;
+            }
+        }
         public static void CutField(this Field field, Field destination)
         {
             field.ParentDirectory = destination;
@@ -53,7 +65,7 @@ namespace WebDisk.BusinessLogic.Extensions
         }
         private static void DirectoryAction(Field field,
             Repository<Field> fieldRepository,
-            Action<Field, Repository<Field>> fileAction, 
+            Action<Field, Repository<Field>> fileAction,
             Action<Field> directoryAction)
         {
             foreach (var child in field.Fields)
@@ -153,8 +165,7 @@ namespace WebDisk.BusinessLogic.Extensions
             {
                 throw new InvalidOperationException("You cannot copy a directory by using CopyFile method");
             }
-            var file = new AzureManager()
-                               .Download(source.FieldInformation.Localisation);
+            var file = AzureManager.Download(source.FieldInformation.Localisation);
             var fileStream = ByteHelper.ByteArrayToStream(file);
             var result = AutoMapper.Mapper.Map<FileViewModel>(source);
             result.InputStream = fileStream;
@@ -168,24 +179,47 @@ namespace WebDisk.BusinessLogic.Extensions
 
             using (var zip = new ZipFile())
             {
-                foreach (var field in source.Fields)
-                {
-                    if (field.Type == FieldType.File && field.FieldInformation != null)
-                    {
-                        var file = azureManager.Download(field.FieldInformation.Localisation);
-                        string fileName = ZipHelper.GetFileName($"{field.Name}{field.Extension}",zip.Entries);
-                        
-                        zip.AddEntry(fileName, file);
-                    }
-                }
+                ZipDirectory(source, zip, string.Empty);
                 zip.Save(outputStream);
-            }           
+            }
 
             outputStream.Position = 0;
             var result = AutoMapper.Mapper.Map<FileViewModel>(source);
             result.InputStream = outputStream;
             result.FileName = result.FileName + "zip";
             return result;
+
+        }
+
+        private static ZipFile ZipField(Field field, ZipFile zip, string currentPath = "")
+        {
+            if (field.Type == FieldType.File)
+            {
+                return ZipFile(field, zip, currentPath);
+            }
+            else
+            {
+                return ZipDirectory(field, zip, currentPath);
+            }
+        }
+
+        private static ZipFile ZipFile(Field field, ZipFile zip, string currentPath)
+        {
+            var file = AzureManager.Download(field.FieldInformation.Localisation);
+            string fileName = ZipHelper.GetFileName($"{currentPath}{field.Name}{field.Extension}", zip.Entries);
+
+            zip.AddEntry(fileName, file);
+            return zip;
+        }
+
+        private static ZipFile ZipDirectory(Field field, ZipFile zip, string currentPath)
+        {
+            
+            foreach (var child in field.Fields)
+            {
+                ZipField(child, zip, $"{currentPath}{field.Name}/");
+            }
+            return zip;
 
         }
 
