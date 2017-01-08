@@ -114,11 +114,22 @@ namespace WebDisk.Web.Controllers
                             System.Net.Mime.MediaTypeNames.Application.Octet,
                             fileModel.FileName);
             }
-            catch (ArgumentException ex)
+            catch (ArgumentException)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-
+        }
+        [HttpGet]
+        [Route("Update/{fieldId}/{fieldName}")]
+        public ActionResult Upate(Guid fieldId, string fieldName)
+        {
+            if (string.IsNullOrEmpty(fieldName))
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Guid userId = Identity.GetUserId(User.Identity);
+            _fieldService.Update(userId, fieldId, fieldName);
+            return new HttpStatusCodeResult(HttpStatusCode.OK);
         }
 
 

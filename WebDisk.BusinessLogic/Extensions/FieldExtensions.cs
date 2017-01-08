@@ -175,7 +175,6 @@ namespace WebDisk.BusinessLogic.Extensions
         private static FileViewModel DownloadDirectory(this Field source)
         {
             var outputStream = new MemoryStream();
-            var azureManager = new AzureManager();
 
             using (var zip = new ZipFile())
             {

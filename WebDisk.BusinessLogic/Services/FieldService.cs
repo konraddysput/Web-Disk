@@ -127,11 +127,21 @@ namespace WebDisk.BusinessLogic.Services
             {
                 throw new ArgumentException("You cannot download directory or field that does not exists");
             }
-            
+
             return currentField.Download();
 
         }
 
-
+        [FieldAccess]
+        [AfterDataChange]
+        public void Update(Guid userId, Guid fieldId, string newFieldName)
+        {
+            var field = FieldRepository.GetByID(fieldId);
+            if (field == null)
+            {
+                throw new ArgumentException("Field does not exists");
+            }
+            field.Name = newFieldName;
+        }
     }
 }

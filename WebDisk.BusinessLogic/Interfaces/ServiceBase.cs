@@ -4,7 +4,7 @@ using WebDisk.Database.DatabaseModel;
 
 namespace WebDisk.BusinessLogic.Interfaces
 {
-    public class ServiceBase : IDisposable
+    public abstract class ServiceBase : IDisposable
     {
         protected WebDiskDbContext _context;
 
@@ -20,7 +20,7 @@ namespace WebDisk.BusinessLogic.Interfaces
             _context = new WebDiskDbContext();
             _authManager = new AuthenticationManager(_context);
         }
-        public void Save()
+        internal void Save()
         {
             _context.SaveChanges();
         }

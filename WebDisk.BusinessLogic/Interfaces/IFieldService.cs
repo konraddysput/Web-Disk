@@ -15,5 +15,7 @@ namespace WebDisk.BusinessLogic.Interfaces
 
         void Copy(Guid userId, Guid destinationId, Guid fieldId);
         void Cut(Guid userId, Guid destinationId, Guid fieldId);
+
+        void Update(Guid userId, Guid fieldId, string newFieldName);
     }
 }

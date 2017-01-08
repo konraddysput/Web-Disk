@@ -55,6 +55,13 @@ function endLoading() {
     initFieldClick();
 }
 
+function openFieldNameChangeModal() {
+    var currentFieldId = getCurrentFile().attr("data-id");
+    $("#new-input-name-id").val(currentFieldId);
+    $("#field-name-change").modal("show");
+
+}
+
 
 function initFieldClick() {
     $(".field").contextMenu({

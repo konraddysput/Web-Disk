@@ -169,18 +169,18 @@ function createDirectory() {
 
 function pasteField(fieldId) {
     var currentDirectoryId = getCurrentDirectoryId();
-    moveField( "Field/Copy/",currentDirectoryId,fieldId);
+    moveField("Field/Copy/", currentDirectoryId, fieldId);
 }
 
 function cutField(fieldId) {
     var currentDirectoryId = getCurrentDirectoryId();
-    moveField("Field/Cut/",currentDirectoryId,fieldId);
+    moveField("Field/Cut/", currentDirectoryId, fieldId);
 }
 
-function moveField(domainUrl,currentDirectoryId, fieldId) {
+function moveField(domainUrl, currentDirectoryId, fieldId) {
     $.ajax({
         type: "POST",
-        url: domainUrl +"/"+ currentDirectoryId + "/" + fieldId,
+        url: domainUrl + "/" + currentDirectoryId + "/" + fieldId,
         success: function () {
             displayToast("Pomyślnie przeniesiono dane", toastType.INFO);
             refreshWindow(currentDirectoryId);
@@ -221,4 +221,27 @@ function deleteField(currentDirectoryId, currentFieldId) {
 
 function downloadField(currentFieldId) {
     window.location = "Field/Download/" + currentFieldId;
+}
+
+
+function updateName() {
+    var currentFieldId = $("#new-input-name-id").val();
+    var newFileName = $("#new-field-name").val();
+    if (!newFileName) {
+        displayToast("Należy podać nową nazwę", toastType.ERROR);
+        return;
+    }
+
+    $.ajax({
+        type: "GET",
+        url: "Field/Update/" + currentFieldId + "/" + newFileName,
+        success: function () {
+            displayToast("Zmieniono nazwę", toastType.SUCCESS);
+            $("#field-name-change").modal("hide");
+            refreshWindow(getCurrentDirectoryId());
+        },
+        error: function () {
+            displayToast("Nie udało się zmienić nazwy pliku", toastType.ERROR);
+        }
+    });
 }

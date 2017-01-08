@@ -1,13 +1,13 @@
 ﻿@*<div class="row">
-    <div class="col-md-3 col-xs-3 col-md-offset-1 col-xs-offset-1">
-        <a data-toggle="tooltip" data-placement="bottom" onclick="startUpload()" data-original-title="Dodaj nowe pliki do dysku" class="btn btn-raised"><i class="fa fa-plus" aria-hidden="true"></i>Dodaj</a>
-        
-    </div>
-    <div class="col-md-3 col-xs-3 col-md-offset-1 col-xs-offset-1">
-        <a data-placement="bottom" data-original-title="Dodaj nowy katalog" data-toggle="modal" data-target="#modal" class="btn btn-raised"><i class="fa fa-plus" aria-hidden="true"></i>Utwórz katalog</a>
-    </div>
+        <div class="col-md-3 col-xs-3 col-md-offset-1 col-xs-offset-1">
+            <a data-toggle="tooltip" data-placement="bottom" onclick="startUpload()" data-original-title="Dodaj nowe pliki do dysku" class="btn btn-raised"><i class="fa fa-plus" aria-hidden="true"></i>Dodaj</a>
 
-</div>*@
+        </div>
+        <div class="col-md-3 col-xs-3 col-md-offset-1 col-xs-offset-1">
+            <a data-placement="bottom" data-original-title="Dodaj nowy katalog" data-toggle="modal" data-target="#modal" class="btn btn-raised"><i class="fa fa-plus" aria-hidden="true"></i>Utwórz katalog</a>
+        </div>
+
+    </div>*@
 <input type="file" multiple style="display:none" id="file" name="files" onchange="uploadFiles()" />
 <div id="history" class="row">
     <div class="col-md-11 col-xs-11 " id="history-items">
@@ -41,6 +41,30 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" id="close-new-directory-modal" data-dismiss="modal">Anuluj</button>
                 <button type="button" class="btn btn-primary" onclick="createDirectory()">Utwórz</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal" id="field-name-change">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title">Nowa nazwa</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="new-field-name" class="col-md-2 control-label">Nazwa katalogu</label>
+                    <input type="hidden" id="new-input-name-id" />
+                    <div class="col-md-10">
+                        <input type="text" class="form-control" id="new-field-name" placeholder="Nowa nazwa">
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" id="close-new-directory-modal" data-dismiss="modal">Anuluj</button>
+                <button type="button" class="btn btn-primary" onclick="updateName()">Zmień</button>
             </div>
         </div>
     </div>
