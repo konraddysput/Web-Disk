@@ -56,6 +56,7 @@ function openDirectory(url, inform, directoryName) {
 }
 
 function openFileInNav(id) {
+    console.log("Field/Display/" + id);
     $("#frame").attr("src", "Field/Display/" + id);
     openNav();
 }

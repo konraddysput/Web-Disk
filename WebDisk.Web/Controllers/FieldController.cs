@@ -13,6 +13,7 @@ using WebDisk.Web.Attributes;
 using WebDisk.Web.Models.Field;
 using PdfConverter = Microsoft.Office.Interop.Word;
 using Identity = WebDisk.Database.IdentityExtensions.IdentityExtensions;
+using WebDisk.Web.Common;
 
 namespace WebDisk.Web.Controllers
 {
@@ -97,7 +98,7 @@ namespace WebDisk.Web.Controllers
                 var fileViewModel = AutoMapper.Mapper.Map<IEnumerable<FileViewModel>>(files);
                 Guid userId = Identity.GetUserId(User.Identity);
                 _fieldService.CreateField(userId, directoryId, fileViewModel);
-                return RedirectToAction("IndexDetails", "Directory", new { directoryId = directoryId });
+                return RedirectToAction("IndexDetails", "Directory", new { directoryId });
             }
             catch
             {
@@ -140,9 +141,9 @@ namespace WebDisk.Web.Controllers
         public ActionResult Display(Guid fieldId)
         {
             Guid userId = Identity.GetUserId(User.Identity);
-
             var fileModel = _fieldService.Get(userId, fieldId);
-            return new FileContentResult(ByteHelper.ReadToEnd(fileModel.InputStream), "application/pdf");
+            var result = FileDisplayHelper.ConvertFile(fileModel);
+            return new FileContentResult(result.Content,result.ContentType);
         }
     }
 }

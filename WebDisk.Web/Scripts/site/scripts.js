@@ -97,4 +97,5 @@ function closeNav() {
     $("#field-display-nav").css("width", "0");
     $("#main-content").css("margin-left", "");
     document.body.style.backgroundColor = "white";
+    $("#frame").attr("src", "");
 }
