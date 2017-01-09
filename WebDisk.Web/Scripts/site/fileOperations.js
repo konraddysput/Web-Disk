@@ -16,13 +16,14 @@ function removeSelectedMark() {
 
 function openField(id, type, object) {
     selectFile(object);
+    debugger;
     switch (type) {
         case 'Directory':
             var nextDirectoryName = $(object).next().text();
             LoadNextDirectory(id, nextDirectoryName);
             break;
         case 'File':
-            openFile(id);
+            openFileInNav(id);
             break;
         default:
             displayToast("Plik jest nie możliwym do podglądu", toastType.INFO);
@@ -54,8 +55,9 @@ function openDirectory(url, inform, directoryName) {
     });
 }
 
-function openFile(id) {
-
+function openFileInNav(id) {
+    $("#frame").attr("src", "Field/Display/" + id);
+    openNav();
 }
 
 function selectFile(object) {
@@ -93,10 +95,10 @@ function uploadFiles() {
         data: formData,
         xhr: function () {
             var myXhr = $.ajaxSettings.xhr();
-            if (myXhr.upload) { // Check if upload property exists
+            if (myXhr.upload) {
+                // Check if upload property exists
                 // For handling the progress of the upload
                 myXhr.upload.addEventListener('progress', uploadStatus, false);
-
             }
             return myXhr;
         },
@@ -118,10 +120,6 @@ function uploadFiles() {
 function uploadStatus(e) {
     if (e.lengthComputable) {
         var percentage = Math.floor((e.loaded / e.total) * 100);
-        //update progressbar percent complete
-        //statustxt1.html(percentage + '%');
-        console.log(percentage);
-        console.log("Value = " + e.loaded + " :: Max =" + e.total);
     }
 }
 
@@ -244,4 +242,15 @@ function updateName() {
             displayToast("Nie udało się zmienić nazwy pliku", toastType.ERROR);
         }
     });
+}
+
+
+function filterFields() {
+    var filter = $("#field-filter").val();
+    if (!filter) {
+        //if filter is empty show every field
+        $(".context-field").show();
+    }
+    //hide every field that does not contain filter character
+    $(".context-field p:not(:contains(" + filter + "))").parent().hide();
 }

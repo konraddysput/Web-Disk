@@ -86,3 +86,15 @@ function getCurrentDirectoryId() {
 function getFileType(file) {
     return $(file).attr("data-type");
 }
+
+function openNav() {
+    $("#field-display-nav").css("width", "70%");
+    $("#main-content").css("margin-left", "70%");
+    document.body.style.backgroundColor = "rgba(0,0,0,0.4)";
+}
+
+function closeNav() {
+    $("#field-display-nav").css("width", "0");
+    $("#main-content").css("margin-left", "");
+    document.body.style.backgroundColor = "white";
+}

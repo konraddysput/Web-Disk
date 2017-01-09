@@ -1,13 +1,8 @@
-﻿@*<div class="row">
-        <div class="col-md-3 col-xs-3 col-md-offset-1 col-xs-offset-1">
-            <a data-toggle="tooltip" data-placement="bottom" onclick="startUpload()" data-original-title="Dodaj nowe pliki do dysku" class="btn btn-raised"><i class="fa fa-plus" aria-hidden="true"></i>Dodaj</a>
-
-        </div>
-        <div class="col-md-3 col-xs-3 col-md-offset-1 col-xs-offset-1">
-            <a data-placement="bottom" data-original-title="Dodaj nowy katalog" data-toggle="modal" data-target="#modal" class="btn btn-raised"><i class="fa fa-plus" aria-hidden="true"></i>Utwórz katalog</a>
-        </div>
-
-    </div>*@
+﻿<div class="row">
+    <div class="col-md-12 filter-container">
+        <input type="text" class="form-control" id="field-filter" placeholder="Fitlruj" onkeyup="filterFields()">
+    </div>
+</div>
 <input type="file" multiple style="display:none" id="file" name="files" onchange="uploadFiles()" />
 <div id="history" class="row">
     <div class="col-md-11 col-xs-11 " id="history-items">
@@ -20,6 +15,11 @@
 
 <div id="fields">
     @{Html.RenderAction("Index", "Directory");}
+</div>
+
+<div id="field-display-nav" class="sidenav">
+    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+    <iframe id="frame" src="" width="100%" height="300"></iframe>
 </div>
 
 <div class="modal" id="modal">

@@ -9,19 +9,18 @@
     color: $default-color !important;
     font-size: 16px;
     cursor: pointer;
-    max-width: 10%;
+    max-width: 15%;
     display: inline-flex;
-    //truncate text inside div
+
     p {
         overflow: hidden;
         white-space: nowrap;
         text-overflow: ellipsis;
     }
-    /*transform: translateY(25%);*/
 }
 
 .context-field {
-    max-height:70px;
+    max-height: 70px;
     /*overflow:hidden;*/
     i {
         text-align: center;
@@ -29,13 +28,22 @@
     }
 
     p {
-         overflow: hidden;
+        overflow: hidden;
         white-space: nowrap;
         text-overflow: ellipsis;
     }
 }
 
-#fields{
-    width:100%;
-    height:85vh;
+#fields {
+    width: 100%;
+    height: 85vh;
+}
+
+.filter-container {
+    input[type='text'] {
+        display:block;
+        float: right;
+        max-width: 20%;
+    }
+
 }

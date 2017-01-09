@@ -197,9 +197,8 @@ label.required::after {
   color: #3f51b5 !important;
   font-size: 16px;
   cursor: pointer;
-  max-width: 10%;
-  display: inline-flex;
-  /*transform: translateY(25%);*/ }
+  max-width: 15%;
+  display: inline-flex; }
   .history-item p {
     overflow: hidden;
     white-space: nowrap;
@@ -219,4 +218,52 @@ label.required::after {
 #fields {
   width: 100%;
   height: 85vh; }
+
+.filter-container input[type='text'] {
+  display: block;
+  float: right;
+  max-width: 20%; }
+
+.sidenav {
+  height: 100%;
+  width: 0;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: #111;
+  overflow-x: hidden;
+  padding-top: 60px;
+  transition: 0.5s; }
+  .sidenav a {
+    padding: 8px 8px 8px 32px;
+    text-decoration: none;
+    font-size: 25px;
+    color: #818181;
+    display: block;
+    transition: 0.3s; }
+    .sidenav a:hover {
+      color: #f1f1f1; }
+  .sidenav .closebtn {
+    position: absolute;
+    top: 0;
+    right: 25px;
+    font-size: 36px;
+    margin-left: 50px; }
+
+.offcanvas a:focus {
+  color: #f1f1f1; }
+
+@media screen and (max-height: 450px) {
+  .sidenav {
+    padding-top: 15px; }
+  .sidenav a {
+    font-size: 18px; } }
+
+#main-content {
+  transition: margin-left .5s;
+  padding: 20px; }
+
+iframe {
+  height: 90vh; }
 

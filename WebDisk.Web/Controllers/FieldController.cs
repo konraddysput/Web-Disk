@@ -5,11 +5,13 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
+using WebDisk.BusinessLogic.Common;
 using WebDisk.BusinessLogic.Services;
 using WebDisk.BusinessLogic.ViewModels;
 using WebDisk.Database.DatabaseModel;
 using WebDisk.Web.Attributes;
 using WebDisk.Web.Models.Field;
+using PdfConverter = Microsoft.Office.Interop.Word;
 using Identity = WebDisk.Database.IdentityExtensions.IdentityExtensions;
 
 namespace WebDisk.Web.Controllers
@@ -133,11 +135,14 @@ namespace WebDisk.Web.Controllers
         }
 
 
-        //[HttpGet]
-        //[Route("Display/{fieldId")]
-        //public ActionResult Display(Guid fieldId)
-        //{
+        [HttpGet]
+        [Route("Display/{fieldId}")]
+        public ActionResult Display(Guid fieldId)
+        {
+            Guid userId = Identity.GetUserId(User.Identity);
 
-        //}
+            var fileModel = _fieldService.Get(userId, fieldId);
+            return new FileContentResult(ByteHelper.ReadToEnd(fileModel.InputStream), "application/pdf");
+        }
     }
 }
