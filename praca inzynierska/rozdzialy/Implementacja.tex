@@ -1,0 +1,85 @@
+
+
+W celu realizacji poszczególnych założeń projektowych został wykonany złożony program przy użyciu platformy .NET w wersji 4.6. Część serwerowa aplikacji została napisana w języku C\# 6.0, a widoki użytkownika została stworzone przy pomocy języków SCSS, JavaScript oraz HTML. W celu zmniejszenia złożoności oraz kosztów utrzymania projektu zdecydowano się na rozbicie architektury na cztery moduły. Każdy z wyodrębnionych modułów ma za zadanie spełniać określoną czynność w architekturze systemu. Rozbicie projektu pozwala  na łatwiejsze zarządzanie kodem oraz w przypadku dalszego rozwoju przez większą ilość programistów umożliwia na szybką aklimatyzacje. Zastosowanie warstw projektowych bardzo dobrze sprawdza się przy projektach dużej wielkości w przypadkach, gdy programista dąży do rozłożenia odpowiedzialności komponentów w poszczególnych modułach.
+
+\section{Architektura systemu}
+System został podzielony na cztery moduły:
+\begin{center}
+    \begin{tabular}{ | p{3cm}| p{3cm} | p{7cm} |}
+    \hline Nazwa & Typ &  Opis \\ \hline   
+    \hline  Moduł aplikacji użytkownika &  Aplikacja \mbox{internetowa} ASP.NET MVC & Aplikacja internetowa odpowiedzialna za sterowanie komunikacji pomiędzy interfejsem użytkownika na stronie internetowej, a logiką aplikacji.\\ \hline
+	\hline  Moduł logiki biznesowej & Biblioteka klas & Aplikacja biblioteczna odpowiedzialna za kontrolowanie przepływu informacji pomiędzy aplikacją internetową, do której użytkownik wysyła żądania, a bazą danych na której wykonywane są operacje pobrania danych niezbędnych do stworzenie i wyświetlenia widoku użytkownikowi.\\ \hline
+	\hline Moduł  \mbox{bazodanowy} & Biblioteka klas & Aplikacja zawierające modele struktury bazodanowych potrzebnych do stworzenia bazy danych (eng. code-first)oraz operacji na nich przy użycia języka zapytań funkcyjnych LINQ.\\ \hline
+		\hline Moduł testów & Projekt testów jednostkowych & Aplikacja zawierająca scenariusze testowe oraz testy sprawdzające poprawność działania kodu poprzez sprawdzanie oczekiwanego wyjścia z metod.\\ \hline
+	\end{tabular}
+\end{center}
+
+
+W celu realizacji aplikacji użytkownika zastosowano wzorzec architektoniczny Model-View-Controller (MVC), który zakłada dodatkowy podział projektu ASP.NET MVC na trzy dodatkowe warstwy. 
+
+
+
+\section{Standardy architektury}
+
+\section{Przepływ danych}
+
+\section{Użyte biblioteki}
+
+W celu łatwiejszego korzystania z dostępnych kolekcji danych oraz skorzystania ze stworzonych modułó
+
+\begin{center}
+    \begin{tabular}{ | l | p{6.5cm} | p{5cm} |}
+    \hline Biblioteka & Moduły & Opis \\ \hline    
+    \hline Automapper &  
+    	\begin{itemize} 
+   			 \item Moduł aplikacji użytkownika 
+   			 \item Moduł aplikacji biznesowej	
+   		\end{itemize} 
+    & biblioteka umożliwiająca mapowanie pomiędzy obiektami różnego typu  np. modeli bazodanowych na modele widoków  		\\ \hline
+    
+    \hline Unity &	
+    \begin{itemize} 
+   			 \item Moduł aplikacji użytkownika 
+    \end{itemize}
+   			 & biblioteka umożliwiająca wstrzykiwanie struktur danych. Została użyta w związki z zastosowaniem wzorca architektonicznego odwróconego sterowania (ang. Inversion of Control), aby wstrzykiwać serwisy do przetwarzania logiki biznesowej aplikacji  		\\ \hline
+    
+        \hline Entity Framework &  
+    	\begin{itemize} 
+   			  \item Moduł aplikacji użytkownika 
+ 			  \item Moduł logiki biznesowej
+			  \item Moduł dostępu do danych bazodanowych
+   		\end{itemize} 
+    &  biblioteka umożliwiająca operacje na kolekcjach danych oraz tworzenie ich.\\ \hline
+    
+        \hline Microsoft Identity & 
+         \begin{itemize} 
+   			 \item Moduł aplikacji użytkownika 
+    	\end{itemize} & Biblioteka zapewniająca aplikacji użytkownika zestaw metody umożliwiających autoryzacje oraz uwierzytelnienie \\ \hline
+    
+        \hline Newtonsoft Json.NET  &
+        \begin{itemize} 
+   			 \item Moduł aplikacji użytkownika 
+   		 \end{itemize}
+    & biblioteka umożliwiająca zamianę dowolnego typu obiekt na tekst w formacie JSON		\\ \hline
+    
+        \hline Automapper &  
+    	\begin{itemize} 
+   			 \item Moduł aplikacji użytkownika 
+   			 \item Moduł aplikacji biznesowej	
+   		\end{itemize} 
+    & biblioteka umożliwiająca mapowanie pomiędzy obiektami różnego typu  np. modeli bazodanowych na modele widoków  		\\ \hline
+    
+    
+	\end{tabular}
+\end{center}
+
+
+
+Dodatkowo w celu łatwiejszego użytkowania wymienionych bibliotek, zostały stworzone pomocnicze atrybuty, umożliwiające w prosty oraz szybki sposób wykorzystanie funkcjonalności biblioteki. Do tej listy należy zaliczyć:
+\begin{itemize}
+  \item \textbf{AutomapAttribute} - Atrybut stworzony w celu zamiany zwracanego z kontrolera z modelu bazodanowego na model widoku zaraz po przetworzeniu logiki znajdującej się w akcji.
+  \item \textbf{AjaxAttribute} - Atrybut umożliwiający dostęp do danej akcji tylko poprzez użycie asynchronicznego zapytania AJAX (Asynchronous JavaScript and XML). Użycie atrybutu umożliwi nie wykonanie się logiki zawartej w akcji poprzez zapytanie inne niż AJAX.
+\end{itemize}
+
+
+\section{Komunikacja z chmurą danych Azure}

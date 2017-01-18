@@ -208,3 +208,6 @@ FakesAssemblies/
 # Visual Studio 6 workspace options file
 *.opt
 /WebDisk.BusinessLogic/Keys/AzureKeys.cs
+/praca inzynierska/praca_inzynierska.aux
+/praca inzynierska/praca_inzynierska.synctex.gz
+/praca inzynierska/praca_inzynierska.toc

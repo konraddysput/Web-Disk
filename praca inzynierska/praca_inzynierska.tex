@@ -1,0 +1,81 @@
+\documentclass[12pt,a4paper,leqno,oneside,titlepage]{mwrep}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{polski}
+\usepackage{graphicx}
+\usepackage{listings}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{import}
+
+
+\setlength{\oddsidemargin}{0.5in}
+\setlength{\textwidth}{5.7in}
+\setlength{\topmargin}{0in}
+\setlength{\textheight}{8.5in}
+\linespread{1.05}
+
+%imported packages settings
+
+%1. listings
+\lstset{language=[Sharp]C,captionpos=b,tabsize=3,frame=lines,extendedchars=\true,inputencoding=ansinew,
+keywordstyle=\color{blue},commentstyle=\color{darkgreen},stringstyle=\color{red},
+numbers=left,numberstyle=\tiny,numbersep=5pt,breaklines=true,showstringspaces=false,basicstyle=\footnotesize,emph={label}}
+
+
+\begin{document}
+
+\begin{titlepage}
+\begin{center}
+{\large POLITECHNIKA POZNAŃSKA\\ WYDZIAŁ ELEKTRYCZNY\\ INSTYTUT AUTOMATYKI I INŻYNIERII INFORMATYCZNEJ\par}
+\end{center}
+\vspace{1.5cm plus 1fill}
+\begin{center}
+{\bf \Large Konrad Dysput\par}
+\end{center}
+\vspace{1.5cm plus 1mm minus 2mm}
+\begin{center}
+{\large PRACA DYPLOMOWA INŻYNIERSKA\par}
+\end{center}
+\vspace{1.5cm plus 1mm minus 2mm}
+\begin{center}
+{\huge\textbf{Wirtualny system plików zarządzający przechowywaniem i synchronizacją danych w chmurze}\par}
+\vspace{1.5cm plus 1.5fill}
+\begin{flushright}
+{\large Promotor: dr Andrzej Sikorski}
+\end{flushright}
+\vspace{4cm plus .1fill}
+{\large Poznań,\space 2017\par}
+\end{center}
+\end{titlepage}
+
+\tableofcontents
+
+\chapter{Wstęp}
+\import{rozdzialy/}{Wstep.tex}
+
+\chapter{Fukncjonalności systemu}
+\import{rozdzialy/}{Funkcjonalnosc.tex}
+
+\chapter{Projekt wirtualnego systemu plików}
+\import{rozdzialy/}{Projekt.tex}
+
+\begin{lstlisting}[caption=Code example]
+public void CodeTemplate(templateValue value, float valueNumber)
+{
+    var temp = 1;
+    var stringExample = "strig";
+}	
+\end{lstlisting}
+
+\chapter{Implementacja systemu}
+\import{rozdzialy/}{Implementacja.tex}
+
+\chapter{Testy, wdrożenia oraz scenariusze użycia}
+\import{rozdzialy/}{Testy.tex}
+
+\chapter{Zakończenie}
+\import{rozdzialy/}{Zakonczenie.tex}
+
+
+\import{rozdzialy/}{Bibliografia.tex}
+\end{document}

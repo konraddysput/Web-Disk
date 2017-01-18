@@ -78,7 +78,7 @@ namespace WebDisk.BusinessLogic.Common
 
             // Retrieve reference to a blob named "myblob.txt".
             CloudBlockBlob blockBlob = container.GetBlockBlobReference(blobReference);
-            
+
             // Delete the blob.
             blockBlob.Delete();
         }
@@ -97,9 +97,5 @@ namespace WebDisk.BusinessLogic.Common
                 return ByteHelper.ReadToEnd(memoryStream);
             }
         }
-
-
-
-
     }
 }
