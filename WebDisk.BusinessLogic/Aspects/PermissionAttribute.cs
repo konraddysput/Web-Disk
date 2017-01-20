@@ -6,7 +6,7 @@ using WebDisk.BusinessLogic.Interfaces;
 namespace WebDisk.BusinessLogic.Aspects
 {
     [Serializable]
-    public class FieldAccess : MethodInterceptionAspect
+    public class Permission : MethodInterceptionAspect
     {
         public override void OnInvoke(MethodInterceptionArgs args)
         {

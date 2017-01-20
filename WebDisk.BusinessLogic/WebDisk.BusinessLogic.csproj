@@ -102,8 +102,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Aspects\AfterDataChange.cs" />
-    <Compile Include="Aspects\FieldAccess.cs" />
+    <Compile Include="Aspects\DataChangeAttribute.cs" />
+    <Compile Include="Aspects\PermissionAttribute.cs" />
     <Compile Include="Common\AuthenticationManager.cs" />
     <Compile Include="Common\AzureManager.cs" />
     <Compile Include="Common\ByteHelper.cs" />

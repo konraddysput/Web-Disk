@@ -1,12 +1,15 @@
 \documentclass[12pt,a4paper,leqno,oneside,titlepage]{mwrep}
+\usepackage{polski}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage{polski}
 \usepackage{graphicx}
+\usepackage{tabularx,ragged2e,booktabs,caption}
 \usepackage{listings}
 \usepackage[dvipsnames]{xcolor}
 \usepackage{import}
-
+\usepackage{grffile}
+\usepackage{longtable}
 
 \setlength{\oddsidemargin}{0.5in}
 \setlength{\textwidth}{5.7in}
@@ -17,7 +20,7 @@
 %imported packages settings
 
 %1. listings
-\lstset{language=[Sharp]C,captionpos=b,tabsize=3,frame=lines,extendedchars=\true,inputencoding=ansinew,
+\lstset{language=[Sharp]C,captionpos=b,tabsize=3,frame=lines,extendedchars=true,inputencoding=utf8,
 keywordstyle=\color{blue},commentstyle=\color{darkgreen},stringstyle=\color{red},
 numbers=left,numberstyle=\tiny,numbersep=5pt,breaklines=true,showstringspaces=false,basicstyle=\footnotesize,emph={label}}
 
@@ -59,15 +62,11 @@ numbers=left,numberstyle=\tiny,numbersep=5pt,breaklines=true,showstringspaces=fa
 \chapter{Projekt wirtualnego systemu plików}
 \import{rozdzialy/}{Projekt.tex}
 
-\begin{lstlisting}[caption=Code example]
-public void CodeTemplate(templateValue value, float valueNumber)
-{
-    var temp = 1;
-    var stringExample = "strig";
-}	
-\end{lstlisting}
 
-\chapter{Implementacja systemu}
+\chapter{Architektura systemu}
+\import{rozdzialy/}{Architektura.tex}
+
+\chapter{Implementacja}
 \import{rozdzialy/}{Implementacja.tex}
 
 \chapter{Testy, wdrożenia oraz scenariusze użycia}

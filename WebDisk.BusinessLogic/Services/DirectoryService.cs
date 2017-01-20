@@ -20,7 +20,7 @@ namespace WebDisk.BusinessLogic.Services
     {
         //Repositories
         private Repository<Space> _spaceRepository;
-        private Repository<Field> _fieldRepository;
+       
         private Repository<FieldShareInformation> _sharedInformationRepository;
 
         public Repository<Space> SpaceRepository
@@ -34,7 +34,7 @@ namespace WebDisk.BusinessLogic.Services
                 return _spaceRepository;
             }
         }
-
+        private Repository<Field> _fieldRepository;
         public Repository<Field> FieldRepository
         {
             get
@@ -70,7 +70,7 @@ namespace WebDisk.BusinessLogic.Services
         /// <param name="userId">current logged user</param>
         /// <param name="fieldId">expected field ID</param>
         /// <returns>Field object</returns>
-        [FieldAccess]
+        [Permission]
         public Field GetFieldDetails(Guid userId, Guid fieldId)
         {
             return FieldRepository.GetByID(fieldId);
@@ -97,7 +97,7 @@ namespace WebDisk.BusinessLogic.Services
         /// <param name="userId">current logged user Id</param>
         /// <param name="directoryId">root directory of fields that we want to retrive from method</param>
         /// <returns>Fields from root directory</returns>
-        [FieldAccess]
+        [Permission]
         public IEnumerable<Field> GetAvailableFields(Guid userId, Guid fieldId)
         {
             return FieldRepository.GetFields(fieldId);
@@ -132,8 +132,8 @@ namespace WebDisk.BusinessLogic.Services
         /// <param name="userId"></param>
         /// <param name="fieldId"></param>
         /// <param name="name"></param>
-        [FieldAccess]
-        [AfterDataChange]
+        [Permission]
+        [DataChangeAttribute]
         public void CreateDirectory(Guid userId, Guid fieldId, string name)
         {
             FieldRepository.CreateDirectory(userId, fieldId, name);

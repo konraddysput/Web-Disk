@@ -1,85 +1,277 @@
+\section{Środowisko programistyczne}
+W celu realizacji poszczególnych założeń projektowych został wykonany złożony program przy użyciu platformy .NET w wersji 4.6. Część serwerowa aplikacji została napisana w języku C\# 6.0, a widoki użytkownika zostały stworzone przy pomocy języków SCSS, JavaScript oraz HTML przy użyciu ASP.NET MVC. Całość oprogramowania została stworzona przy wykorzystaniu programu Visual Studio 2015 w wersji Community oraz systemu automatyzacji zadań gulp w środowisku Node.js, służącemu do minifikacji oraz konkatenacji stylów i skryptów. Aplikacja wymaga posiadania na komputerze programisty zainstalowanego silnika bazodanowego MS SQL Server oraz dowolnej przeglądarki internetowej z uruchomioną obsługą języka JavaScript. Środowisko Node.js oraz wszystkie pakiety z nim związane nie są wymagane do dalszej kontynuacji, lecz w znaczny sposób mogą przyspieszyć dalszą pracę. Pomocnymi narzędziami używanymi do analizowania pracy programu jest program rozszerzenie Postman do przeglądarki internetowej Google Chrome lub pakiet Fiddler. Narzędzie te mogą posłużyć do wywoływania akcji kontrolerów poprzez odpowiednie adresy URL. W celu udostępnienia funkcjonalności zapisywania plików w chmurze Azure, należy skorzystać z konta portalu Azure oraz usługi magazynu. Aplikacja została stworzona przy użyciu systemu Windows 10 oraz może zostać uruchomiona przy pomocy programu Internet Information Service (IIS).
 
+\newpage
 
-W celu realizacji poszczególnych założeń projektowych został wykonany złożony program przy użyciu platformy .NET w wersji 4.6. Część serwerowa aplikacji została napisana w języku C\# 6.0, a widoki użytkownika została stworzone przy pomocy języków SCSS, JavaScript oraz HTML. W celu zmniejszenia złożoności oraz kosztów utrzymania projektu zdecydowano się na rozbicie architektury na cztery moduły. Każdy z wyodrębnionych modułów ma za zadanie spełniać określoną czynność w architekturze systemu. Rozbicie projektu pozwala  na łatwiejsze zarządzanie kodem oraz w przypadku dalszego rozwoju przez większą ilość programistów umożliwia na szybką aklimatyzacje. Zastosowanie warstw projektowych bardzo dobrze sprawdza się przy projektach dużej wielkości w przypadkach, gdy programista dąży do rozłożenia odpowiedzialności komponentów w poszczególnych modułach.
+\section{Biblioteki}
 
-\section{Architektura systemu}
-System został podzielony na cztery moduły:
-\begin{center}
-    \begin{tabular}{ | p{3cm}| p{3cm} | p{7cm} |}
-    \hline Nazwa & Typ &  Opis \\ \hline   
-    \hline  Moduł aplikacji użytkownika &  Aplikacja \mbox{internetowa} ASP.NET MVC & Aplikacja internetowa odpowiedzialna za sterowanie komunikacji pomiędzy interfejsem użytkownika na stronie internetowej, a logiką aplikacji.\\ \hline
-	\hline  Moduł logiki biznesowej & Biblioteka klas & Aplikacja biblioteczna odpowiedzialna za kontrolowanie przepływu informacji pomiędzy aplikacją internetową, do której użytkownik wysyła żądania, a bazą danych na której wykonywane są operacje pobrania danych niezbędnych do stworzenie i wyświetlenia widoku użytkownikowi.\\ \hline
-	\hline Moduł  \mbox{bazodanowy} & Biblioteka klas & Aplikacja zawierające modele struktury bazodanowych potrzebnych do stworzenia bazy danych (eng. code-first)oraz operacji na nich przy użycia języka zapytań funkcyjnych LINQ.\\ \hline
-		\hline Moduł testów & Projekt testów jednostkowych & Aplikacja zawierająca scenariusze testowe oraz testy sprawdzające poprawność działania kodu poprzez sprawdzanie oczekiwanego wyjścia z metod.\\ \hline
-	\end{tabular}
-\end{center}
-
-
-W celu realizacji aplikacji użytkownika zastosowano wzorzec architektoniczny Model-View-Controller (MVC), który zakłada dodatkowy podział projektu ASP.NET MVC na trzy dodatkowe warstwy. 
-
-
-
-\section{Standardy architektury}
-
-\section{Przepływ danych}
-
-\section{Użyte biblioteki}
-
-W celu łatwiejszego korzystania z dostępnych kolekcji danych oraz skorzystania ze stworzonych modułó
+W celu stworzenia funkcjonalności określonej w pracy wykorzystano liczny zestaw bibliotek platformy .NET oraz interfejsu użytkownika. Wykorzystanie wymienionych poniżej komponentów przyspieszyło w znaczący sposób pracę oraz umożliwiło wykonanie funkcjonalności zgodnie z założoną architekturą systemu.
 
 \begin{center}
-    \begin{tabular}{ | l | p{6.5cm} | p{5cm} |}
+    \begin{longtable}{ | p{2.2cm} | p{5cm} | p{6.5cm} |}
+   	\caption{Użyte biblioteki platformy .NET oraz interfejsu użytkownika} \\
     \hline Biblioteka & Moduły & Opis \\ \hline    
     \hline Automapper &  
     	\begin{itemize} 
-   			 \item Moduł aplikacji użytkownika 
-   			 \item Moduł aplikacji biznesowej	
+   			 \item aplikacji użytkownika
+   			 \item aplikacji biznesowej	
    		\end{itemize} 
-    & biblioteka umożliwiająca mapowanie pomiędzy obiektami różnego typu  np. modeli bazodanowych na modele widoków  		\\ \hline
+    & biblioteka umożliwiająca mapowanie pomiędzy obiektami odmiennego typu, dzięki której między innymi dokonywana jest zamiana modelu bazodanowego na model widoku.\\ \hline
     
     \hline Unity &	
     \begin{itemize} 
-   			 \item Moduł aplikacji użytkownika 
+   			 \item aplikacji użytkownika
     \end{itemize}
-   			 & biblioteka umożliwiająca wstrzykiwanie struktur danych. Została użyta w związki z zastosowaniem wzorca architektonicznego odwróconego sterowania (ang. Inversion of Control), aby wstrzykiwać serwisy do przetwarzania logiki biznesowej aplikacji  		\\ \hline
+   			 & Biblioteka umożliwiająca wstrzykiwanie struktur danych. Została użyta w związku z zastosowaniem wzorca architektonicznego odwróconego sterowania, aby wstrzykiwać modele danych do przetwarzania logiki biznesowej aplikacji do konstruktorów kontrolerów. Biblioteka umożliwia również wstrzykiwanie repozytoriów do serwisów danych.	\\ \hline
     
-        \hline Entity Framework &  
+        \hline Entity \mbox{Framework} &  
     	\begin{itemize} 
-   			  \item Moduł aplikacji użytkownika 
- 			  \item Moduł logiki biznesowej
-			  \item Moduł dostępu do danych bazodanowych
+   			  \item aplikacji użytkownika
+ 			  \item logiki biznesowej
+			  \item dostępu do danych
    		\end{itemize} 
-    &  biblioteka umożliwiająca operacje na kolekcjach danych oraz tworzenie ich.\\ \hline
+    &  biblioteka umożliwiająca operacje na kolekcjach danych oraz tworzenie struktur bazodanowych poprzez zastosowanie kocepcji Code-First.\\ \hline
     
         \hline Microsoft Identity & 
          \begin{itemize} 
-   			 \item Moduł aplikacji użytkownika 
-    	\end{itemize} & Biblioteka zapewniająca aplikacji użytkownika zestaw metody umożliwiających autoryzacje oraz uwierzytelnienie \\ \hline
+   			 \item aplikacji użytkownika
+    	\end{itemize} & Biblioteka zapewniająca aplikacji użytkownika zestaw metody umożliwiających autoryzacje oraz uwierzytelnienie. Komponenty zestawu ponadto rozbudowują bazę danych o dodatkowe tabele oraz kolumny przechowujace poufne dane. \\ \hline
+    
+    \hline Microsoft Windows Azure Storage &  
+    \begin{itemize} 
+    	\item logiki biznesowej
+    \end{itemize} 
+    & Biblioteka umożliwiająca komunikację z magazynem danych w chmurze Azure.\\ \hline
     
         \hline Newtonsoft Json.NET  &
         \begin{itemize} 
-   			 \item Moduł aplikacji użytkownika 
+   			 \item aplikacji użytkownika
    		 \end{itemize}
-    & biblioteka umożliwiająca zamianę dowolnego typu obiekt na tekst w formacie JSON		\\ \hline
+    & Biblioteka umożliwiająca zamianę obiektu dowolnego typu  na tekst w formacie JSON oraz danych w postaci JSON na modele używane w aplikacji.		\\ \hline
     
-        \hline Automapper &  
-    	\begin{itemize} 
-   			 \item Moduł aplikacji użytkownika 
-   			 \item Moduł aplikacji biznesowej	
-   		\end{itemize} 
-    & biblioteka umożliwiająca mapowanie pomiędzy obiektami różnego typu  np. modeli bazodanowych na modele widoków  		\\ \hline
+    \hline jQuery &  
+    \begin{itemize} 
+    	\item aplikacji użytkownika
+    \end{itemize} 
+    & Biblioteka skryptowa operująca na komponentach graficznych oraz definiująca działanie interfejsu użytkownika w dowolnej przeglądarce internetowej z włączoną obsługą języka JavaScript. \\ \hline
     
     
-	\end{tabular}
+    \hline Bootstrap Material Design &  
+    \begin{itemize} 
+    	\item testów
+    \end{itemize} 
+    & Biblioteka zawierająca kaskadowe arkusze stylów oraz skrypty implementuje wygląd i zachowanie komponentów zaprojektowanych przez wzorzec Material Design firmy Google. \\ \hline
+    
+    
+    \hline PostSharp &  
+    \begin{itemize} 
+    	\item logiki biznesowej
+    \end{itemize} 
+    & Biblioteka umożliwiająca stworzenie własnych atrybutów dla klas oraz metod w języku C\# w projektach biblioteki klas. Kod stworzony w ramach atrybutu w trakcie kompilacji zostanie wstrzyknięty w miejsce określone przy konfiguracji aspektu. \\ \hline
+    
+      \hline DotNetZip &  
+    \begin{itemize} 
+    	\item logiki biznesowej
+    \end{itemize} 
+    & Biblioteka umożliwiająca dynamiczne tworzenie plików zip w oparciu o pliki w postaci strumienia lub tablicy bajtów. \\ \hline
+    
+    \hline MOQ &  
+    \begin{itemize} 
+    	\item testów
+    \end{itemize} 
+    & Biblioteka umożliwiająca imitowanie struktur danych używanych w testach jednostkowych. \\ \hline
+    
+     \hline xUnit &  
+    \begin{itemize} 
+    	\item testów
+    \end{itemize} 
+    & Biblioteka umożliwiająca pisanie metod testujących funkcjonalności napisane w programie.  \\ \hline
+	\end{longtable}
 \end{center}
 
+\newpage
+\section{Konfiguracja}
+Aplikacja użytkownika zaimplementowana w ASP.NET MVC charakteryzuje się wykorzystaniem trzech wzorców architektonicznych - Model-Widok-Kontroler, Odwrotnego sterowania oraz wstrzykiwania zależności. Każda z klas pełniących funkcję kontrolerów wykorzystuje zasady zdefiniowane w każdym z wymienionych wzorców. W celu implementacji założeń wykorzystano bibliotekę Unity platformy .NET umożliwiającą wstrzykiwanie złożonych struktur danych - serwisów, do konstruktorów kontrolerów. Konfiguracja zakłada stworzenie kontenera danych oraz zdefiniowanie w nim klas serwisów oraz ich interfejsów, które mogą zostać wykorzystane w argumentach metody inicjalizującej klasę.
+\\
+
+\begin{lstlisting}[caption=Konfiguracja kontenera Odwrotnego sterowania ]
+public class IoCConfiguration
+{
+	public static void ConfigureIocUnityContainer()
+	{
+		IUnityContainer container = new UnityContainer();
+		RegisterServices(container);
+		DependencyResolver.SetResolver(new
+		 WebDiskDependencyResolver(container));
+	}
+
+	private static void RegisterServices(IUnityContainer container)
+	{
+		container.RegisterType<ISpaceService, SpaceService>();
+		container.RegisterType<IDirectoryService, DirectoryService>();
+		container.RegisterType<IFieldService, FieldService>();
+	}
+}
+\end{lstlisting}
+
+Aplikacja w przypadku użycia biblioteki Automapper wymaga zdefiniowania możliwych ścieżek zamiany modeli. W związku z tym stworzono klasę konfigurującą dozwolone ścieżki o nazwie MapperConfig, która jest uruchamiana jednorazowo wraz ze startem aplikacji. Metoda konfigurującą przykładowe modele danych znajduje się w Listingu 5.2. 
+\newpage
+
+\begin{lstlisting}[caption=Konfiguracja biblioteki Automapper]
+public static class MapperConfig
+{
+	public static void RegisterMaps()
+	{
+		AutoMapper.Mapper.Initialize(n =>
+		{
+			n.CreateMap<Field, FieldViewModel>();
+			n.CreateMap<HttpPostedFileBase, FileViewModel>();
+			
+			n.CreateMap<FieldInformation, FieldInformation>()
+			.ForMember(dest => dest.FieldInformationId,
+					 opts => opts.MapFrom(from => Guid.NewGuid()))
+			.ForMember(dest => dest.Field, 
+						opts => opts.Ignore());
+						
+			.....
+		}
+	}
+}
+
+\end{lstlisting}
+
+Wszystkie funkcje konfigurujące aplikację ASP.NET MVC oraz te zdefiniowane dla używanych bibliotek wywoływane są w klasie Global.asax, w metodzie wywoływanej podczas uruchamiania aplikacji - Application\_Start. Pojedyncze wykonanie zapisuje konfigurację na cały żywot istnienia aplikacji internetowej. 
 
 
-Dodatkowo w celu łatwiejszego użytkowania wymienionych bibliotek, zostały stworzone pomocnicze atrybuty, umożliwiające w prosty oraz szybki sposób wykorzystanie funkcjonalności biblioteki. Do tej listy należy zaliczyć:
+\begin{lstlisting}[caption=Konfiguracja aplikacji]
+
+ public class MvcApplication : System.Web.HttpApplication
+{
+	protected void Application_Start()
+	{
+		AreaRegistration.RegisterAllAreas();
+		FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
+		RouteConfig.RegisterRoutes(RouteTable.Routes);
+		BundleConfig.RegisterBundles(BundleTable.Bundles);
+		IoCConfiguration.ConfigureIocUnityContainer();
+		MapperConfig.RegisterMaps();
+	}
+	...
+}
+\end{lstlisting}
+
+\section{Atrybuty}
+
+W celu łatwiejszego użytkowania wymienionych bibliotek, zostały stworzone pomocnicze atrybuty, umożliwiające w szybki sposób wykonanie funkcji bardzo często wykonywanych. Do listy nowo utworzonych atrybutów należy zaliczyć:
 \begin{itemize}
-  \item \textbf{AutomapAttribute} - Atrybut stworzony w celu zamiany zwracanego z kontrolera z modelu bazodanowego na model widoku zaraz po przetworzeniu logiki znajdującej się w akcji.
-  \item \textbf{AjaxAttribute} - Atrybut umożliwiający dostęp do danej akcji tylko poprzez użycie asynchronicznego zapytania AJAX (Asynchronous JavaScript and XML). Użycie atrybutu umożliwi nie wykonanie się logiki zawartej w akcji poprzez zapytanie inne niż AJAX.
+  \item \textbf{AutomapAttribute} - atrybut stworzony w celu zamiany zwracanego z kontrolera, modelu bazodanowego, na model widoku, zaraz po przetworzeniu logiki znajdującej się w akcji.
+  \\
+  \begin{lstlisting}[caption=Kod atrybutu Automap]
+  [AttributeUsage(AttributeTargets.Method, AllowMultiple = false)]
+  public class AutoMapAttribute : ActionFilterAttribute
+  {
+  	private readonly Type _sourceType;
+  	private readonly Type _destType;
+  	
+  	public AutoMapAttribute(Type sourceType, Type destType)
+  	{
+  		_sourceType = sourceType;
+  		_destType = destType;
+  	}
+  	
+  	public override void OnActionExecuted
+  									(ActionExecutedContext filterContext)
+  	{
+  		var filter = new AutoMapFilter(SourceType, DestType);
+  		
+  		filter.OnActionExecuted(filterContext);
+  	}
+  \end{lstlisting}
+  
+  Atrybut może być wykonywany tylko na akcji znajdującej się w klasie pełniącej funkcję kontrolera. W widoku dla danej akcji, należy pamiętać o zadeklarowaniu modelu dla widoku, ponieważ w innym przypadku otrzymamy błąd niezgodności typów przy generowaniu strony. Dane zwracane z akcji powinny być typu określonego w atrybucie Automap.
+  \\
+  \begin{lstlisting}[caption=Wykorzystanie atrybutu AutoMap]
+  [AutoMap(typeof(IEnumerable<Field>),
+			  typeof(IEnumerable<FieldViewModel>))]
+  public ActionResult Index()
+  {
+  	....
+  	return PartialView("_Directory", availableFields);
+  }
+  \end{lstlisting}
+  
+  \item \textbf{AjaxActionAttribute} - atrybut umożliwiający dostęp do danej akcji tylko poprzez użycie asynchronicznego zapytania AJAX (Asynchronous JavaScript and XML). Użycie atrybutu spowoduje zablokowanie wykonania się logiki zawartej w akcji poprzez zapytanie inne niż AJAX. 
+   \\
+  \begin{lstlisting}[caption=Kod atrybutu Automap]
+  public class AjaxActionAttribute : ActionMethodSelectorAttribute
+  {
+  	public override bool IsValidForRequest(
+				  	ControllerContext controllerContext, 
+				  	System.Reflection.MethodInfo methodInfo)
+  	{
+  		return controllerContext.RequestContext
+  					.HttpContext.Request.IsAjaxRequest();
+  	}
+  }
+   \end{lstlisting}
+  Atrybut ma za zadanie zablokować wysyłanie żądań pobrania danych bezpośrednio z przeglądarki użytkownika lub poprzez narzędzia takiej jak Postman lub Fiddler.
+  \\
+  \begin{lstlisting}[caption=Wykorzystanie atrybutu AjaxAction]
+  [AjaxAction]
+   public ActionResult Create(Guid rootId, string directoryName)
+  {
+ 		...
+  		return IndexDetails(rootId);  	
+  }
+  
+  \end{lstlisting}
+  \item \textbf{PermissionAttribute} - atrybut sprawdzający, czy aktualnie zalogowana osoba ma dostęp do wykonywania operacji na pliku lub katalogu. Atrybut używany jest w projekcie biblioteki klas w serwisach odpowiadających za logikę plików oraz katalogów. W celu jego implementacji zastosowano bibliotekę PostSharp, która umożliwia wprowadzanie atrybutów w klasach nie będących kontrolerami w aplikacjach ASP.NET MVC. Atrybut wymaga, aby w argumentach metody przyjmowane były zmienne typu Guid oznaczające identyfikator użytkownika oraz pola, na którym ma zostać wykonana operacja. W celu implementacji aspektu, nowo utworzona klasa musi być oznaczona atrybutem [Serializable]. Jest to jedno z wymagań biblioteki Postsharp. Kod znajdujący się w atrybucie wykonywany jest przed wywołaniem metody docelowej.
+   \\
+  \begin{lstlisting}[caption=Aspekt potwierdzający uprawnienia zalogowanego użytkownik do wykonywania operacji na pliku lub katalogu ]
+  [Serializable]
+  public class Permission : MethodInterceptionAspect
+  {
+  	public override void OnInvoke(MethodInterceptionArgs args)
+  	{
+  		Guid userId = args.GetAttributeValue<Guid>("userId");
+  		Guid fieldId = args.GetAttributeValue<Guid>("fieldId");
+  		var serviceInstance = (ServiceBase)args.Instance;
+  		bool hasUserRights = serviceInstance
+  								._authManager
+  								.IsUserHasRights(userId,fieldId);
+  		if (!hasUserRights)
+  		{
+  			throw new UnauthorizedAccessException("..");
+  		}
+  		base.OnInvoke(args);
+  	}	
+  }
+  \end{lstlisting}
+  \item \textbf{DataChangeAttribute} - atrybut zapisujące dane w metodach wykonujących zmiany na modelach bazodanowych, zaraz po wykonaniu się całej funkcji.Atrybut jest używany w bibliotece klas dzięki wykorzystaniu biblioteki Postsharp. Aspekt korzysta z metody zaimplementowanej w abstrakcyjnej klasie bazowej serwisu.
+  \\
+\begin{lstlisting}[caption=Aspekt zapisujący dane w bazie danych]
+  
+  [Serializable]
+  public class DataChangeAttribute : OnMethodBoundaryAspect
+  {
+  	public override void OnExit(MethodExecutionArgs args)
+  	{
+  		((ServiceBase)args.Instance).Save();
+  		base.OnExit(args);
+  	}
+  }
+  \end{lstlisting}  
+\end{itemize}
+\newpage
+
+\section{Zaimplementowane metody w programie}
+\begin{itemize}
+\item \textbf{Wykorzystanie wzorca odwrotnego sterowania oraz wstrzykiwania zależności} - 
 \end{itemize}
 
 
-\section{Komunikacja z chmurą danych Azure}
+
+
+
+
+

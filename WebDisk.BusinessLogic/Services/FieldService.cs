@@ -57,8 +57,8 @@ namespace WebDisk.BusinessLogic.Services
         /// <param name="userId">current user Id</param>
         /// <param name="fieldId">directory where file should exists</param>
         /// <param name="fileViewModel">information about file - bytes, name, extensions</param>
-        [AfterDataChange]
-        [FieldAccess]
+        [DataChangeAttribute]
+        [Permission]
         public void CreateField(Guid userId, Guid fieldId, FileViewModel fileViewModel)
         {
             var field = AutoMapper.Mapper.Map<Field>(fileViewModel);
@@ -70,8 +70,8 @@ namespace WebDisk.BusinessLogic.Services
         /// </summary>
         /// <param name="userId">current logged user id</param>
         /// <param name="fieldId">field Id </param>
-        [FieldAccess]
-        [AfterDataChange]
+        [Permission]
+        [DataChangeAttribute]
         public void Delete(Guid userId, Guid fieldId)
         {
             var field = FieldRepository
@@ -83,8 +83,8 @@ namespace WebDisk.BusinessLogic.Services
             field.DeleteField(FieldRepository);
         }
 
-        [FieldAccess]
-        [AfterDataChange]
+        [Permission]
+        [DataChangeAttribute]
         public void Copy(Guid userId, Guid destinationId, Guid fieldId)
         {
             var destinationDirectory = FieldRepository.GetByID(destinationId);
@@ -101,8 +101,8 @@ namespace WebDisk.BusinessLogic.Services
             currentField.CopyField(destinationDirectory, userId, FieldRepository);
         }
 
-        [FieldAccess]
-        [AfterDataChange]
+        [Permission]
+        [DataChangeAttribute]
         public void Cut(Guid userId, Guid destinationId, Guid fieldId)
         {
             var destinationDirectory = FieldRepository.GetByID(destinationId);
@@ -119,7 +119,7 @@ namespace WebDisk.BusinessLogic.Services
             currentField.CutField(destinationDirectory);
         }
 
-        [FieldAccess]
+        [Permission]
         public FileViewModel Get(Guid userId, Guid fieldId)
         {
             var currentField = FieldRepository.GetByID(fieldId);
@@ -132,8 +132,8 @@ namespace WebDisk.BusinessLogic.Services
 
         }
 
-        [FieldAccess]
-        [AfterDataChange]
+        [Permission]
+        [DataChangeAttribute]
         public void Update(Guid userId, Guid fieldId, string newFieldName)
         {
             var field = FieldRepository.GetByID(fieldId);

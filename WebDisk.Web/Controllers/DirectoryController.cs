@@ -47,6 +47,7 @@ namespace WebDisk.Web.Controllers
 
         [HttpPost]
         [Route("Create")]
+        [AjaxAction]
         [AutoMap(typeof(IEnumerable<Field>), typeof(IEnumerable<FieldViewModel>))]
         public ActionResult Create(Guid rootId, string directoryName)
         {

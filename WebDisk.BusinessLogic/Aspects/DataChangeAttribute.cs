@@ -5,7 +5,7 @@ using WebDisk.BusinessLogic.Interfaces;
 namespace WebDisk.BusinessLogic.Aspects
 {
     [Serializable]
-    public class AfterDataChange : OnMethodBoundaryAspect
+    public class DataChangeAttribute : OnMethodBoundaryAspect
     {
         public override void OnExit(MethodExecutionArgs args)
         {
