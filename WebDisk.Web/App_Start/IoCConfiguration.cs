@@ -11,9 +11,7 @@ namespace WebDisk.Web.App_Start
         public static void ConfigureIocUnityContainer()
         {
             IUnityContainer container = new UnityContainer();
-
             RegisterServices(container);
-
             DependencyResolver.SetResolver(new WebDiskDependencyResolver(container));
         }
 

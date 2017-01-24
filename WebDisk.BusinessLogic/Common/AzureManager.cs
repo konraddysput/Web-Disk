@@ -61,6 +61,7 @@ namespace WebDisk.BusinessLogic.Common
             blockBlob.UploadFromStream(content);
             return blobId;
         }
+
         public static void DeleteFile(string blobReference)
         {
             if (string.IsNullOrWhiteSpace(blobReference))

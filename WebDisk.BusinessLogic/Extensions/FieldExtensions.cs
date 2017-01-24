@@ -163,7 +163,7 @@ namespace WebDisk.BusinessLogic.Extensions
         {
             if (source.Type != FieldType.File)
             {
-                throw new InvalidOperationException("You cannot copy a directory by using CopyFile method");
+                throw new InvalidOperationException("You cannot downloa directory");
             }
             var file = AzureManager.Download(source.FieldInformation.Localisation);
             var fileStream = ByteHelper.ByteArrayToStream(file);

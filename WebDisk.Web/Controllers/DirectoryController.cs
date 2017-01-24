@@ -51,17 +51,9 @@ namespace WebDisk.Web.Controllers
         [AutoMap(typeof(IEnumerable<Field>), typeof(IEnumerable<FieldViewModel>))]
         public ActionResult Create(Guid rootId, string directoryName)
         {
-            try
-            {
-                var userId = Identity.GetUserId(User.Identity);
-                _directoryService.CreateDirectory(userId, rootId, directoryName);
-                return IndexDetails(rootId);
-            }
-            catch (Exception)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-
+            var userId = Identity.GetUserId(User.Identity);
+            _directoryService.CreateDirectory(userId, rootId, directoryName);
+            return IndexDetails(rootId);
         }
 
     }

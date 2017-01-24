@@ -14,13 +14,14 @@ namespace WebDisk.BusinessLogic.Extensions
 
         public static Field GetFieldRoot(this Repository<Field> source, Guid fieldId)
         {
-            if(source.GetByID(fieldId) == null)
+            Field root = source.GetByID(fieldId);
+            if (root == null)
             {
                 throw new ArgumentException($"There is no root folder for expected field Id:{fieldId}");
-            }
-            return source.GetByID(fieldId).ParentDirectoryId.HasValue
-                                ? GetFieldRoot(source, source.GetByID(fieldId).ParentDirectoryId.Value)
-                                : source.GetByID(fieldId);
+            }           
+            return root.ParentDirectoryId.HasValue
+                                ? GetFieldRoot(source, root.ParentDirectoryId.Value)
+                                : root;
         }
     }
 }

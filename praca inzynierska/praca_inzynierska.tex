@@ -10,6 +10,7 @@
 \usepackage{import}
 \usepackage{grffile}
 \usepackage{longtable}
+\usepackage{ucs}
 
 \setlength{\oddsidemargin}{0.5in}
 \setlength{\textwidth}{5.7in}
@@ -20,9 +21,27 @@
 %imported packages settings
 
 %1. listings
-\lstset{language=[Sharp]C,captionpos=b,tabsize=3,frame=lines,extendedchars=true,inputencoding=utf8,
+\lstset{language=[Sharp]C,captionpos=b,tabsize=3,frame=lines,extendedchars=true,inputencoding=utf8x,
 keywordstyle=\color{blue},commentstyle=\color{darkgreen},stringstyle=\color{red},
-numbers=left,numberstyle=\tiny,numbersep=5pt,breaklines=true,showstringspaces=false,basicstyle=\footnotesize,emph={label}}
+numbers=left,numberstyle=\tiny,numbersep=5pt,breaklines=true,showstringspaces=false,basicstyle=\footnotesize,emph={label},extendedchars=\true,
+literate={ą}{{\k{a}}}1
+{Ą}{{\k{A}}}1
+{ę}{{\k{e}}}1
+{Ę}{{\k{E}}}1
+{ó}{{\'o}}1
+{Ó}{{\'O}}1
+{ś}{{\'s}}1
+{Ś}{{\'S}}1
+{ł}{{\l{}}}1
+{Ł}{{\L{}}}1
+{ż}{{\.z}}1
+{Ż}{{\.Z}}1
+{ź}{{\'z}}1
+{Ź}{{\'Z}}1
+{ć}{{\'c}}1
+{Ć}{{\'C}}1
+{ń}{{\'n}}1
+{Ń}{{\'N}}1}
 
 
 \begin{document}
@@ -56,7 +75,7 @@ numbers=left,numberstyle=\tiny,numbersep=5pt,breaklines=true,showstringspaces=fa
 \chapter{Wstęp}
 \import{rozdzialy/}{Wstep.tex}
 
-\chapter{Fukncjonalności systemu}
+\chapter{System plików}
 \import{rozdzialy/}{Funkcjonalnosc.tex}
 
 \chapter{Projekt wirtualnego systemu plików}

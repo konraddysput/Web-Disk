@@ -20,7 +20,7 @@ namespace WebDisk.Web.App_Start
             AutoMapper.Mapper.Initialize(n =>
             {
                 n.CreateMap<Field, FieldViewModel>();
-                n.CreateMap<HttpPostedFileBase, FileViewModel>();
+                n.CreateMap<HttpPostedFileBase, FileViewModel>();              
 
                 n.CreateMap<FieldInformation, FieldInformation>()
                 .ForMember(dest => dest.FieldInformationId, opts => opts.MapFrom(from => Guid.NewGuid()))

@@ -14,6 +14,7 @@ using WebDisk.Web.Models.Field;
 using PdfConverter = Microsoft.Office.Interop.Word;
 using Identity = WebDisk.Database.IdentityExtensions.IdentityExtensions;
 using WebDisk.Web.Common;
+using AutoMapper;
 
 namespace WebDisk.Web.Controllers
 {
@@ -42,8 +43,8 @@ namespace WebDisk.Web.Controllers
         /// </summary>
         /// <param name="fieldId">id of field that we're looking for</param>
         /// <returns>Json with field informations</returns>
-        [Route("Details/{fieldId}")]
         [AjaxAction]
+        [Route("Details/{fieldId}")]
         [AutoMap(typeof(Field), typeof(FieldDescriptionViewModel))]
         public ActionResult Details(Guid fieldId)
         {
@@ -93,34 +94,22 @@ namespace WebDisk.Web.Controllers
         [Route("Update/{directoryId}")]
         public ActionResult Create(IEnumerable<HttpPostedFileBase> files, Guid directoryId)
         {
-            try
-            {
-                var fileViewModel = AutoMapper.Mapper.Map<IEnumerable<FileViewModel>>(files);
-                Guid userId = Identity.GetUserId(User.Identity);
-                _fieldService.CreateField(userId, directoryId, fileViewModel);
-                return RedirectToAction("IndexDetails", "Directory", new { directoryId });
-            }
-            catch
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
+            var fileViewModel = Mapper.Map<IEnumerable<FileViewModel>>(files);
+            Guid userId = Identity.GetUserId(User.Identity);
+            _fieldService.CreateField(userId, directoryId, fileViewModel);
+            return RedirectToAction("IndexDetails", "Directory", new { directoryId });
         }
+
         [HttpGet]
         [Route("Download/{fieldId}")]
         public ActionResult Download(Guid fieldId)
         {
             Guid userId = Identity.GetUserId(User.Identity);
-            try
-            {
-                var fileModel = _fieldService.Get(userId, fieldId);
-                return File(fileModel.InputStream,
-                            System.Net.Mime.MediaTypeNames.Application.Octet,
-                            fileModel.FileName);
-            }
-            catch (ArgumentException)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
+            var fileModel = _fieldService.Get(userId, fieldId);
+            return File(fileModel.InputStream,
+                        System.Net.Mime.MediaTypeNames.Application.Octet,
+                        fileModel.FileName);
+
         }
         [HttpGet]
         [Route("Update/{fieldId}/{fieldName}")]
@@ -143,7 +132,7 @@ namespace WebDisk.Web.Controllers
             Guid userId = Identity.GetUserId(User.Identity);
             var fileModel = _fieldService.Get(userId, fieldId);
             var result = FileDisplayHelper.ConvertFile(fileModel);
-            return new FileContentResult(result.Content,result.ContentType);
+            return new FileContentResult(result.Content, result.ContentType);
         }
     }
 }

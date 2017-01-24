@@ -93,16 +93,7 @@ function uploadFiles() {
     $.ajax({
         url: 'Field/Update/' + directoryId,
         type: 'POST',
-        data: formData,
-        xhr: function () {
-            var myXhr = $.ajaxSettings.xhr();
-            if (myXhr.upload) {
-                // Check if upload property exists
-                // For handling the progress of the upload
-                myXhr.upload.addEventListener('progress', uploadStatus, false);
-            }
-            return myXhr;
-        },
+        data: formData,       
         success: function (data) {
             displayToast("Dodano pliki", toastType.SUCCESS);
             //refresh current window
@@ -110,7 +101,7 @@ function uploadFiles() {
 
         },
         error: function (data) {
-            console.log(data);
+            displayToast("Napotkano problemy, spróbuj ponownie", toastType.ERROR);
         },
         contentType: false,
         cache: false,
