@@ -2,31 +2,33 @@
 @using WebDisk.Database.DatabaseModel.Types
 @model FieldViewModel
 
-@switch (Model.Type)
-{
-    case FieldType.File:
-        <i class="material-icons pointer field md-24 @(Model.Attributes != 0?"badge":string.Empty)"
-           data-field="@Model.AttributeShortcut"
-           onclick="selectFile($(this))"
-           data-type="@Model.Type"
-           data-id="@Model.FieldId"
-           ondblclick="openField('@Model.FieldId', '@Model.Type',$(this))">
-            @(Model.Extension == "pdf" ? "picture_as_pdf" : "description")
-        </i>
-        <p>@Model.Name</p>
-        break;
-    case FieldType.Directory:
-        <i class="material-icons pointer field md-24 @(Model.Attributes != 0?"badge":string.Empty)"
-           data-field="@Model.AttributeShortcut"
-           onclick="selectFile($(this))"
-           data-type="@Model.Type"
-           data-id="@Model.FieldId"
-           ondblclick="openField('@Model.FieldId', '@Model.Type',$(this))">
-            folder
-        </i>
-        <p>@Model.Name</p>
-        break;
-    default:
-        <i class="material-icons pointer">build</i>
-        break;
-}
+<i class="material-icons pointer field md-24 @(Model.Attributes != 0?"badge":string.Empty)"
+   data-field="@Model.AttributeShortcut"
+   onclick="selectFile($(this))"
+   data-type="@Model.Type"
+   data-id="@Model.FieldId"
+   ondblclick="openField('@Model.FieldId', '@Model.Type',$(this))">
+    @switch (Model.Extension)
+            {
+                case "":
+            @:folder
+                    break;
+                case ".pdf":
+            @:picture_as_pdf
+                    break;
+                case ".mp3":
+                    @:music_video
+                    break;
+                case ".png":
+                case ".jpg":
+                case ".jpeg":
+                case ".tiff":
+            @:photo
+                        break;
+                default:
+            @:description
+                    break;
+            }
+
+</i>
+<p>@Model.Name</p>

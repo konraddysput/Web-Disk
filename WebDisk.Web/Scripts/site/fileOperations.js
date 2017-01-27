@@ -115,7 +115,12 @@ function uploadStatus(e) {
     }
 }
 
+
 function refreshWindow(directoryId) {
+    if (directoryId === undefined)
+    {
+        directoryId = getCurrentDirectoryId();
+    }
     $.ajax({
         type: "GET",
         url: "Directory/" + directoryId,

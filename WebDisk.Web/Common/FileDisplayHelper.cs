@@ -23,7 +23,14 @@ namespace WebDisk.Web.Common
                 case ".docx":
                 case ".doc":
                     mimeType = "application/pdf";
-                    content = ExportDocxToPdf(content, Convert.ToInt32(source.ContentLength));
+                    try
+                    {
+                        content = ExportDocxToPdf(content, Convert.ToInt32(source.ContentLength));
+                    }
+                    catch
+                    {
+                        content = new byte[0];
+                    }
                     break;
 
                 case ".xlsx":

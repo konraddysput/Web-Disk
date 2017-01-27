@@ -37,9 +37,9 @@
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 @if (Request.IsAuthenticated)
                 {
-                    <ul id="nav1" class="nav navbar-nav waves-effect">
-                        <li>@Html.ActionLink("Przestrzeń", "Index", "Space")</li>
-                        <li>@Html.ActionLink("Konto", "Index", "Manage")</li>
+                    <ul id="nav1" class="nav navbar-nav waves-effect pull-right">
+                        @*<li>@Html.ActionLink("Przestrzeń", "Index", "Space")</li>
+                        <li>@Html.ActionLink("Konto", "Index", "Manage")</li>*@
                         <li class="pull-right">@Html.ActionLink("Wyloguj", "LogOff", "Account")</li>
                     </ul>
 

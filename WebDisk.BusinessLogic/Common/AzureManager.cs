@@ -26,9 +26,9 @@ namespace WebDisk.BusinessLogic.Common
         /// </summary>
         /// <param name="content">array of file bytes</param>
         /// <returns>path to uploaded file</returns>
-        public string UploadFile(byte[] content)
+        public string UploadFile(byte[] content, string path)
         {
-            return UploadFile(ByteHelper.ByteArrayToStream(content));
+            return UploadFile(ByteHelper.ByteArrayToStream(content), path);
         }
 
         public string Copy(string blobId)
@@ -49,17 +49,16 @@ namespace WebDisk.BusinessLogic.Common
         }
 
 
-        public string UploadFile(Stream content)
+        public string UploadFile(Stream content, string path)
         {
             // Retrieve reference to a previously created container.
             CloudBlobContainer container = _blobClient.GetContainerReference(AzureKeys.ContainerName);
+            var blobPath = Path.Combine(path, $"{Guid.NewGuid()}-{Guid.NewGuid()}");
 
-            // Retrieve reference to a blob named "myblob".
-            var blobId = $"{Guid.NewGuid()}{Guid.NewGuid()}";
-            CloudBlockBlob blockBlob = container.GetBlockBlobReference(blobId);
+            CloudBlockBlob blockBlob = container.GetBlockBlobReference(blobPath);
 
             blockBlob.UploadFromStream(content);
-            return blobId;
+            return blobPath;
         }
 
         public static void DeleteFile(string blobReference)

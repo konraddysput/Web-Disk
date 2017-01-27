@@ -20,6 +20,7 @@ namespace WebDisk.Web.Models.Field
         [Display(Name = "Data ostatniej modyfikacji")]
         public DateTime? LastModifiedDate { get; set; }
 
+        [Display(Name= "Atrybuty")]
         public string Attribute { get; set; }
 
         public double Size { get; set; }

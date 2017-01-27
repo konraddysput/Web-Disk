@@ -97,7 +97,7 @@ namespace WebDisk.BusinessLogic.Extensions
         public static void CreateField(this Repository<Field> fieldRepository, Guid userId, Guid parentDirectoryId, Field field, Stream inputStream)
         {
             string pathToAzureFile = new AzureManager()
-                                          .UploadFile(inputStream);
+                                          .UploadFile(inputStream,field.Name);
 
             field.FieldInformation.Localisation = pathToAzureFile;
             field.ParentDirectoryId = parentDirectoryId;
